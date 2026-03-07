@@ -34,8 +34,6 @@ body { background-color: var(--bg-dark); color: white; font-family: 'Poppins', s
     padding: 30px 20px;
 }
 .sidebar.active { left: 0; box-shadow: 10px 0 30px rgba(0, 229, 255, 0.2); }
-
-/* TEKS USER NAME - TETAP DI TENGAH (PERMINTAAN TERAKHIR) */
 .user-name-text {
     color: var(--neon-cyan);
     font-weight: bold;
@@ -45,8 +43,6 @@ body { background-color: var(--bg-dark); color: white; font-family: 'Poppins', s
     text-align: center;
     width: 100%;
 }
-
-/* FOTO PROFIL - SESUAI UKURAN SEBELUMNYA */
 .sidebar-pfp {
     width: 100%;
     height: 110px;
@@ -60,7 +56,6 @@ body { background-color: var(--bg-dark); color: white; font-family: 'Poppins', s
     height: 100%;
     object-fit: cover;
 }
-
 .sidebar-menu { list-style: none; }
 .sidebar-menu li { margin-bottom: 5px; }
 .sidebar-menu li a { display: block; padding: 12px 15px; color: #aaa; text-decoration: none; font-size: 14px; border-radius: 12px; transition: 0.2s; }
@@ -69,27 +64,25 @@ body { background-color: var(--bg-dark); color: white; font-family: 'Poppins', s
 .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; z-index: 1500; }
 .overlay.active { display: block; }
 
-/* MAIN CONTENT - KEMBALI KE MODEL AWAL (RATA KIRI) */
+/* MAIN CONTENT HOME */
 .container {
     padding: 90px 20px 40px;
     max-width: 450px;
     margin: 0 auto;
     text-align: left;
 }
-
 .welcome-title {
     color: var(--neon-cyan);
     text-shadow: 0 0 10px var(--neon-cyan);
     font-size: 18px;
     margin-bottom: 8px;
-    text-align: center;  /* DIUBAH JADI TENGAH */
+    text-align: center;
 }
-
 .welcome-desc {
     font-size: 11px;
     color: #666;
     margin-bottom: 25px;
-    text-align: left;
+    text-align: center;
 }
 
 /* PRODUCT GRID */
@@ -98,8 +91,6 @@ body { background-color: var(--bg-dark); color: white; font-family: 'Poppins', s
     flex-direction: column;
     gap: 12px;
 }
-
-/* CARD - MODEL AWAL LENGKAP */
 .card {
     background: rgba(255, 255, 255, 0.03);
     border-radius: 15px;
@@ -109,48 +100,29 @@ body { background-color: var(--bg-dark); color: white; font-family: 'Poppins', s
     width: 100%;
     text-align: left;
 }
-
 .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 8px;
 }
+.card h3 { font-size: 14px; font-weight: 600; margin-bottom: 2px; color: #eee; }
+.card p { font-size: 11px; color: #777; margin-bottom: 5px; }
+.system-status { font-size: 9px; font-weight: bold; letter-spacing: 0.5px; }
 
-.card h3 {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 2px;
-    color: #eee;
-    text-align: left;
-}
-
-.card p {
-    font-size: 11px;
-    color: #777;
-    margin-bottom: 5px;
-    text-align: left;
-}
-
-.system-status {
-    font-size: 9px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-}
-
-/* LEVEL 1: AGAK TERANG (DEFAULT) */
+/* LEVEL 1 */
 .card-cyan { border: 1.5px solid rgba(0, 229, 255, 0.35); box-shadow: 0 0 8px rgba(0, 229, 255, 0.1); }
 .card-purple { border: 1.5px solid rgba(191, 0, 255, 0.35); box-shadow: 0 0 8px rgba(191, 0, 255, 0.1); }
 .card-green { border: 1.5px solid rgba(0, 255, 136, 0.35); box-shadow: 0 0 8px rgba(0, 255, 136, 0.1); }
 .card-red { border: 1.5px solid rgba(255, 0, 85, 0.35); box-shadow: 0 0 8px rgba(255, 0, 85, 0.1); }
 
-/* LEVEL 2: MELEDAK TERANG (SELECTED) */
+/* LEVEL 2 SELECTED */
 .card-cyan.selected { border: 2.5px solid var(--neon-cyan); box-shadow: 0 0 25px var(--neon-cyan); transform: scale(1.02) translateY(-2px); }
 .card-purple.selected { border: 2.5px solid var(--neon-purple); box-shadow: 0 0 25px var(--neon-purple); transform: scale(1.02) translateY(-2px); }
 .card-green.selected { border: 2.5px solid var(--neon-green); box-shadow: 0 0 25px var(--neon-green); transform: scale(1.02) translateY(-2px); }
 .card-red.selected { border: 2.5px solid var(--neon-red); box-shadow: 0 0 25px var(--neon-red); transform: scale(1.02) translateY(-2px); }
 
-/* WARNA STATUS */
+/* STATUS WARNA */
 .card-cyan .system-status { color: var(--neon-cyan); }
 .card-purple .system-status { color: var(--neon-purple); }
 .card-green .system-status { color: var(--neon-green); }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alwaysnyzzz Website</title>
+    <!-- CSS: loading (folder css) + style utama (root) -->
     <link rel="stylesheet" href="css/loading.css">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -45,9 +46,9 @@
             </div>
         </div>
         <ul class="sidebar-menu">
-            <li class="active"><a href="index.html">🏠 Home</a></li>
+            <li class="active"><a href="index">🏠 Home</a></li>
             <li><a href="#">📦 Product</a></li>
-            <li><a href="donasi.html">❤️ Donasi</a></li>
+            <li><a href="donasi">❤️ Donasi</a></li>
         </ul>
     </div>
     <div class="overlay" id="overlay"></div>
@@ -82,14 +83,15 @@
         </div>
     </main>
 
+    <!-- Script utama (root) -->
     <script src="script.js"></script>
+    <!-- Script loading (inline, sudah termasuk di sini) -->
     <script>
         (function() {
             const loadingScreen = document.getElementById('loading-screen');
             const bar = document.querySelector('.progress-bar');
             const text = document.getElementById('progress-text');
             
-            // Cek apakah home sudah pernah diload sebelumnya
             if (sessionStorage.getItem('homeLoaded')) {
                 loadingScreen.style.opacity = '0';
                 setTimeout(() => {
@@ -98,14 +100,12 @@
                 return;
             }
 
-            // Loading pertama: naik bertahap dan berhenti di 20,40,60,80
             let progress = 0;
             const steps = [20, 40, 60, 80, 100];
             let stepIndex = 0;
 
             function goToNextStep() {
                 if (stepIndex >= steps.length) {
-                    // Selesai semua, simpan status dan hilangkan loading
                     sessionStorage.setItem('homeLoaded', 'true');
                     setTimeout(() => {
                         loadingScreen.style.opacity = '0';
@@ -125,17 +125,14 @@
                     } else {
                         clearInterval(interval);
                         stepIndex++;
-                        // Jika masih ada step berikutnya, jeda 500ms
                         if (stepIndex < steps.length) {
                             setTimeout(goToNextStep, 500);
                         } else {
-                            // Langsung lanjut ke penyelesaian
                             goToNextStep();
                         }
                     }
-                }, 20); // kecepatan naik (makin kecil makin cepat)
+                }, 20);
             }
-
             goToNextStep();
         })();
     </script>
