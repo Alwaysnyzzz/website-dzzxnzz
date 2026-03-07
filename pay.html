@@ -6,6 +6,7 @@
     <title>Detail Pembayaran - DzzXNzz</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Library QR Code -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
     <style>
         .pay-container {
@@ -23,7 +24,7 @@
         }
         .qr-frame {
             position: relative;
-            background-image: url('/image/bg-payment.png'); /* ← path diubah */
+            background-image: url('/image/bg-payment.png');
             background-size: cover;
             background-position: center;
             background-color: #1a1a1a;
@@ -32,9 +33,9 @@
             padding: 20px;
             margin-bottom: 30px;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 280px;
+            justify-content: center;  /* horizontal tengah */
+            align-items: center;      /* vertical tengah */
+            min-height: 250px;         /* tinggi minimal */
         }
         .qr-frame::before {
             content: '';
@@ -55,6 +56,8 @@
             max-width: 100%;
             height: auto;
             border-radius: 5px;
+            width: 200px;              /* ukuran QR diperkecil */
+            height: 200px;             /* konsisten */
         }
         .btn-group {
             display: flex;
@@ -93,6 +96,7 @@
 <body>
     <canvas id="canvas"></canvas>
 
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-left">
             <button id="menu-toggle">☰</button>
@@ -106,6 +110,7 @@
         </div>
     </nav>
 
+    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <span class="user-name-text">Alwaysnyzzz</span>
@@ -121,6 +126,7 @@
     </div>
     <div class="overlay" id="overlay"></div>
 
+    <!-- Konten Utama Pembayaran -->
     <main>
         <div class="pay-container">
             <div class="pay-card">
@@ -137,6 +143,7 @@
 
     <script src="script.js"></script>
     <script>
+        // Inisialisasi sidebar
         document.addEventListener('DOMContentLoaded', function() {
             const menuBtn = document.getElementById('menu-toggle');
             const sidebar = document.getElementById('sidebar');
@@ -175,8 +182,8 @@
 
                     const canvas = document.createElement('canvas');
                     QRCode.toCanvas(canvas, data.qr_string, {
-                        width: 250,
-                        margin: 2,
+                        width: 200,          // ukuran QR diperkecil jadi 200px
+                        margin: 1,
                         errorCorrectionLevel: 'H',
                         color: { dark: '#000000', light: '#ffffff' }
                     }, function (error) {
