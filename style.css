@@ -1,0 +1,157 @@
+:root {
+    --neon-cyan: #00e5ff;
+    --neon-purple: #bf00ff;
+    --neon-green: #00ff88;
+    --neon-red: #ff0055;
+    --bg-dark: #020202;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background-color: var(--bg-dark); color: white; font-family: 'Poppins', sans-serif; overflow-x: hidden; }
+
+#canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+/* NAVBAR */
+.navbar {
+    position: fixed; top: 0; width: 100%; height: 60px;
+    background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(10px);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 15px; border-bottom: 1px solid rgba(0, 229, 255, 0.15); z-index: 1000;
+}
+.nav-left, .nav-right { display: flex; align-items: center; gap: 10px; }
+#menu-toggle { background: none; border: none; color: white; font-size: 22px; cursor: pointer; }
+.nav-brand { color: var(--neon-cyan); font-weight: bold; font-size: 14px; text-shadow: 0 0 8px var(--neon-cyan); }
+
+.coins-wrapper { border: 1.5px solid var(--neon-cyan); padding: 4px 10px; border-radius: 15px; font-size: 10px; font-weight: bold; color: var(--neon-cyan); }
+.user-avatar { width: 34px; height: 34px; border: 1.5px solid var(--neon-cyan); border-radius: 50%; overflow: hidden; background: #111; }
+.user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+/* SIDEBAR */
+.sidebar {
+    position: fixed; top: 0; left: -260px; width: 260px; height: 100%;
+    background: #080808; z-index: 2000; transition: 0.3s ease;
+    border-right: 1px solid var(--neon-cyan);
+    padding: 30px 20px;
+}
+.sidebar.active { left: 0; box-shadow: 10px 0 30px rgba(0, 229, 255, 0.2); }
+
+/* TEKS USER NAME - TETAP DI TENGAH (PERMINTAAN TERAKHIR) */
+.user-name-text {
+    color: var(--neon-cyan);
+    font-weight: bold;
+    font-size: 18px;
+    display: block;
+    margin-bottom: 15px;
+    text-align: center;
+    width: 100%;
+}
+
+/* FOTO PROFIL - SESUAI UKURAN SEBELUMNYA */
+.sidebar-pfp {
+    width: 100%;
+    height: 110px;
+    border-radius: 18px;
+    border: 1.5px solid var(--neon-cyan);
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+.sidebar-pfp img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sidebar-menu { list-style: none; }
+.sidebar-menu li { margin-bottom: 5px; }
+.sidebar-menu li a { display: block; padding: 12px 15px; color: #aaa; text-decoration: none; font-size: 14px; border-radius: 12px; transition: 0.2s; }
+.sidebar-menu li.active a { background: rgba(0, 229, 255, 0.12); color: var(--neon-cyan); font-weight: 600; }
+
+.overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; z-index: 1500; }
+.overlay.active { display: block; }
+
+/* MAIN CONTENT - KEMBALI KE MODEL AWAL (RATA KIRI) */
+.container {
+    padding: 90px 20px 40px;
+    max-width: 450px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.welcome-title {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px var(--neon-cyan);
+    font-size: 18px;
+    margin-bottom: 8px;
+    text-align: center;  /* DIUBAH JADI TENGAH */
+}
+
+.welcome-desc {
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+/* PRODUCT GRID */
+.product-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* CARD - MODEL AWAL LENGKAP */
+.card {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+    padding: 18px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    color: #eee;
+    text-align: left;
+}
+
+.card p {
+    font-size: 11px;
+    color: #777;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.system-status {
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* LEVEL 1: AGAK TERANG (DEFAULT) */
+.card-cyan { border: 1.5px solid rgba(0, 229, 255, 0.35); box-shadow: 0 0 8px rgba(0, 229, 255, 0.1); }
+.card-purple { border: 1.5px solid rgba(191, 0, 255, 0.35); box-shadow: 0 0 8px rgba(191, 0, 255, 0.1); }
+.card-green { border: 1.5px solid rgba(0, 255, 136, 0.35); box-shadow: 0 0 8px rgba(0, 255, 136, 0.1); }
+.card-red { border: 1.5px solid rgba(255, 0, 85, 0.35); box-shadow: 0 0 8px rgba(255, 0, 85, 0.1); }
+
+/* LEVEL 2: MELEDAK TERANG (SELECTED) */
+.card-cyan.selected { border: 2.5px solid var(--neon-cyan); box-shadow: 0 0 25px var(--neon-cyan); transform: scale(1.02) translateY(-2px); }
+.card-purple.selected { border: 2.5px solid var(--neon-purple); box-shadow: 0 0 25px var(--neon-purple); transform: scale(1.02) translateY(-2px); }
+.card-green.selected { border: 2.5px solid var(--neon-green); box-shadow: 0 0 25px var(--neon-green); transform: scale(1.02) translateY(-2px); }
+.card-red.selected { border: 2.5px solid var(--neon-red); box-shadow: 0 0 25px var(--neon-red); transform: scale(1.02) translateY(-2px); }
+
+/* WARNA STATUS */
+.card-cyan .system-status { color: var(--neon-cyan); }
+.card-purple .system-status { color: var(--neon-purple); }
+.card-green .system-status { color: var(--neon-green); }
+.card-red .system-status { color: var(--neon-red); }

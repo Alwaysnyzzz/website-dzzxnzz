@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donasi - DzzXNzz Website</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS KHUSUS DONASI - CARD SEKARANG CYAN */
+        .donasi-page {
+            max-width: 450px;
+            margin: 100px auto 40px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .donasi-title {
+            color: var(--neon-red);  /* judul tetap merah */
+            text-shadow: 0 0 10px var(--neon-red);
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .donasi-desc {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        /* CARD DONASI - SEKARANG CYAN */
+        .donasi-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid var(--neon-cyan);      /* border cyan */
+            border-radius: 15px;
+            padding: 20px 18px;
+            box-shadow: 0 0 15px var(--neon-cyan);     /* glow cyan */
+            text-align: left;
+            transition: 0.2s;
+        }
+
+        .donasi-card:hover {
+            box-shadow: 0 0 25px var(--neon-cyan);
+            transform: scale(1.01);
+        }
+
+        .donasi-card h3 {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .donasi-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--neon-cyan);        /* border cyan */
+            border-radius: 30px;
+            padding: 12px 18px;
+            color: white;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            margin-bottom: 12px;
+            box-shadow: 0 0 5px var(--neon-cyan);
+            transition: 0.2s;
+        }
+
+        .donasi-input:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px var(--neon-cyan);
+            background: rgba(0, 229, 255, 0.1);        /* cyan dengan transparan */
+        }
+
+        .donasi-input::placeholder {
+            color: rgba(255,255,255,0.4);
+            font-size: 13px;
+        }
+
+        .donasi-btn {
+            width: 100%;
+            background: transparent;
+            border: 1.5px solid var(--neon-cyan);      /* border cyan */
+            border-radius: 30px;
+            padding: 12px 18px;
+            color: var(--neon-cyan);                   /* teks cyan */
+            font-weight: bold;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 8px var(--neon-cyan);
+        }
+
+        .donasi-btn:hover {
+            background: var(--neon-cyan);              /* background cyan */
+            color: black;
+            box-shadow: 0 0 25px var(--neon-cyan);
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <button id="menu-toggle">☰</button>
+            <span class="nav-brand">DzzXNzz Website</span>
+        </div>
+        <div class="nav-right">
+            <div class="coins-wrapper">COINS: 0</div>
+            <div class="user-avatar">
+                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="User">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="user-name-text">Alwaysnyzzz</span>
+            <div class="sidebar-pfp">
+                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="PFP">
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="index.html">🏠 Home</a></li>
+            <li><a href="#">📦 Product</a></li>
+            <li class="active"><a href="donasi.html">❤️ Donasi</a></li>
+        </ul>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Konten Donasi -->
+    <main>
+        <div class="donasi-page">
+            <h1 class="donasi-title">❤️ DONASI</h1>
+            <p class="donasi-desc">Banyak kamu yang berjaya, sekecil apapun berarti.</p>
+
+            <!-- CARD DONASI WARNA CYAN -->
+            <div class="donasi-card">
+                <h3>Input Donasi</h3>
+                <input type="number" class="donasi-input" placeholder="Masukkan nominal (Rp)" min="1000" step="1000">
+                <button class="donasi-btn">DONASI SEKARANG</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
