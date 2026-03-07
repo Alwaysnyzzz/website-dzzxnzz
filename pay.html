@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Pembayaran - DzzXNzz</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <style>
+    .pay-container {
+      max-width: 450px;
+      margin: 100px auto;
+      padding: 0 20px;
+    }
+    .pay-card {
+      background: rgba(255,255,255,0.03);
+      border: 1.5px solid var(--neon-cyan);
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+    }
+    #qris-code {
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .btn {
+      flex: 1;
+      padding: 12px;
+      border: 1.5px solid var(--neon-cyan);
+      background: transparent;
+      color: var(--neon-cyan);
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .btn:hover {
+      background: var(--neon-cyan);
+      color: black;
+    }
+    .btn-red {
+      border-color: var(--neon-red);
+      color: var(--neon-red);
+    }
+    .btn-red:hover {
+      background: var(--neon-red);
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <!-- Navbar dan Sidebar sama persis seperti di index.html (bisa di-include via JavaScript atau copy-paste) -->
+  <!-- Untuk mempermudah, kita copy navbar dan sidebar di sini (atau bisa pakai komponen) -->
+  <nav class="navbar">... (salin dari index.html) ...</nav>
+  <div class="sidebar" id="sidebar">... (salin) ...</div>
+  <div class="overlay" id="overlay"></div>
+
+  <main>
+    <div class="pay-container">
+      <div class="pay-card">
+        <h2>Detail Transaksi</h2>
+        <p>Order ID: <strong id="order-id">-</strong></p>
+        <p>Status: <span id="status">pending</span></p>
+        
+        <div id="qris-area" style="display: none;">
+          <div id="qris-code"></div>
+          <p style="color: #aaa;">Scan QRIS menggunakan aplikasi pembayaran</p>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn" id="cek-status">🔄 CEK STATUS</button>
+          <button class="btn btn-red" id="batalkan">❌ BATALKAN</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/script.js"></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderId = urlParams.get('order_id');
+
+    if (!orderId) {
+      alert('Order ID tidak ditemukan!');
+      window.location.href = '/donasi';
+    }
+
+    async function loadTransaction() {
+      const res = await fetch(`/api/get-transaction?order_id=${orderId}`);
+      const data = await res.json();
+      document.getElementById('order-id').textContent = data.order_id;
+      document.getElementById('status').textContent = data.status;
+
+      if (data.qr_string) {
+        document.getElementById('qris-area').style.display = 'block';
+        new QRCode(document.getElementById('qris-code'), {
+          text: data.qr_string,
+          width: 200,
+          height: 200
+        });
+      }
+    }
+
+    document.getElementById('cek-status').onclick = async () => {
+      const res = await fetch(`/api/check-status?order_id=${orderId}&amount=${amount}`);
+      const data = await res.json();
+      alert('Status: ' + data.status);
+      if (data.status === 'completed') {
+        window.location.href = '/success?order_id=' + orderId;
+      } else {
+        document.getElementById('status').textContent = data.status;
+      }
+    };
+
+    document.getElementById('batalkan').onclick = async () => {
+      if (!confirm('Yakin ingin membatalkan transaksi ini?')) return;
+      const res = await fetch('/api/cancel-transaction', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order_id: orderId, amount })
+      });
+      if (res.ok) {
+        alert('Transaksi dibatalkan');
+        document.getElementById('status').textContent = 'cancelled';
+      }
+    };
+
+    loadTransaction();
+  </script>
+</body>
+</html>
