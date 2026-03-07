@@ -56,8 +56,8 @@
             max-width: 100%;
             height: auto;
             border-radius: 5px;
-            width: 200px;              /* ukuran QR diperkecil */
-            height: 200px;             /* konsisten */
+            width: 100px;              /* ukuran QR diperkecil */
+            height: 100px;             /* konsisten */
         }
         .btn-group {
             display: flex;
@@ -182,7 +182,7 @@
 
                     const canvas = document.createElement('canvas');
                     QRCode.toCanvas(canvas, data.qr_string, {
-                        width: 200,          // ukuran QR diperkecil jadi 200px
+                        width: 100,          // ukuran QR diperkecil jadi 200px
                         margin: 1,
                         errorCorrectionLevel: 'H',
                         color: { dark: '#000000', light: '#ffffff' }
