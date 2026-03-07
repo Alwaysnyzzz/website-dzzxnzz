@@ -1,204 +1,232 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detail Pembayaran - DzzXNzz</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-  <style>
-    .pay-container {
-      max-width: 450px;
-      margin: 100px auto;
-      padding: 0 20px;
-    }
-    .pay-card {
-      background: rgba(255,255,255,0.03);
-      border: 1.5px solid var(--neon-cyan);
-      border-radius: 15px;
-      padding: 25px;
-      text-align: center;
-    }
-    #qrcode {
-      margin: 20px auto;
-      display: flex;
-      justify-content: center;
-    }
-    .btn-group {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-    }
-    .btn {
-      flex: 1;
-      padding: 12px;
-      border: 1.5px solid var(--neon-cyan);
-      background: transparent;
-      color: var(--neon-cyan);
-      border-radius: 30px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .btn:hover {
-      background: var(--neon-cyan);
-      color: black;
-    }
-    .btn-red {
-      border-color: var(--neon-red);
-      color: var(--neon-red);
-    }
-    .btn-red:hover {
-      background: var(--neon-red);
-      color: black;
-    }
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      font-size: 14px;
-    }
-    .expired {
-      color: #ff5555;
-      font-size: 12px;
-      margin-top: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Pembayaran - DzzXNzz</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Library QR Code -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <style>
+        .pay-container {
+            max-width: 450px;
+            margin: 100px auto 40px;
+            padding: 0 20px;
+        }
+        .pay-card {
+            background-image: url('images/bg-payment.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            border: 1.5px solid var(--neon-cyan);
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+        .qr-frame {
+            border: 1px solid rgba(255,255,255,0.5);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(2px);
+        }
+        #qrcode canvas {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: 1.5px solid var(--neon-cyan);
+            background: rgba(0,0,0,0.5);
+            color: var(--neon-cyan);
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+            backdrop-filter: blur(2px);
+        }
+        .btn:hover {
+            background: var(--neon-cyan);
+            color: black;
+        }
+        .btn-red {
+            border-color: var(--neon-red);
+            color: var(--neon-red);
+        }
+        .btn-red:hover {
+            background: var(--neon-red);
+            color: black;
+        }
+        /* Hilangkan outline default */
+        button, a, .btn, #menu-toggle, .sidebar-menu li a {
+            outline: none;
+        }
+    </style>
 </head>
 <body>
-  <canvas id="canvas"></canvas>
-  <!-- Navbar dan Sidebar (copy dari index.html) -->
-  <nav class="navbar">
-    <div class="nav-left">
-      <button id="menu-toggle">☰</button>
-      <span class="nav-brand">DzzXNzz Website</span>
+    <canvas id="canvas"></canvas>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <button id="menu-toggle">☰</button>
+            <span class="nav-brand">DzzXNzz Website</span>
+        </div>
+        <div class="nav-right">
+            <div class="coins-wrapper">COINS: 0</div>
+            <div class="user-avatar">
+                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="User">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="user-name-text">Alwaysnyzzz</span>
+            <div class="sidebar-pfp">
+                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="PFP">
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="index">🏠 Home</a></li>
+            <li><a href="#">📦 Product</a></li>
+            <li class="active"><a href="donasi">❤️ Donasi</a></li>
+        </ul>
     </div>
-    <div class="nav-right">
-      <div class="coins-wrapper">COINS: 0</div>
-      <div class="user-avatar">
-        <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="User">
-      </div>
-    </div>
-  </nav>
+    <div class="overlay" id="overlay"></div>
 
-  <div class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <span class="user-name-text">Alwaysnyzzz</span>
-      <div class="sidebar-pfp">
-        <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="PFP">
-      </div>
-    </div>
-    <ul class="sidebar-menu">
-      <li><a href="index">🏠 Home</a></li>
-      <li><a href="#">📦 Product</a></li>
-      <li class="active"><a href="donasi">❤️ Donasi</a></li>
-    </ul>
-  </div>
-  <div class="overlay" id="overlay"></div>
-
-  <main>
-    <div class="pay-container">
-      <div class="pay-card">
-        <h2>Detail Transaksi</h2>
-        <div class="info-row">
-          <span>Order ID:</span>
-          <strong id="order-id">-</strong>
+    <!-- Konten Utama Pembayaran -->
+    <main>
+        <div class="pay-container">
+            <div class="pay-card">
+                <div class="qr-frame">
+                    <div id="qrcode"></div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn" id="cek-status">🔄 CEK STATUS</button>
+                    <button class="btn btn-red" id="batalkan">❌ BATALKAN</button>
+                </div>
+            </div>
         </div>
-        <div class="info-row">
-          <span>Nominal:</span>
-          <strong id="amount">-</strong>
-        </div>
-        <div class="info-row">
-          <span>Status:</span>
-          <strong id="status">pending</strong>
-        </div>
+    </main>
 
-        <div id="qris-area" style="display: none;">
-          <div id="qrcode"></div>
-          <p style="color: #aaa;">Scan QRIS menggunakan aplikasi pembayaran</p>
-          <div class="expired" id="expired"></div>
-        </div>
-
-        <div class="btn-group">
-          <button class="btn" id="cek-status">🔄 CEK STATUS</button>
-          <button class="btn btn-red" id="batalkan">❌ BATALKAN</button>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <script src="js/script.js"></script>
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const orderId = urlParams.get('order_id');
-
-    if (!orderId) {
-      alert('Order ID tidak ditemukan!');
-      window.location.href = '/donasi';
-    }
-
-    let transactionAmount = 0;
-
-    async function loadTransaction() {
-      const res = await fetch(`/api/get-transaction?order_id=${orderId}`);
-      const data = await res.json();
-      if (!data) {
-        alert('Transaksi tidak ditemukan');
-        window.location.href = '/donasi';
-        return;
-      }
-
-      document.getElementById('order-id').textContent = data.order_id;
-      document.getElementById('amount').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(data.amount);
-      document.getElementById('status').textContent = data.status;
-      transactionAmount = data.amount;
-
-      if (data.qr_string) {
-        document.getElementById('qris-area').style.display = 'block';
-        new QRCode(document.getElementById('qrcode'), {
-          text: data.qr_string,
-          width: 200,
-          height: 200
+    <script src="script.js"></script>
+    <script>
+        // Inisialisasi sidebar ulang (mencegah error setelah navigasi)
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            if (menuBtn && sidebar && overlay) {
+                menuBtn.onclick = () => { sidebar.classList.add('active'); overlay.classList.add('active'); };
+                overlay.onclick = () => { sidebar.classList.remove('active'); overlay.classList.remove('active'); };
+            }
         });
-      }
 
-      if (data.expired_at) {
-        const expired = new Date(data.expired_at).toLocaleString('id-ID');
-        document.getElementById('expired').textContent = `Bayar sebelum ${expired}`;
-      }
-    }
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('order_id');
 
-    document.getElementById('cek-status').onclick = async () => {
-      const res = await fetch(`/api/check-status?order_id=${orderId}&amount=${transactionAmount}`);
-      const data = await res.json();
-      if (res.ok) {
-        alert('Status: ' + data.status);
-        if (data.status === 'completed') {
-          window.location.href = '/success?order_id=' + orderId;
-        } else {
-          document.getElementById('status').textContent = data.status;
+        if (!orderId) {
+            alert('Order ID tidak ditemukan!');
+            window.location.href = '/donasi';
         }
-      } else {
-        alert('Gagal cek status');
-      }
-    };
 
-    document.getElementById('batalkan').onclick = async () => {
-      if (!confirm('Yakin ingin membatalkan transaksi ini?')) return;
-      const res = await fetch('/api/cancel-transaction', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ order_id: orderId, amount: transactionAmount })
-      });
-      if (res.ok) {
-        alert('Transaksi dibatalkan');
-        document.getElementById('status').textContent = 'cancelled';
-      } else {
-        alert('Gagal membatalkan');
-      }
-    };
+        let transactionAmount = 0;
 
-    loadTransaction();
-  </script>
+        async function loadTransaction() {
+            try {
+                const res = await fetch(`/api/get-transaction?order_id=${orderId}`);
+                const data = await res.json();
+                if (!data || data.error) {
+                    alert('Transaksi tidak ditemukan');
+                    window.location.href = '/donasi';
+                    return;
+                }
+
+                transactionAmount = data.amount;
+
+                if (data.qr_string) {
+                    const qrContainer = document.getElementById('qrcode');
+                    qrContainer.innerHTML = '';
+
+                    // Buat canvas untuk QR
+                    const canvas = document.createElement('canvas');
+                    QRCode.toCanvas(canvas, data.qr_string, {
+                        width: 280,
+                        margin: 2,
+                        errorCorrectionLevel: 'H',
+                        color: {
+                            dark: '#000000',
+                            light: '#ffffff'
+                        }
+                    }, function (error) {
+                        if (error) {
+                            console.error('QR Error:', error);
+                            qrContainer.innerHTML = '<p style="color:red;">Gagal generate QR</p>';
+                        } else {
+                            qrContainer.appendChild(canvas);
+                        }
+                    });
+                } else {
+                    document.getElementById('qrcode').innerHTML = '<p style="color:red;">QR tidak tersedia</p>';
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Gagal memuat transaksi');
+            }
+        }
+
+        document.getElementById('cek-status').onclick = async () => {
+            try {
+                const res = await fetch(`/api/check-status?order_id=${orderId}&amount=${transactionAmount}`);
+                const data = await res.json();
+                if (res.ok) {
+                    alert('Status: ' + data.status);
+                    if (data.status === 'completed') {
+                        window.location.href = '/success?order_id=' + orderId;
+                    }
+                } else {
+                    alert('Gagal cek status: ' + (data.error || ''));
+                }
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
+        };
+
+        document.getElementById('batalkan').onclick = async () => {
+            if (!confirm('Yakin ingin membatalkan transaksi ini?')) return;
+            try {
+                const res = await fetch('/api/cancel-transaction', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ order_id: orderId, amount: transactionAmount })
+                });
+                if (res.ok) {
+                    alert('Transaksi dibatalkan');
+                } else {
+                    const data = await res.json();
+                    alert('Gagal: ' + (data.error || ''));
+                }
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
+        };
+
+        loadTransaction();
+    </script>
 </body>
 </html>

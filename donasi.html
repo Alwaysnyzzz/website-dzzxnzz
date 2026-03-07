@@ -4,14 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donasi - DzzXNzz Website</title>
-    <!-- style utama (root) + style khusus donasi (folder css) -->
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="css/donasi.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Tambahan CSS untuk hilangkan blue flash */
+        button, a, .btn, .donasi-btn, #menu-toggle, .sidebar-menu li a {
+            outline: none;
+        }
+        button:focus-visible, a:focus-visible, .btn:focus-visible {
+            outline: 2px solid var(--neon-cyan);
+            outline-offset: 2px;
+        }
+        /* Style untuk halaman donasi (salin dari donasi.css agar mandiri) */
+        .donasi-page {
+            max-width: 450px;
+            margin: 100px auto 40px;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .donasi-title {
+            color: var(--neon-red);
+            text-shadow: 0 0 10px var(--neon-red);
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .donasi-desc {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        .donasi-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid var(--neon-cyan);
+            border-radius: 15px;
+            padding: 20px 18px;
+            box-shadow: 0 0 15px var(--neon-cyan);
+            text-align: left;
+            transition: 0.2s;
+        }
+        .donasi-card h3 {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .donasi-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 30px;
+            padding: 12px 18px;
+            color: white;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            margin-bottom: 12px;
+            box-shadow: 0 0 5px var(--neon-cyan);
+            transition: 0.2s;
+        }
+        .donasi-input:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px var(--neon-cyan);
+            background: rgba(0, 229, 255, 0.1);
+        }
+        .donasi-btn {
+            width: 100%;
+            background: transparent;
+            border: 1.5px solid var(--neon-cyan);
+            border-radius: 30px;
+            padding: 12px 18px;
+            color: var(--neon-cyan);
+            font-weight: bold;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 8px var(--neon-cyan);
+        }
+        .donasi-btn:hover {
+            background: var(--neon-cyan);
+            color: black;
+            box-shadow: 0 0 25px var(--neon-cyan);
+            transform: scale(1.02);
+        }
+    </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
 
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-left">
             <button id="menu-toggle">☰</button>
@@ -25,6 +110,7 @@
         </div>
     </nav>
 
+    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <span class="user-name-text">Alwaysnyzzz</span>
@@ -39,47 +125,67 @@
         </ul>
     </div>
     <div class="overlay" id="overlay"></div>
-<main>
-  <div class="donasi-page">
-    <h1 class="donasi-title">❤️ DONASI</h1>
-    <p class="donasi-desc">Banyak kamu yang berjaya, sekecil apapun berarti.</p>
 
-    <div class="donasi-card">
-      <h3>Input Donasi</h3>
-      <input type="number" class="donasi-input" id="amount" placeholder="Masukkan nominal (Rp)" min="1000" step="1000">
-      <button class="donasi-btn" id="donasi-btn">DONASI SEKARANG</button>
-    </div>
-  </div>
-</main>
+    <!-- Konten Utama Donasi -->
+    <main>
+        <div class="donasi-page">
+            <h1 class="donasi-title">❤️ DONASI</h1>
+            <p class="donasi-desc">Banyak kamu yang berjaya, sekecil apapun berarti.</p>
 
-<script src="js/script.js"></script>
-<script>
-  document.getElementById('donasi-btn').addEventListener('click', async (e) => {
-    e.preventDefault();
-    const amount = document.getElementById('amount').value;
-    if (!amount || amount < 1000) {
-      alert('Minimal donasi Rp 1.000');
-      return;
-    }
+            <div class="donasi-card">
+                <h3>Input Donasi</h3>
+                <input type="number" class="donasi-input" id="amount" placeholder="Masukkan nominal (Rp)" min="1000" step="1000">
+                <button class="donasi-btn" id="donasi-btn">DONASI SEKARANG</button>
+            </div>
+        </div>
+    </main>
 
-    try {
-      const res = await fetch('/api/create-transaction', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: parseInt(amount) })
-      });
-      const data = await res.json();
-      if (res.ok) {
-        // Redirect ke halaman pembayaran kita sendiri
-        window.location.href = `/pay?order_id=${data.order_id}`;
-      } else {
-        alert('Error: ' + (data.error || 'Gagal'));
-      }
-    } catch (err) {
-      console.error(err);
-      alert('Gagal menghubungi server.');
-    }
-  });
-</script>
+    <!-- Script utama -->
+    <script src="script.js"></script>
+    <!-- Script khusus donasi dan inisialisasi sidebar -->
+    <script>
+        // Inisialisasi sidebar (untuk jaga-jaga jika script.js tidak berjalan sempurna)
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            if (menuBtn && sidebar && overlay) {
+                menuBtn.onclick = () => { sidebar.classList.add('active'); overlay.classList.add('active'); };
+                overlay.onclick = () => { sidebar.classList.remove('active'); overlay.classList.remove('active'); };
+            }
+        });
+
+        // Handler donasi
+        document.getElementById('donasi-btn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            const amount = document.getElementById('amount').value;
+            if (!amount || amount < 1000) {
+                alert('Minimal donasi Rp 1.000');
+                return;
+            }
+
+            console.log('Mengirim amount:', amount); // Debug
+
+            try {
+                const res = await fetch('/api/create-transaction', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount: parseInt(amount) })
+                });
+
+                const data = await res.json();
+                console.log('Response:', data); // Debug
+
+                if (res.ok) {
+                    window.location.href = `/pay?order_id=${data.order_id}`;
+                } else {
+                    alert('Error: ' + (data.error || 'Gagal'));
+                }
+            } catch (err) {
+                console.error('Fetch error:', err);
+                alert('Gagal menghubungi server.');
+            }
+        });
+    </script>
 </body>
 </html>
