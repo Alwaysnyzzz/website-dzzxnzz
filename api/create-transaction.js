@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+const { createClient } = require('@supabase/supabase-js');
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
@@ -7,26 +7,37 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { amount } = req.body;
-  if (!amount || amount < 1000) {
-    return res.status(400).json({ error: 'Minimal donasi Rp 1.000' });
+  const { order_id, amount } = req.body;
+  if (!order_id || !amount) {
+    return res.status(400).json({ error: 'order_id dan amount diperlukan' });
   }
 
-  // Generate order_id unik
-  const order_id = 'DONASI-' + Date.now() + '-' + Math.random().toString(36).substring(2, 7);
+  try {
+    const cancelUrl = 'https://app.pakasir.com/api/transactioncancel';
+    const response = await fetch(cancelUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        project: process.env.PAKASIR_SLUG,
+        order_id,
+        amount,
+        api_key: process.env.PAKASIR_API_KEY
+      })
+    });
 
-  // Simpan ke Supabase (status pending)
-  const { error } = await supabase.from('transactions').insert([
-    { order_id, amount, status: 'pending' }
-  ]);
+    const data = await response.json();
 
-  if (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Gagal menyimpan transaksi' });
+    if (response.ok) {
+      await supabase
+        .from('transactions')
+        .update({ status: 'cancelled' })
+        .eq('order_id', order_id);
+      return res.status(200).json({ success: true });
+    } else {
+      return res.status(500).json({ error: data });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
   }
-
-  // Buat URL pembayaran Pakasir (via URL method)
-  const payment_url = `https://app.pakasir.com/pay/${process.env.PAKASIR_SLUG}/${amount}?order_id=${order_id}&qris_only=1&redirect=${process.env.BASE_URL}/success?order_id=${order_id}`;
-
-  res.status(200).json({ payment_url, order_id });
 }

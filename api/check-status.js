@@ -1,4 +1,5 @@
-import { createClient } from '@supabase/supabase-js';
+const { createClient } = require('@supabase/supabase-js');
+
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
 export default async function handler(req, res) {
@@ -7,9 +8,8 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'order_id dan amount diperlukan' });
   }
 
-  // Panggil API Pakasir
-  const url = `https://app.pakasir.com/api/transactiondetail?project=${process.env.PAKASIR_SLUG}&amount=${amount}&order_id=${order_id}&api_key=${process.env.PAKASIR_API_KEY}`;
   try {
+    const url = `https://app.pakasir.com/api/transactiondetail?project=${process.env.PAKASIR_SLUG}&amount=${amount}&order_id=${order_id}&api_key=${process.env.PAKASIR_API_KEY}`;
     const response = await fetch(url);
     const data = await response.json();
 

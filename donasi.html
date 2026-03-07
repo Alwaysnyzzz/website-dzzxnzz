@@ -70,12 +70,13 @@
       });
       const data = await res.json();
       if (res.ok) {
-        // Redirect ke halaman pembayaran Pakasir
-        window.location.href = data.payment_url;
+        // Redirect ke halaman pembayaran kita sendiri
+        window.location.href = `/pay?order_id=${data.order_id}`;
       } else {
-        alert('Error: ' + data.error);
+        alert('Error: ' + (data.error || 'Gagal'));
       }
     } catch (err) {
+      console.error(err);
       alert('Gagal menghubungi server.');
     }
   });

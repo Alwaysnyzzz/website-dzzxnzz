@@ -20,7 +20,7 @@
       padding: 25px;
       text-align: center;
     }
-    #qris-code {
+    #qrcode {
       margin: 20px auto;
       display: flex;
       justify-content: center;
@@ -52,26 +52,71 @@
       background: var(--neon-red);
       color: black;
     }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    .expired {
+      color: #ff5555;
+      font-size: 12px;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
   <canvas id="canvas"></canvas>
-  <!-- Navbar dan Sidebar sama persis seperti di index.html (bisa di-include via JavaScript atau copy-paste) -->
-  <!-- Untuk mempermudah, kita copy navbar dan sidebar di sini (atau bisa pakai komponen) -->
-  <nav class="navbar">... (salin dari index.html) ...</nav>
-  <div class="sidebar" id="sidebar">... (salin) ...</div>
+  <!-- Navbar dan Sidebar (copy dari index.html) -->
+  <nav class="navbar">
+    <div class="nav-left">
+      <button id="menu-toggle">☰</button>
+      <span class="nav-brand">DzzXNzz Website</span>
+    </div>
+    <div class="nav-right">
+      <div class="coins-wrapper">COINS: 0</div>
+      <div class="user-avatar">
+        <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="User">
+      </div>
+    </div>
+  </nav>
+
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="user-name-text">Alwaysnyzzz</span>
+      <div class="sidebar-pfp">
+        <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="PFP">
+      </div>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="index">🏠 Home</a></li>
+      <li><a href="#">📦 Product</a></li>
+      <li class="active"><a href="donasi">❤️ Donasi</a></li>
+    </ul>
+  </div>
   <div class="overlay" id="overlay"></div>
 
   <main>
     <div class="pay-container">
       <div class="pay-card">
         <h2>Detail Transaksi</h2>
-        <p>Order ID: <strong id="order-id">-</strong></p>
-        <p>Status: <span id="status">pending</span></p>
-        
+        <div class="info-row">
+          <span>Order ID:</span>
+          <strong id="order-id">-</strong>
+        </div>
+        <div class="info-row">
+          <span>Nominal:</span>
+          <strong id="amount">-</strong>
+        </div>
+        <div class="info-row">
+          <span>Status:</span>
+          <strong id="status">pending</strong>
+        </div>
+
         <div id="qris-area" style="display: none;">
-          <div id="qris-code"></div>
+          <div id="qrcode"></div>
           <p style="color: #aaa;">Scan QRIS menggunakan aplikasi pembayaran</p>
+          <div class="expired" id="expired"></div>
         </div>
 
         <div class="btn-group">
@@ -92,30 +137,49 @@
       window.location.href = '/donasi';
     }
 
+    let transactionAmount = 0;
+
     async function loadTransaction() {
       const res = await fetch(`/api/get-transaction?order_id=${orderId}`);
       const data = await res.json();
+      if (!data) {
+        alert('Transaksi tidak ditemukan');
+        window.location.href = '/donasi';
+        return;
+      }
+
       document.getElementById('order-id').textContent = data.order_id;
+      document.getElementById('amount').textContent = 'Rp ' + new Intl.NumberFormat('id-ID').format(data.amount);
       document.getElementById('status').textContent = data.status;
+      transactionAmount = data.amount;
 
       if (data.qr_string) {
         document.getElementById('qris-area').style.display = 'block';
-        new QRCode(document.getElementById('qris-code'), {
+        new QRCode(document.getElementById('qrcode'), {
           text: data.qr_string,
           width: 200,
           height: 200
         });
       }
+
+      if (data.expired_at) {
+        const expired = new Date(data.expired_at).toLocaleString('id-ID');
+        document.getElementById('expired').textContent = `Bayar sebelum ${expired}`;
+      }
     }
 
     document.getElementById('cek-status').onclick = async () => {
-      const res = await fetch(`/api/check-status?order_id=${orderId}&amount=${amount}`);
+      const res = await fetch(`/api/check-status?order_id=${orderId}&amount=${transactionAmount}`);
       const data = await res.json();
-      alert('Status: ' + data.status);
-      if (data.status === 'completed') {
-        window.location.href = '/success?order_id=' + orderId;
+      if (res.ok) {
+        alert('Status: ' + data.status);
+        if (data.status === 'completed') {
+          window.location.href = '/success?order_id=' + orderId;
+        } else {
+          document.getElementById('status').textContent = data.status;
+        }
       } else {
-        document.getElementById('status').textContent = data.status;
+        alert('Gagal cek status');
       }
     };
 
@@ -124,11 +188,13 @@
       const res = await fetch('/api/cancel-transaction', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ order_id: orderId, amount })
+        body: JSON.stringify({ order_id: orderId, amount: transactionAmount })
       });
       if (res.ok) {
         alert('Transaksi dibatalkan');
         document.getElementById('status').textContent = 'cancelled';
+      } else {
+        alert('Gagal membatalkan');
       }
     };
 
