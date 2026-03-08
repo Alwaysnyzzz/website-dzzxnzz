@@ -134,12 +134,13 @@
             100% { transform: rotate(360deg); }
         }
         .loading-text {
-            color: white;
+            color: var(--neon-cyan);
             font-size: 18px;
             font-family: 'Poppins', sans-serif;
             letter-spacing: 2px;
+            text-shadow: 0 0 8px var(--neon-cyan);
         }
-        /* Modal konfirmasi */
+        /* Modal konfirmasi (untuk batalkan) */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -203,15 +204,110 @@
             background: #00ff00;
             box-shadow: 0 0 15px #44ff44;
         }
+        /* Success overlay (centang hijau) */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 30000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .success-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .checkmark-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(0,255,0,0.2);
+            border: 3px solid #00ff88;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            animation: popIn 0.5s ease;
+        }
+        .checkmark {
+            width: 50px;
+            height: 25px;
+            border-left: 5px solid #00ff88;
+            border-bottom: 5px solid #00ff88;
+            transform: rotate(-45deg);
+            animation: drawCheck 0.5s ease 0.2s forwards;
+            opacity: 0;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @keyframes drawCheck {
+            0% { width: 0; height: 0; opacity: 1; }
+            100% { width: 50px; height: 25px; opacity: 1; }
+        }
+        .success-message {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px #00ff88;
+            animation: fadeInUp 0.5s ease;
+        }
+        .success-submessage {
+            color: #ccc;
+            font-size: 16px;
+            margin-bottom: 30px;
+            max-width: 300px;
+            text-align: center;
+            animation: fadeInUp 0.5s ease 0.1s both;
+        }
+        .btn-bukti {
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            animation: fadeInUp 0.5s ease 0.2s both;
+        }
+        .btn-bukti:hover {
+            background: var(--neon-cyan);
+            color: black;
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         button, a, .btn, #menu-toggle, .sidebar-menu li a {
             outline: none;
+        }
+        /* Sembunyikan sidebar di halaman ini */
+        .sidebar, .overlay {
+            display: none;
         }
     </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
 
-    <!-- Navbar -->
+    <!-- Navbar (tetap ada) -->
     <nav class="navbar">
         <div class="nav-left">
             <button id="menu-toggle">☰</button>
@@ -225,19 +321,9 @@
         </div>
     </nav>
 
-    <!-- Sidebar -->
+    <!-- Sidebar dihilangkan (display: none via CSS) -->
     <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <span class="user-name-text">Alwaysnyzzz</span>
-            <div class="sidebar-pfp">
-                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="PFP">
-            </div>
-        </div>
-        <ul class="sidebar-menu">
-            <li><a href="index">🏠 Home</a></li>
-            <li><a href="#">📦 Product</a></li>
-            <li class="active"><a href="donasi">❤️ Donasi</a></li>
-        </ul>
+        <!-- konten sidebar tidak perlu ditampilkan -->
     </div>
     <div class="overlay" id="overlay"></div>
 
@@ -263,7 +349,7 @@
         <div class="loading-text" id="loadingText">loading ...</div>
     </div>
 
-    <!-- Modal Konfirmasi -->
+    <!-- Modal Konfirmasi Batalkan -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-card">
             <p>Apakah Anda Yakin Ingin Membatalkan Transaksi Ini?</p>
@@ -274,19 +360,19 @@
         </div>
     </div>
 
+    <!-- Success Overlay (centang hijau) -->
+    <div class="success-overlay" id="successOverlay">
+        <div class="checkmark-circle">
+            <div class="checkmark"></div>
+        </div>
+        <div class="success-message">Terima Kasih!</div>
+        <div class="success-submessage">Uang Anda sangat bermanfaat untuk pengembangan website ini.</div>
+        <button class="btn-bukti" id="btnBukti">📄 Bukti Pembayaran</button>
+    </div>
+
     <script src="script.js"></script>
     <script>
-        // Inisialisasi sidebar
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuBtn = document.getElementById('menu-toggle');
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-            if (menuBtn && sidebar && overlay) {
-                menuBtn.onclick = () => { sidebar.classList.add('active'); overlay.classList.add('active'); };
-                overlay.onclick = () => { sidebar.classList.remove('active'); overlay.classList.remove('active'); };
-            }
-        });
-
+        // Inisialisasi tidak diperlukan untuk sidebar karena sudah dihilangkan
         const urlParams = new URLSearchParams(window.location.search);
         const orderId = urlParams.get('order_id');
         if (!orderId) {
@@ -315,6 +401,15 @@
                 overlay.classList.remove('active');
                 if (callback) callback();
             }, duration);
+        }
+
+        // Fungsi untuk menampilkan success overlay
+        function showSuccessOverlay() {
+            document.getElementById('successOverlay').classList.add('active');
+        }
+
+        function hideSuccessOverlay() {
+            document.getElementById('successOverlay').classList.remove('active');
         }
 
         async function loadTransaction() {
@@ -369,27 +464,29 @@
             }
         });
 
-        // Tombol cek status
+        // Tombol cek status dengan loading dan success overlay
         document.getElementById('cek-status').onclick = async () => {
-            try {
-                const res = await fetch(`/api/check-status?order_id=${orderId}&amount=${transactionAmount}`);
-                const data = await res.json();
-                if (res.ok) {
-                    alert('Status: ' + data.status);
-                    if (data.status === 'completed') {
-                        window.location.href = '/success?order_id=' + orderId;
+            showLoadingOverlay(1500, 'Mengecek', async () => {
+                try {
+                    const res = await fetch(`/api/check-status?order_id=${orderId}&amount=${transactionAmount}`);
+                    const data = await res.json();
+                    if (res.ok) {
+                        if (data.status === 'completed') {
+                            showSuccessOverlay();
+                        } else {
+                            alert('Status: ' + data.status);
+                        }
+                    } else {
+                        alert('Gagal cek status: ' + (data.error || ''));
                     }
-                } else {
-                    alert('Gagal cek status: ' + (data.error || ''));
+                } catch (err) {
+                    alert('Error: ' + err.message);
                 }
-            } catch (err) {
-                alert('Error: ' + err.message);
-            }
+            });
         };
 
         // Tombol batalkan dengan loading & modal
         document.getElementById('batalkan').onclick = () => {
-            // Tampilkan loading 1.7 detik dengan teks "Tunggu Sebentar"
             showLoadingOverlay(1700, 'Tunggu Sebentar', () => {
                 document.getElementById('modalOverlay').classList.add('active');
             });
@@ -398,7 +495,6 @@
         // Modal Ya
         document.getElementById('modalYa').onclick = () => {
             document.getElementById('modalOverlay').classList.remove('active');
-            // Tampilkan loading 1.2 detik dengan teks "loading ..." (boleh diganti)
             showLoadingOverlay(1200, 'loading', () => {
                 window.location.href = '/donasi';
             });
@@ -407,6 +503,12 @@
         // Modal Tidak
         document.getElementById('modalTidak').onclick = () => {
             document.getElementById('modalOverlay').classList.remove('active');
+        };
+
+        // Tombol Bukti Pembayaran (sementara tutup overlay, nanti bisa diarahkan ke halaman invoice)
+        document.getElementById('btnBukti').onclick = () => {
+            hideSuccessOverlay();
+            alert('Fitur bukti pembayaran akan segera tersedia');
         };
 
         loadTransaction();

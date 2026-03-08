@@ -55,10 +55,11 @@
             100% { transform: rotate(360deg); }
         }
         .loading-text {
-            color: white;
+            color: var(--neon-cyan); /* warna cyan */
             font-size: 18px;
             font-family: 'Poppins', sans-serif;
             letter-spacing: 2px;
+            text-shadow: 0 0 8px var(--neon-cyan);
         }
         /* Style untuk halaman donasi (salin dari donasi.css agar mandiri) */
         .donasi-page {
@@ -236,8 +237,8 @@
                 return;
             }
 
-            // Tampilkan loading 2.6 detik dengan teks "Sedang Membuat Pembayaran"
-            showLoadingOverlay(2600, 'Sedang Membuat Pembayaran', async () => {
+            // Tampilkan loading 2.6 detik dengan teks "Membuat Qris..." (warna cyan dari CSS)
+            showLoadingOverlay(2600, 'Membuat Qris', async () => {
                 try {
                     const res = await fetch('/api/create-transaction', {
                         method: 'POST',
