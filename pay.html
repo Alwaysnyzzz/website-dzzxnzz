@@ -4,313 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Pembayaran - DzzXNzz</title>
+    <!-- CSS utama -->
     <link rel="stylesheet" href="style.css">
+    <!-- CSS khusus pay -->
+    <link rel="stylesheet" href="css/pay.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Library QR Code -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
-    <style>
-        /* Gaya dasar */
-        .pay-container {
-            max-width: 450px;
-            margin: 100px auto 40px;
-            padding: 0 20px;
-        }
-        .pay-card {
-            background: rgba(20,20,20,0.9);
-            border-radius: 15px;
-            padding: 30px 20px;
-            text-align: center;
-            border: 1.5px solid var(--neon-cyan);
-            box-shadow: 0 0 15px var(--neon-cyan);
-        }
-        .qr-frame {
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.5);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 200px;
-        }
-        #qrcode canvas {
-            width: 160px;
-            height: 160px;
-            border-radius: 5px;
-        }
-        .btn-download {
-            background: transparent;
-            border: 1.5px solid var(--neon-cyan);
-            color: var(--neon-cyan);
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-bottom: 20px;
-            transition: 0.2s;
-            width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .btn-download:hover {
-            background: var(--neon-cyan);
-            color: black;
-        }
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .btn {
-            flex: 1;
-            padding: 12px;
-            border: 1.5px solid var(--neon-cyan);
-            background: rgba(0,0,0,0.5);
-            color: var(--neon-cyan);
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.2s;
-            backdrop-filter: blur(2px);
-        }
-        .btn:hover {
-            background: var(--neon-cyan);
-            color: black;
-        }
-        .btn-red {
-            border-color: var(--neon-red);
-            color: var(--neon-red);
-        }
-        .btn-red:hover {
-            background: var(--neon-red);
-            color: black;
-        }
-        /* Loading overlay */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(5px);
-            visibility: hidden;
-            opacity: 0;
-            transition: 0.2s;
-        }
-        .loading-overlay.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .loader {
-            color: #ffffff;
-            font-size: 45px;
-            text-indent: -9999em;
-            overflow: hidden;
-            width: 1em;
-            height: 1em;
-            border-radius: 50%;
-            position: relative;
-            transform: translateZ(0);
-            animation: mltShdSpin 1.7s infinite ease, round 1.7s infinite ease;
-            margin-bottom: 20px;
-        }
-        @keyframes mltShdSpin {
-            0% { box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em; }
-            5%, 95% { box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em; }
-            10%, 59% { box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em; }
-            20% { box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em; }
-            38% { box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em; }
-            100% { box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em; }
-        }
-        @keyframes round {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .loading-text {
-            color: var(--neon-cyan);
-            font-size: 18px;
-            font-family: 'Poppins', sans-serif;
-            letter-spacing: 2px;
-            text-shadow: 0 0 8px var(--neon-cyan);
-        }
-        /* Modal konfirmasi (untuk batalkan) */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 20000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            visibility: hidden;
-            opacity: 0;
-            transition: 0.2s;
-        }
-        .modal-overlay.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .modal-card {
-            background: #111;
-            border: 2px solid var(--neon-cyan);
-            border-radius: 20px;
-            padding: 30px 25px;
-            max-width: 320px;
-            text-align: center;
-            box-shadow: 0 0 30px var(--neon-cyan);
-        }
-        .modal-card p {
-            color: white;
-            font-size: 18px;
-            margin-bottom: 25px;
-        }
-        .modal-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-        .modal-btn {
-            padding: 10px 30px;
-            border: none;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .modal-btn.ya {
-            background: #ff4444;
-            color: white;
-        }
-        .modal-btn.ya:hover {
-            background: #ff0000;
-            box-shadow: 0 0 15px #ff4444;
-        }
-        .modal-btn.tidak {
-            background: #44ff44;
-            color: black;
-        }
-        .modal-btn.tidak:hover {
-            background: #00ff00;
-            box-shadow: 0 0 15px #44ff44;
-        }
-        /* Success overlay (centang hijau) */
-        .success-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 30000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(8px);
-            visibility: hidden;
-            opacity: 0;
-            transition: 0.3s;
-        }
-        .success-overlay.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .checkmark-circle {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: rgba(0,255,0,0.2);
-            border: 3px solid #00ff88;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 30px;
-            animation: popIn 0.5s ease;
-        }
-        .checkmark {
-            width: 50px;
-            height: 25px;
-            border-left: 5px solid #00ff88;
-            border-bottom: 5px solid #00ff88;
-            transform: rotate(-45deg);
-            animation: drawCheck 0.5s ease 0.2s forwards;
-            opacity: 0;
-        }
-        @keyframes popIn {
-            0% { transform: scale(0); }
-            80% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        @keyframes drawCheck {
-            0% { width: 0; height: 0; opacity: 1; }
-            100% { width: 50px; height: 25px; opacity: 1; }
-        }
-        .success-message {
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px #00ff88;
-            animation: fadeInUp 0.5s ease;
-        }
-        .success-submessage {
-            color: #ccc;
-            font-size: 16px;
-            margin-bottom: 30px;
-            max-width: 300px;
-            text-align: center;
-            animation: fadeInUp 0.5s ease 0.1s both;
-        }
-        .btn-bukti {
-            background: transparent;
-            border: 2px solid var(--neon-cyan);
-            color: var(--neon-cyan);
-            padding: 12px 30px;
-            border-radius: 40px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-            text-decoration: none;
-            display: inline-block;
-            animation: fadeInUp 0.5s ease 0.2s both;
-        }
-        .btn-bukti:hover {
-            background: var(--neon-cyan);
-            color: black;
-            box-shadow: 0 0 20px var(--neon-cyan);
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        button, a, .btn, #menu-toggle, .sidebar-menu li a {
-            outline: none;
-        }
-        /* Sembunyikan sidebar di halaman ini */
-        .sidebar, .overlay {
-            display: none;
-        }
-    </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
 
-    <!-- Navbar (tetap ada) -->
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-left">
-            <button id="menu-toggle">☰</button>
             <span class="nav-brand">DzzXNzz Website</span>
         </div>
         <div class="nav-right">
@@ -321,16 +28,15 @@
         </div>
     </nav>
 
-    <!-- Sidebar dihilangkan (display: none via CSS) -->
-    <div class="sidebar" id="sidebar">
-        <!-- konten sidebar tidak perlu ditampilkan -->
-    </div>
+    <!-- Sidebar (disembunyikan via CSS) -->
+    <div class="sidebar" id="sidebar"></div>
     <div class="overlay" id="overlay"></div>
 
-    <!-- Konten Utama Pembayaran -->
+    <!-- Konten Utama -->
     <main>
         <div class="pay-container">
             <div class="pay-card">
+                <div class="timer-container" id="timer">⏳ Menghitung...</div>
                 <div class="qr-frame">
                     <div id="qrcode"></div>
                 </div>
@@ -343,13 +49,13 @@
         </div>
     </main>
 
-    <!-- Loading Overlay -->
+    <!-- Overlay Loading -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loader"></div>
         <div class="loading-text" id="loadingText">loading ...</div>
     </div>
 
-    <!-- Modal Konfirmasi Batalkan -->
+    <!-- Modal Batalkan -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-card">
             <p>Apakah Anda Yakin Ingin Membatalkan Transaksi Ini?</p>
@@ -360,7 +66,17 @@
         </div>
     </div>
 
-    <!-- Success Overlay (centang hijau) -->
+    <!-- Modal Pending -->
+    <div class="modal-overlay pending-modal" id="pendingModal">
+        <div class="modal-card">
+            <p>Status masih pending, silahkan lakukan pembayaran</p>
+            <div class="modal-buttons">
+                <button class="modal-btn ok" id="pendingOk">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Overlay -->
     <div class="success-overlay" id="successOverlay">
         <div class="checkmark-circle">
             <div class="checkmark"></div>
@@ -370,148 +86,9 @@
         <button class="btn-bukti" id="btnBukti">📄 Bukti Pembayaran</button>
     </div>
 
+    <!-- Script utama (root) -->
     <script src="script.js"></script>
-    <script>
-        // Inisialisasi tidak diperlukan untuk sidebar karena sudah dihilangkan
-        const urlParams = new URLSearchParams(window.location.search);
-        const orderId = urlParams.get('order_id');
-        if (!orderId) {
-            alert('Order ID tidak ditemukan!');
-            window.location.href = '/donasi';
-        }
-
-        let transactionAmount = 0;
-        let qrCanvas = null;
-
-        // Fungsi loading overlay dengan teks berubah
-        let loadingInterval;
-        function showLoadingOverlay(duration, text, callback) {
-            const overlay = document.getElementById('loadingOverlay');
-            const loadingText = document.getElementById('loadingText');
-            let dots = 0;
-            overlay.classList.add('active');
-            loadingText.textContent = text + ' ...';
-            loadingInterval = setInterval(() => {
-                dots = (dots + 1) % 4;
-                loadingText.textContent = text + ' ' + '.'.repeat(dots);
-            }, 500);
-
-            setTimeout(() => {
-                clearInterval(loadingInterval);
-                overlay.classList.remove('active');
-                if (callback) callback();
-            }, duration);
-        }
-
-        // Fungsi untuk menampilkan success overlay
-        function showSuccessOverlay() {
-            document.getElementById('successOverlay').classList.add('active');
-        }
-
-        function hideSuccessOverlay() {
-            document.getElementById('successOverlay').classList.remove('active');
-        }
-
-        async function loadTransaction() {
-            try {
-                const res = await fetch(`/api/get-transaction?order_id=${orderId}`);
-                const data = await res.json();
-                if (!data || data.error) {
-                    alert('Transaksi tidak ditemukan');
-                    window.location.href = '/donasi';
-                    return;
-                }
-
-                transactionAmount = data.amount;
-
-                if (data.qr_string) {
-                    const qrContainer = document.getElementById('qrcode');
-                    qrContainer.innerHTML = '';
-
-                    const canvas = document.createElement('canvas');
-                    QRCode.toCanvas(canvas, data.qr_string, {
-                        width: 160,
-                        margin: 1,
-                        errorCorrectionLevel: 'H',
-                        color: { dark: '#000000', light: '#ffffff' }
-                    }, function (error) {
-                        if (error) {
-                            console.error('QR Error:', error);
-                            qrContainer.innerHTML = '<p style="color:red;">Gagal generate QR</p>';
-                        } else {
-                            qrContainer.appendChild(canvas);
-                            qrCanvas = canvas;
-                        }
-                    });
-                } else {
-                    document.getElementById('qrcode').innerHTML = '<p style="color:red;">QR tidak tersedia</p>';
-                }
-            } catch (err) {
-                console.error(err);
-                alert('Gagal memuat transaksi');
-            }
-        }
-
-        // Tombol download QR
-        document.getElementById('downloadBtn').addEventListener('click', function() {
-            if (qrCanvas) {
-                const link = document.createElement('a');
-                link.download = `qris-${orderId}.png`;
-                link.href = qrCanvas.toDataURL('image/png');
-                link.click();
-            } else {
-                alert('QR code belum tersedia');
-            }
-        });
-
-        // Tombol cek status dengan loading dan success overlay
-        document.getElementById('cek-status').onclick = async () => {
-            showLoadingOverlay(1500, 'Mengecek', async () => {
-                try {
-                    const res = await fetch(`/api/check-status?order_id=${orderId}&amount=${transactionAmount}`);
-                    const data = await res.json();
-                    if (res.ok) {
-                        if (data.status === 'completed') {
-                            showSuccessOverlay();
-                        } else {
-                            alert('Status: ' + data.status);
-                        }
-                    } else {
-                        alert('Gagal cek status: ' + (data.error || ''));
-                    }
-                } catch (err) {
-                    alert('Error: ' + err.message);
-                }
-            });
-        };
-
-        // Tombol batalkan dengan loading & modal
-        document.getElementById('batalkan').onclick = () => {
-            showLoadingOverlay(1700, 'Tunggu Sebentar', () => {
-                document.getElementById('modalOverlay').classList.add('active');
-            });
-        };
-
-        // Modal Ya
-        document.getElementById('modalYa').onclick = () => {
-            document.getElementById('modalOverlay').classList.remove('active');
-            showLoadingOverlay(1200, 'loading', () => {
-                window.location.href = '/donasi';
-            });
-        };
-
-        // Modal Tidak
-        document.getElementById('modalTidak').onclick = () => {
-            document.getElementById('modalOverlay').classList.remove('active');
-        };
-
-        // Tombol Bukti Pembayaran (sementara tutup overlay, nanti bisa diarahkan ke halaman invoice)
-        document.getElementById('btnBukti').onclick = () => {
-            hideSuccessOverlay();
-            alert('Fitur bukti pembayaran akan segera tersedia');
-        };
-
-        loadTransaction();
-    </script>
+    <!-- Script khusus pay -->
+    <script src="js/pay.js"></script>
 </body>
 </html>
