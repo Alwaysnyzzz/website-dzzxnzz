@@ -1,19 +1,23 @@
-/* success.css */
+/* success.css - Gaya untuk halaman sukses pembayaran */
+
+/* Kontainer utama */
 .success-container {
     max-width: 450px;
     margin: 100px auto 40px;
     padding: 0 20px;
 }
 
+/* Kartu sukses */
 .success-card {
     background: rgba(20, 20, 20, 0.9);
     border-radius: 15px;
     padding: 30px 25px;
-    border: 2px solid #00ff88;
+    border: 2px solid #00ff88; /* neon hijau */
     box-shadow: 0 0 25px rgba(0, 255, 136, 0.5);
     text-align: center;
 }
 
+/* Judul sukses */
 .success-title {
     color: #00ff88;
     font-size: 24px;
@@ -21,6 +25,7 @@
     text-shadow: 0 0 10px #00ff88;
 }
 
+/* Detail transaksi */
 .success-detail {
     text-align: left;
     margin-bottom: 30px;
@@ -29,6 +34,7 @@
     padding: 15px;
 }
 
+/* Baris detail */
 .detail-row {
     display: flex;
     flex-wrap: wrap;
@@ -37,12 +43,14 @@
     line-height: 1.5;
 }
 
+/* Label detail */
 .detail-label {
     flex: 0 0 100px;
     color: #aaa;
     font-weight: 400;
 }
 
+/* Nilai detail */
 .detail-value {
     flex: 1;
     color: white;
@@ -50,12 +58,44 @@
     word-break: break-word;
 }
 
+/* Status selesai dengan warna hijau */
 .detail-value.status-done {
     color: #00ff88;
     font-weight: bold;
     text-shadow: 0 0 5px #00ff88;
 }
 
+/* Teks informasi kirim ke admin */
+.info-kirim {
+    color: #ccc;
+    font-size: 14px;
+    margin: 20px 0 10px;
+    text-align: center;
+}
+
+/* Tombol Kirim (hijau) */
+.btn-kirim {
+    background: #44ff44;
+    border: none;
+    color: black;
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-bottom: 15px;
+    display: inline-block;
+    box-shadow: 0 0 10px rgba(68, 255, 68, 0.5);
+}
+
+.btn-kirim:hover {
+    background: #00ff00;
+    box-shadow: 0 0 20px #44ff44;
+    transform: scale(1.02);
+}
+
+/* Tombol Kembali ke Dashboard (cyan) */
 .btn-back {
     display: inline-block;
     background: transparent;
@@ -76,12 +116,14 @@
     box-shadow: 0 0 20px var(--neon-cyan);
 }
 
-/* Sembunyikan menu toggle dan sidebar */
-#menu-toggle, .sidebar, .overlay {
+/* Sembunyikan menu toggle dan sidebar (karena tidak dipakai di halaman sukses) */
+#menu-toggle,
+.sidebar,
+.overlay {
     display: none;
 }
 
-/* Responsif */
+/* Responsif untuk layar kecil */
 @media (max-width: 400px) {
     .detail-label {
         flex: 0 0 80px;
@@ -92,5 +134,9 @@
     }
     .success-card {
         padding: 20px 15px;
+    }
+    .btn-kirim, .btn-back {
+        width: 100%;
+        box-sizing: border-box;
     }
 }
