@@ -6,9 +6,9 @@
     <title>Detail Pembayaran - DzzXNzz</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Library QR Code -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
     <style>
+        /* Gaya dasar */
         .pay-container {
             max-width: 450px;
             margin: 100px auto 40px;
@@ -23,46 +23,44 @@
             box-shadow: 0 0 15px var(--neon-cyan);
         }
         .qr-frame {
-            position: relative;
-            background-image: url('/image/bg-payment.png');
-            background-size: cover;
-            background-position: center;
-            background-color: #1a1a1a;
+            background: rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.5);
             border-radius: 20px;
             padding: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             display: flex;
-            justify-content: center;  /* horizontal tengah */
-            align-items: center;      /* vertical tengah */
-            min-height: 250px;         /* tinggi minimal */
-        }
-        .qr-frame::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.4);
-            border-radius: 20px;
-            z-index: 0;
-        }
-        .qr-frame > * {
-            position: relative;
-            z-index: 1;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
         }
         #qrcode canvas {
-            max-width: 100%;
-            height: auto;
+            width: 160px;
+            height: 160px;
             border-radius: 5px;
-            width: 100px;              /* ukuran QR diperkecil */
-            height: 100px;             /* konsisten */
+        }
+        .btn-download {
+            background: transparent;
+            border: 1.5px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: 0.2s;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .btn-download:hover {
+            background: var(--neon-cyan);
+            color: black;
         }
         .btn-group {
             display: flex;
             gap: 10px;
-            margin-top: 20px;
+            margin-top: 10px;
         }
         .btn {
             flex: 1;
@@ -87,6 +85,123 @@
         .btn-red:hover {
             background: var(--neon-red);
             color: black;
+        }
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .loading-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .loader {
+            color: #ffffff;
+            font-size: 45px;
+            text-indent: -9999em;
+            overflow: hidden;
+            width: 1em;
+            height: 1em;
+            border-radius: 50%;
+            position: relative;
+            transform: translateZ(0);
+            animation: mltShdSpin 1.7s infinite ease, round 1.7s infinite ease;
+            margin-bottom: 20px;
+        }
+        @keyframes mltShdSpin {
+            0% { box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em; }
+            5%, 95% { box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em; }
+            10%, 59% { box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em; }
+            20% { box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em; }
+            38% { box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em; }
+            100% { box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em; }
+        }
+        @keyframes round {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-text {
+            color: white;
+            font-size: 18px;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 2px;
+        }
+        /* Modal konfirmasi */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 20000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-card {
+            background: #111;
+            border: 2px solid var(--neon-cyan);
+            border-radius: 20px;
+            padding: 30px 25px;
+            max-width: 320px;
+            text-align: center;
+            box-shadow: 0 0 30px var(--neon-cyan);
+        }
+        .modal-card p {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .modal-btn {
+            padding: 10px 30px;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .modal-btn.ya {
+            background: #ff4444;
+            color: white;
+        }
+        .modal-btn.ya:hover {
+            background: #ff0000;
+            box-shadow: 0 0 15px #ff4444;
+        }
+        .modal-btn.tidak {
+            background: #44ff44;
+            color: black;
+        }
+        .modal-btn.tidak:hover {
+            background: #00ff00;
+            box-shadow: 0 0 15px #44ff44;
         }
         button, a, .btn, #menu-toggle, .sidebar-menu li a {
             outline: none;
@@ -133,6 +248,7 @@
                 <div class="qr-frame">
                     <div id="qrcode"></div>
                 </div>
+                <button class="btn-download" id="downloadBtn">📥 DOWNLOAD QR</button>
                 <div class="btn-group">
                     <button class="btn" id="cek-status">🔄 CEK STATUS</button>
                     <button class="btn btn-red" id="batalkan">❌ BATALKAN</button>
@@ -140,6 +256,23 @@
             </div>
         </div>
     </main>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+        <div class="loading-text" id="loadingText">loading ...</div>
+    </div>
+
+    <!-- Modal Konfirmasi -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-card">
+            <p>Apakah Anda Yakin Ingin Membatalkan Transaksi Ini?</p>
+            <div class="modal-buttons">
+                <button class="modal-btn ya" id="modalYa">Ya</button>
+                <button class="modal-btn tidak" id="modalTidak">Tidak</button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
     <script>
@@ -156,13 +289,33 @@
 
         const urlParams = new URLSearchParams(window.location.search);
         const orderId = urlParams.get('order_id');
-
         if (!orderId) {
             alert('Order ID tidak ditemukan!');
             window.location.href = '/donasi';
         }
 
         let transactionAmount = 0;
+        let qrCanvas = null;
+
+        // Fungsi loading overlay dengan teks berubah
+        let loadingInterval;
+        function showLoadingOverlay(duration, text, callback) {
+            const overlay = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            let dots = 0;
+            overlay.classList.add('active');
+            loadingText.textContent = text + ' ...';
+            loadingInterval = setInterval(() => {
+                dots = (dots + 1) % 4;
+                loadingText.textContent = text + ' ' + '.'.repeat(dots);
+            }, 500);
+
+            setTimeout(() => {
+                clearInterval(loadingInterval);
+                overlay.classList.remove('active');
+                if (callback) callback();
+            }, duration);
+        }
 
         async function loadTransaction() {
             try {
@@ -182,7 +335,7 @@
 
                     const canvas = document.createElement('canvas');
                     QRCode.toCanvas(canvas, data.qr_string, {
-                        width: 100,          // ukuran QR diperkecil jadi 200px
+                        width: 160,
                         margin: 1,
                         errorCorrectionLevel: 'H',
                         color: { dark: '#000000', light: '#ffffff' }
@@ -192,6 +345,7 @@
                             qrContainer.innerHTML = '<p style="color:red;">Gagal generate QR</p>';
                         } else {
                             qrContainer.appendChild(canvas);
+                            qrCanvas = canvas;
                         }
                     });
                 } else {
@@ -203,6 +357,19 @@
             }
         }
 
+        // Tombol download QR
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            if (qrCanvas) {
+                const link = document.createElement('a');
+                link.download = `qris-${orderId}.png`;
+                link.href = qrCanvas.toDataURL('image/png');
+                link.click();
+            } else {
+                alert('QR code belum tersedia');
+            }
+        });
+
+        // Tombol cek status
         document.getElementById('cek-status').onclick = async () => {
             try {
                 const res = await fetch(`/api/check-status?order_id=${orderId}&amount=${transactionAmount}`);
@@ -220,23 +387,26 @@
             }
         };
 
-        document.getElementById('batalkan').onclick = async () => {
-            if (!confirm('Yakin ingin membatalkan transaksi ini?')) return;
-            try {
-                const res = await fetch('/api/cancel-transaction', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ order_id: orderId, amount: transactionAmount })
-                });
-                if (res.ok) {
-                    alert('Transaksi dibatalkan');
-                } else {
-                    const data = await res.json();
-                    alert('Gagal: ' + (data.error || ''));
-                }
-            } catch (err) {
-                alert('Error: ' + err.message);
-            }
+        // Tombol batalkan dengan loading & modal
+        document.getElementById('batalkan').onclick = () => {
+            // Tampilkan loading 1.7 detik dengan teks "Tunggu Sebentar"
+            showLoadingOverlay(1700, 'Tunggu Sebentar', () => {
+                document.getElementById('modalOverlay').classList.add('active');
+            });
+        };
+
+        // Modal Ya
+        document.getElementById('modalYa').onclick = () => {
+            document.getElementById('modalOverlay').classList.remove('active');
+            // Tampilkan loading 1.2 detik dengan teks "loading ..." (boleh diganti)
+            showLoadingOverlay(1200, 'loading', () => {
+                window.location.href = '/donasi';
+            });
+        };
+
+        // Modal Tidak
+        document.getElementById('modalTidak').onclick = () => {
+            document.getElementById('modalOverlay').classList.remove('active');
         };
 
         loadTransaction();

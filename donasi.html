@@ -3,17 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donasi - DzzXNzz Website</title>
+    <title>Donasi - DzzXNzz</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Tambahan CSS untuk hilangkan blue flash */
-        button, a, .btn, .donasi-btn, #menu-toggle, .sidebar-menu li a {
-            outline: none;
+        /* Loading overlay (sama dengan di pay.html) */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
         }
-        button:focus-visible, a:focus-visible, .btn:focus-visible {
-            outline: 2px solid var(--neon-cyan);
-            outline-offset: 2px;
+        .loading-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .loader {
+            color: #ffffff;
+            font-size: 45px;
+            text-indent: -9999em;
+            overflow: hidden;
+            width: 1em;
+            height: 1em;
+            border-radius: 50%;
+            position: relative;
+            transform: translateZ(0);
+            animation: mltShdSpin 1.7s infinite ease, round 1.7s infinite ease;
+            margin-bottom: 20px;
+        }
+        @keyframes mltShdSpin {
+            0% { box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em; }
+            5%, 95% { box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em; }
+            10%, 59% { box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em; }
+            20% { box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em; }
+            38% { box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em; }
+            100% { box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em; }
+        }
+        @keyframes round {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-text {
+            color: white;
+            font-size: 18px;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 2px;
         }
         /* Style untuk halaman donasi (salin dari donasi.css agar mandiri) */
         .donasi-page {
@@ -36,7 +81,7 @@
             font-weight: 300;
         }
         .donasi-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255,255,255,0.03);
             border: 1.5px solid var(--neon-cyan);
             border-radius: 15px;
             padding: 20px 18px;
@@ -52,7 +97,7 @@
         }
         .donasi-input {
             width: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0,0,0,0.5);
             border: 1px solid var(--neon-cyan);
             border-radius: 30px;
             padding: 12px 18px;
@@ -67,7 +112,7 @@
         .donasi-input:focus {
             border-color: var(--neon-cyan);
             box-shadow: 0 0 15px var(--neon-cyan);
-            background: rgba(0, 229, 255, 0.1);
+            background: rgba(0,229,255,0.1);
         }
         .donasi-btn {
             width: 100%;
@@ -91,6 +136,9 @@
             box-shadow: 0 0 25px var(--neon-cyan);
             transform: scale(1.02);
         }
+        button, a, .btn, #menu-toggle, .sidebar-menu li a {
+            outline: none;
+        }
     </style>
 </head>
 <body>
@@ -105,7 +153,7 @@
         <div class="nav-right">
             <div class="coins-wrapper">COINS: 0</div>
             <div class="user-avatar">
-                <img src=./image/profile.jpg alt="User">
+                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="User">
             </div>
         </div>
     </nav>
@@ -115,7 +163,7 @@
         <div class="sidebar-header">
             <span class="user-name-text">Alwaysnyzzz</span>
             <div class="sidebar-pfp">
-                <img src=./image/image.jpg alt="PFP">
+                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="PFP">
             </div>
         </div>
         <ul class="sidebar-menu">
@@ -140,11 +188,15 @@
         </div>
     </main>
 
-    <!-- Script utama -->
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+        <div class="loading-text" id="loadingText">loading ...</div>
+    </div>
+
     <script src="script.js"></script>
-    <!-- Script khusus donasi dan inisialisasi sidebar -->
     <script>
-        // Inisialisasi sidebar (untuk jaga-jaga jika script.js tidak berjalan sempurna)
+        // Inisialisasi sidebar
         document.addEventListener('DOMContentLoaded', function() {
             const menuBtn = document.getElementById('menu-toggle');
             const sidebar = document.getElementById('sidebar');
@@ -155,7 +207,27 @@
             }
         });
 
-        // Handler donasi
+        // Fungsi loading overlay dengan teks berubah
+        let loadingInterval;
+        function showLoadingOverlay(duration, text, callback) {
+            const overlay = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            let dots = 0;
+            overlay.classList.add('active');
+            loadingText.textContent = text + ' ...';
+            loadingInterval = setInterval(() => {
+                dots = (dots + 1) % 4;
+                loadingText.textContent = text + ' ' + '.'.repeat(dots);
+            }, 500);
+
+            setTimeout(() => {
+                clearInterval(loadingInterval);
+                overlay.classList.remove('active');
+                if (callback) callback();
+            }, duration);
+        }
+
+        // Event tombol donasi
         document.getElementById('donasi-btn').addEventListener('click', async (e) => {
             e.preventDefault();
             const amount = document.getElementById('amount').value;
@@ -164,27 +236,26 @@
                 return;
             }
 
-            console.log('Mengirim amount:', amount); // Debug
+            // Tampilkan loading 2.6 detik dengan teks "Sedang Membuat Pembayaran"
+            showLoadingOverlay(2600, 'Sedang Membuat Pembayaran', async () => {
+                try {
+                    const res = await fetch('/api/create-transaction', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ amount: parseInt(amount) })
+                    });
 
-            try {
-                const res = await fetch('/api/create-transaction', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ amount: parseInt(amount) })
-                });
-
-                const data = await res.json();
-                console.log('Response:', data); // Debug
-
-                if (res.ok) {
-                    window.location.href = `/pay?order_id=${data.order_id}`;
-                } else {
-                    alert('Error: ' + (data.error || 'Gagal'));
+                    const data = await res.json();
+                    if (res.ok) {
+                        window.location.href = `/pay?order_id=${data.order_id}`;
+                    } else {
+                        alert('Error: ' + (data.error || 'Gagal'));
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('Gagal menghubungi server.');
                 }
-            } catch (err) {
-                console.error('Fetch error:', err);
-                alert('Gagal menghubungi server.');
-            }
+            });
         });
     </script>
 </body>
