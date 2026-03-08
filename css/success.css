@@ -1,0 +1,96 @@
+/* success.css */
+.success-container {
+    max-width: 450px;
+    margin: 100px auto 40px;
+    padding: 0 20px;
+}
+
+.success-card {
+    background: rgba(20, 20, 20, 0.9);
+    border-radius: 15px;
+    padding: 30px 25px;
+    border: 2px solid #00ff88;
+    box-shadow: 0 0 25px rgba(0, 255, 136, 0.5);
+    text-align: center;
+}
+
+.success-title {
+    color: #00ff88;
+    font-size: 24px;
+    margin-bottom: 25px;
+    text-shadow: 0 0 10px #00ff88;
+}
+
+.success-detail {
+    text-align: left;
+    margin-bottom: 30px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.detail-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.detail-label {
+    flex: 0 0 100px;
+    color: #aaa;
+    font-weight: 400;
+}
+
+.detail-value {
+    flex: 1;
+    color: white;
+    font-weight: 500;
+    word-break: break-word;
+}
+
+.detail-value.status-done {
+    color: #00ff88;
+    font-weight: bold;
+    text-shadow: 0 0 5px #00ff88;
+}
+
+.btn-back {
+    display: inline-block;
+    background: transparent;
+    border: 2px solid var(--neon-cyan, #00e5ff);
+    color: var(--neon-cyan, #00e5ff);
+    padding: 12px 30px;
+    border-radius: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.2s;
+    margin-top: 10px;
+}
+
+.btn-back:hover {
+    background: var(--neon-cyan, #00e5ff);
+    color: black;
+    box-shadow: 0 0 20px var(--neon-cyan);
+}
+
+/* Sembunyikan menu toggle dan sidebar */
+#menu-toggle, .sidebar, .overlay {
+    display: none;
+}
+
+/* Responsif */
+@media (max-width: 400px) {
+    .detail-label {
+        flex: 0 0 80px;
+        font-size: 13px;
+    }
+    .detail-value {
+        font-size: 13px;
+    }
+    .success-card {
+        padding: 20px 15px;
+    }
+}

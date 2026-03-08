@@ -3,6 +3,7 @@ const { createClient } = require('@supabase/supabase-js');
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
 export default async function handler(req, res) {
+  // Set CORS headers (opsional)
   res.setHeader('Access-Control-Allow-Origin', '*');
   
   if (req.method !== 'POST') {
@@ -19,7 +20,7 @@ export default async function handler(req, res) {
   const order_id = 'DONASI-' + Date.now() + '-' + Math.random().toString(36).substring(2, 7);
 
   try {
-    // Panggil Pakasir API
+    // Panggil API Pakasir untuk buat transaksi QRIS
     const pakasirRes = await fetch('https://app.pakasir.com/api/transactioncreate/qris', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -39,7 +40,7 @@ export default async function handler(req, res) {
     }
 
     // Simpan ke Supabase
-    const { data, error } = await supabase.from('transactions').insert([
+    const { error } = await supabase.from('transactions').insert([
       {
         order_id,
         amount,
@@ -54,7 +55,15 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Gagal menyimpan transaksi: ' + error.message });
     }
 
-    res.status(200).json({ order_id });
+    // Buat URL pembayaran Pakasir dengan redirect ke halaman sukses
+    const baseUrl = process.env.BASE_URL || 'https://website-dzzxnzz.vercel.app';
+    const payment_url = `https://app.pakasir.com/pay/${process.env.PAKASIR_SLUG}/${amount}?order_id=${order_id}&qris_only=1&redirect=${baseUrl}/success?order_id=${order_id}`;
+
+    res.status(200).json({ 
+      order_id,
+      payment_url 
+    });
+
   } catch (err) {
     console.error('Server error:', err);
     res.status(500).json({ error: 'Internal server error: ' + err.message });

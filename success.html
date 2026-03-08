@@ -1,12 +1,73 @@
 <!DOCTYPE html>
-... (navbar, sidebar) ...
-<main>
-  <div class="pay-container">
-    <div class="pay-card">
-      <h2 style="color: var(--neon-green);">✓ Pembayaran Berhasil</h2>
-      <p>Terima kasih atas donasi Anda.</p>
-      <a href="/donasi" class="btn">DONASI LAGI</a>
-      <a href="/" class="btn">KEMBALI KE HOME</a>
-    </div>
-  </div>
-</main>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran Sukses - DzzXNzz</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/success.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <!-- Navbar sederhana (tanpa menu toggle) -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <span class="nav-brand">DzzXNzz Website</span>
+        </div>
+        <div class="nav-right">
+            <div class="coins-wrapper">COINS: 0</div>
+            <div class="user-avatar">
+                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="User">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar disembunyikan -->
+    <div class="sidebar" id="sidebar"></div>
+    <div class="overlay" id="overlay"></div>
+
+    <main>
+        <div class="success-container">
+            <div class="success-card">
+                <h2 class="success-title">✓ Pembayaran Berhasil</h2>
+                <div class="success-detail">
+                    <div class="detail-row">
+                        <span class="detail-label">Donasi :</span>
+                        <span class="detail-value">QRIS Donation</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Pembayaran :</span>
+                        <span class="detail-value">QRIS</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Layanan :</span>
+                        <span class="detail-value">Pakasir</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Order ID :</span>
+                        <span class="detail-value" id="order-id">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Waktu :</span>
+                        <span class="detail-value" id="waktu">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Tanggal :</span>
+                        <span class="detail-value" id="tanggal">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Status :</span>
+                        <span class="detail-value status-done">done</span>
+                    </div>
+                </div>
+                <a href="/" class="btn-back">Kembali ke Dashboard</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="js/success.js"></script>
+</body>
+</html>

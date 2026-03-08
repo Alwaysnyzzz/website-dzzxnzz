@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let timerInterval;
     let loadingInterval;
 
-    // Fungsi loading overlay
+    // Fungsi loading overlay dengan teks berubah
     function showLoadingOverlay(duration, text, callback) {
         const overlay = document.getElementById('loadingOverlay');
         const loadingText = document.getElementById('loadingText');
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, duration);
     }
 
-    // Fungsi success overlay
+    // Fungsi success overlay (centang hijau)
     function showSuccessOverlay() {
         document.getElementById('successOverlay').classList.add('active');
     }
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
         timerInterval = setInterval(updateTimer, 1000);
     }
 
-    // Load transaksi
+    // Load transaksi dari API
     async function loadTransaction() {
         try {
             const res = await fetch(`/api/get-transaction?order_id=${orderId}`);
@@ -90,6 +90,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (data.expired_at) {
                 startCountdown(data.expired_at);
+            } else {
+                // Fallback 30 menit dari sekarang
+                const fallbackExpired = new Date(Date.now() + 30 * 60000).toISOString();
+                startCountdown(fallbackExpired);
             }
 
             if (data.qr_string) {
@@ -132,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Tombol cek status
+    // Tombol cek status dengan loading dan success overlay
     document.getElementById('cek-status').onclick = async () => {
         showLoadingOverlay(1500, 'Mengecek', async () => {
             try {
@@ -140,7 +144,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const data = await res.json();
                 if (res.ok) {
                     if (data.status === 'completed') {
-                        showSuccessOverlay();
+                        // Redirect ke halaman sukses
+                        window.location.href = `/success?order_id=${orderId}`;
                     } else if (data.status === 'pending') {
                         document.getElementById('pendingModal').classList.add('active');
                     } else {
@@ -155,14 +160,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
 
-    // Tombol batalkan
+    // Tombol batalkan dengan loading & modal
     document.getElementById('batalkan').onclick = () => {
         showLoadingOverlay(1700, 'Tunggu Sebentar', () => {
             document.getElementById('modalOverlay').classList.add('active');
         });
     };
 
-    // Modal Ya
+    // Modal Ya (batalkan)
     document.getElementById('modalYa').onclick = () => {
         document.getElementById('modalOverlay').classList.remove('active');
         showLoadingOverlay(1200, 'loading', () => {
@@ -170,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     };
 
-    // Modal Tidak
+    // Modal Tidak (batalkan)
     document.getElementById('modalTidak').onclick = () => {
         document.getElementById('modalOverlay').classList.remove('active');
     };
@@ -180,10 +185,10 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('pendingModal').classList.remove('active');
     };
 
-    // Tombol Bukti
+    // Tombol Bukti Pembayaran (di success overlay)
     document.getElementById('btnBukti').onclick = () => {
         hideSuccessOverlay();
-        alert('Fitur bukti pembayaran akan segera tersedia');
+        window.location.href = `/success?order_id=${orderId}`;
     };
 
     // Mulai
