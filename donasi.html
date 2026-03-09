@@ -7,7 +7,96 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Loading overlay (sama dengan di pay.html) */
+        /* Tambahan style khusus donasi */
+        .donasi-page {
+            max-width: 450px;
+            margin: 100px auto 40px;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .donasi-title {
+            color: var(--neon-red);
+            text-shadow: 0 0 10px var(--neon-red);
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .donasi-desc {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        .donasi-card {
+            background: rgba(255,255,255,0.03);
+            border: 1.5px solid var(--neon-cyan);
+            border-radius: 15px;
+            padding: 20px 18px;
+            box-shadow: 0 0 15px var(--neon-cyan);
+            text-align: left;
+            transition: 0.2s;
+        }
+        .donasi-card h3 {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .donasi-input {
+            width: 100%;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 30px;
+            padding: 12px 18px;
+            color: white;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            margin-bottom: 5px;
+            box-shadow: 0 0 5px var(--neon-cyan);
+            transition: 0.2s;
+        }
+        .donasi-input:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px var(--neon-cyan);
+            background: rgba(0,229,255,0.1);
+        }
+        /* Pesan error minimal 500 */
+        .error-message {
+            color: #ff5555;
+            font-size: 12px;
+            margin-bottom: 10px;
+            text-align: left;
+            padding-left: 10px;
+            text-shadow: 0 0 5px #ff0000;
+            display: none;
+        }
+        .error-message.show {
+            display: block;
+        }
+        .donasi-btn {
+            width: 100%;
+            background: transparent;
+            border: 1.5px solid var(--neon-cyan);
+            border-radius: 30px;
+            padding: 12px 18px;
+            color: var(--neon-cyan);
+            font-weight: bold;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 8px var(--neon-cyan);
+        }
+        .donasi-btn:hover {
+            background: var(--neon-cyan);
+            color: black;
+            box-shadow: 0 0 25px var(--neon-cyan);
+            transform: scale(1.02);
+        }
+        /* Loading overlay */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -55,87 +144,11 @@
             100% { transform: rotate(360deg); }
         }
         .loading-text {
-            color: var(--neon-cyan); /* warna cyan */
+            color: var(--neon-cyan);
             font-size: 18px;
             font-family: 'Poppins', sans-serif;
             letter-spacing: 2px;
             text-shadow: 0 0 8px var(--neon-cyan);
-        }
-        /* Style untuk halaman donasi (salin dari donasi.css agar mandiri) */
-        .donasi-page {
-            max-width: 450px;
-            margin: 100px auto 40px;
-            padding: 0 20px;
-            text-align: center;
-        }
-        .donasi-title {
-            color: var(--neon-red);
-            text-shadow: 0 0 10px var(--neon-red);
-            font-size: 26px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .donasi-desc {
-            font-size: 12px;
-            color: #888;
-            margin-bottom: 30px;
-            font-weight: 300;
-        }
-        .donasi-card {
-            background: rgba(255,255,255,0.03);
-            border: 1.5px solid var(--neon-cyan);
-            border-radius: 15px;
-            padding: 20px 18px;
-            box-shadow: 0 0 15px var(--neon-cyan);
-            text-align: left;
-            transition: 0.2s;
-        }
-        .donasi-card h3 {
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-        .donasi-input {
-            width: 100%;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid var(--neon-cyan);
-            border-radius: 30px;
-            padding: 12px 18px;
-            color: white;
-            font-size: 14px;
-            font-family: 'Poppins', sans-serif;
-            outline: none;
-            margin-bottom: 12px;
-            box-shadow: 0 0 5px var(--neon-cyan);
-            transition: 0.2s;
-        }
-        .donasi-input:focus {
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 15px var(--neon-cyan);
-            background: rgba(0,229,255,0.1);
-        }
-        .donasi-btn {
-            width: 100%;
-            background: transparent;
-            border: 1.5px solid var(--neon-cyan);
-            border-radius: 30px;
-            padding: 12px 18px;
-            color: var(--neon-cyan);
-            font-weight: bold;
-            font-size: 14px;
-            font-family: 'Poppins', sans-serif;
-            cursor: pointer;
-            transition: 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 0 8px var(--neon-cyan);
-        }
-        .donasi-btn:hover {
-            background: var(--neon-cyan);
-            color: black;
-            box-shadow: 0 0 25px var(--neon-cyan);
-            transform: scale(1.02);
         }
         button, a, .btn, #menu-toggle, .sidebar-menu li a {
             outline: none;
@@ -154,7 +167,7 @@
         <div class="nav-right">
             <div class="coins-wrapper">COINS: 0</div>
             <div class="user-avatar">
-                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="User">
+                <img src=./image/profile.jpg alt="User">
             </div>
         </div>
     </nav>
@@ -162,16 +175,17 @@
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <span class="user-name-text">Alwaysnyzzz</span>
+            <span class="user-name-text">DzzXNzz</span>
             <div class="sidebar-pfp">
-                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="PFP">
+                <img src=./image/image.jpg alt="PFP">
             </div>
         </div>
         <ul class="sidebar-menu">
             <li><a href="index">🏠 Home</a></li>
-            <li><a href="#">📦 Product</a></li>
+            <li><a href="product">📦 Product</a></li>
             <li class="active"><a href="donasi">❤️ Donasi</a></li>
-        </ul>
+            <li><a href="contact">📞 Contact</a></li>
+</ul>
     </div>
     <div class="overlay" id="overlay"></div>
 
@@ -183,7 +197,8 @@
 
             <div class="donasi-card">
                 <h3>Input Donasi</h3>
-                <input type="number" class="donasi-input" id="amount" placeholder="Masukkan nominal (Rp)" min="1000" step="1000">
+                <input type="number" class="donasi-input" id="amount" placeholder="Masukkan nominal (Rp)" min="500" step="100">
+                <div class="error-message" id="errorMessage">Minimal donasi Rp 500</div>
                 <button class="donasi-btn" id="donasi-btn">DONASI SEKARANG</button>
             </div>
         </div>
@@ -228,16 +243,25 @@
             }, duration);
         }
 
-        // Event tombol donasi
+        // Validasi dengan pesan error CSS
+        const errorMsg = document.getElementById('errorMessage');
         document.getElementById('donasi-btn').addEventListener('click', async (e) => {
             e.preventDefault();
             const amount = document.getElementById('amount').value;
-            if (!amount || amount < 1000) {
-                alert('Minimal donasi Rp 1.000');
+
+            // Validasi minimal 500
+            if (!amount || amount < 500) {
+                errorMsg.classList.add('show');
+                // Hilangkan pesan setelah 3 detik (opsional)
+                setTimeout(() => {
+                    errorMsg.classList.remove('show');
+                }, 3000);
                 return;
+            } else {
+                errorMsg.classList.remove('show');
             }
 
-            // Tampilkan loading 2.6 detik dengan teks "Membuat Qris..." (warna cyan dari CSS)
+            // Tampilkan loading 2.6 detik dengan teks "Membuat Qris..."
             showLoadingOverlay(2600, 'Membuat Qris', async () => {
                 try {
                     const res = await fetch('/api/create-transaction', {

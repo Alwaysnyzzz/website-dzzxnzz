@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - DzzXNzz</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Gaya khusus halaman contact */
+        .contact-container {
+            max-width: 450px;
+            margin: 100px auto 40px;
+            padding: 0 20px;
+        }
+
+        .contact-card {
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1.5px solid;
+            transition: 0.2s;
+            backdrop-filter: blur(2px);
+        }
+
+        .contact-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px;
+        }
+
+        .contact-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .contact-card p {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        .btn-detail {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.2s;
+            border: 1.5px solid;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .btn-detail:hover {
+            color: black;
+        }
+
+        /* Warna hijau untuk WhatsApp */
+        .card-wa {
+            border-color: #25D366;
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.3);
+        }
+        .card-wa h3 {
+            color: #25D366;
+            text-shadow: 0 0 8px #25D366;
+        }
+        .card-wa .btn-detail {
+            border-color: #25D366;
+            color: #25D366;
+        }
+        .card-wa .btn-detail:hover {
+            background: #25D366;
+            box-shadow: 0 0 20px #25D366;
+        }
+
+        /* Warna biru untuk Telegram */
+        .card-tg {
+            border-color: #0088cc;
+            box-shadow: 0 0 15px rgba(0, 136, 204, 0.3);
+        }
+        .card-tg h3 {
+            color: #0088cc;
+            text-shadow: 0 0 8px #0088cc;
+        }
+        .card-tg .btn-detail {
+            border-color: #0088cc;
+            color: #0088cc;
+        }
+        .card-tg .btn-detail:hover {
+            background: #0088cc;
+            box-shadow: 0 0 20px #0088cc;
+        }
+
+        /* Warna merah untuk Bot */
+        .card-bot {
+            border-color: #ff4444;
+            box-shadow: 0 0 15px rgba(255, 68, 68, 0.3);
+        }
+        .card-bot h3 {
+            color: #ff4444;
+            text-shadow: 0 0 8px #ff4444;
+        }
+        .card-bot .btn-detail {
+            border-color: #ff4444;
+            color: #ff4444;
+        }
+        .card-bot .btn-detail:hover {
+            background: #ff4444;
+            box-shadow: 0 0 20px #ff4444;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <button id="menu-toggle">☰</button>
+            <span class="nav-brand">DzzXNzz Website</span>
+        </div>
+        <div class="nav-right">
+            <div class="coins-wrapper">COINS: 0</div>
+            <div class="user-avatar">
+                <img src=./image/profile.jpg alt="User">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="user-name-text">DzzXNzz</span>
+            <div class="sidebar-pfp">
+                <img src=./image/image.jpg alt="PFP">
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="index">🏠 Home</a></li>
+            <li><a href="product">📦 Product</a></li>
+            <li><a href="donasi">❤️ Donasi</a></li>
+            <li class="active"><a href="contact">📞 Contact</a></li>
+        </ul>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Konten Utama -->
+    <main>
+        <div class="contact-container">
+            <!-- Card WhatsApp -->
+            <div class="contact-card card-wa">
+                <h3>WhatsApp</h3>
+                <p>Chat langsung dengan admin via WhatsApp</p>
+                <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+
+            <!-- Card Telegram -->
+            <div class="contact-card card-tg">
+                <h3>Telegram</h3>
+                <p>Bergabung di grup Telegram kami</p>
+                <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+
+            <!-- Card Bot -->
+            <div class="contact-card card-bot">
+                <h3>Bot</h3>
+                <p>Bot interaktif siap membantu 24/7</p>
+                <a href="#" class="btn-detail">Lihat Detail</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

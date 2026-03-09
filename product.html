@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product - DzzXNzz</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Gaya khusus halaman product */
+        .product-container {
+            max-width: 450px;
+            margin: 100px auto 40px;
+            padding: 0 20px;
+        }
+        .product-card {
+            background: rgba(255,255,255,0.03);
+            border: 1.5px solid var(--neon-cyan);
+            border-radius: 15px;
+            padding: 40px 25px;
+            text-align: center;
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+        .product-card h2 {
+            color: var(--neon-cyan);
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+        .product-card p {
+            color: #ccc;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .product-card .thanks {
+            color: #00ff88;
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 0 0 5px #00ff88;
+        }
+        /* Responsif */
+        @media (max-width: 400px) {
+            .product-card h2 {
+                font-size: 24px;
+            }
+            .product-card p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <button id="menu-toggle">☰</button>
+            <span class="nav-brand">DzzXNzz Website</span>
+        </div>
+        <div class="nav-right">
+            <div class="coins-wrapper">COINS: 0</div>
+            <div class="user-avatar">
+                <img src=./image/profile.jpg alt="User">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="user-name-text">DzzXNzz</span>
+            <div class="sidebar-pfp">
+                <img src=./image/image.jpg alt="PFP">
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="index">🏠 Home</a></li>
+            <li class="active"><a href="product">📦 Product</a></li>
+            <li><a href="donasi">❤️ Donasi</a></li>
+            <li><a href="contact">📞 Contact</a></li>
+</ul>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Konten Utama -->
+    <main>
+        <div class="product-container">
+            <div class="product-card">
+                <h2>🔧 Maintenance System</h2>
+                <p>Mohon tunggu kehadirannya, kami sedang mempersiapkan produk terbaik untuk Anda.</p>
+                <p class="thanks">Terimakasih 🙏</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
