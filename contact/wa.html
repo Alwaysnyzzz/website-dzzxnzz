@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp - DzzXNzz</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Gaya khusus WA */
+        .detail-container {
+            max-width: 450px;
+            margin: 100px auto 40px;
+            padding: 0 20px;
+        }
+        .detail-card {
+            background: rgba(255,255,255,0.03);
+            border: 1.5px solid #25D366;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.3);
+        }
+        .detail-title {
+            color: #25D366;
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px #25D366;
+        }
+        .info-card {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            border-left: 4px solid #25D366;
+        }
+        .info-label {
+            color: #25D366;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .info-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .info-text {
+            color: white;
+            font-size: 14px;
+            word-break: break-word;
+        }
+        .btn-action {
+            display: inline-block;
+            background: transparent;
+            border: 1.5px solid #25D366;
+            color: #25D366;
+            padding: 8px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+        .btn-action:hover {
+            background: #25D366;
+            color: black;
+            box-shadow: 0 0 20px #25D366;
+        }
+        .btn-back {
+            display: block;
+            background: transparent;
+            border: 1.5px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 30px;
+            transition: 0.2s;
+        }
+        .btn-back:hover {
+            background: var(--neon-cyan);
+            color: black;
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <nav class="navbar">
+        <div class="nav-left">
+            <button id="menu-toggle">☰</button>
+            <span class="nav-brand">DzzXNzz Website</span>
+        </div>
+        <div class="nav-right">
+            <div class="coins-wrapper">COINS: 0</div>
+            <div class="user-avatar">
+                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="User">
+            </div>
+        </div>
+    </nav>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="user-name-text">Alwaysnyzzz</span>
+            <div class="sidebar-pfp">
+                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="PFP">
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="../index">🏠 Home</a></li>
+            <li><a href="../product">📦 Product</a></li>
+            <li><a href="../donasi">❤️ Donasi</a></li>
+            <li class="active"><a href="../contact">📞 Contact</a></li>
+        </ul>
+    </div>
+    <div class="overlay" id="overlay"></div>
+    <main>
+        <div class="detail-container">
+            <div class="detail-card">
+                <h2 class="detail-title">WhatsApp</h2>
+                <div class="info-card">
+                    <div class="info-label">No Utama</div>
+                    <div class="info-content">
+                        <span class="info-text">wa.me/6287713472756</span>
+                        <a href="https://wa.me/6287713472756" target="_blank" class="btn-action">Hubungi</a>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">No Cadangan</div>
+                    <div class="info-content">
+                        <span class="info-text">wa.me/6288989695549</span>
+                        <a href="https://wa.me/6288989695549" target="_blank" class="btn-action">Hubungi</a>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Channel Testi</div>
+                    <div class="info-content">
+                        <span class="info-text">WhatsApp Channel</span>
+                        <a href="https://whatsapp.com/channel/0029Vb6YWHPJ3juqr8vzSc1d" target="_blank" class="btn-action">Kunjungi</a>
+                    </div>
+                </div>
+                <a href="../contact" class="btn-back">Kembali ke Contact</a>
+            </div>
+        </div>
+    </main>
+    <script src="../script.js"></script>
+</body>
+</html>

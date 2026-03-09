@@ -114,6 +114,11 @@
             background: #ff4444;
             box-shadow: 0 0 20px #ff4444;
         }
+
+        /* Hilangkan outline */
+        button, a, .btn, #menu-toggle, .sidebar-menu li a {
+            outline: none;
+        }
     </style>
 </head>
 <body>
@@ -128,7 +133,7 @@
         <div class="nav-right">
             <div class="coins-wrapper">COINS: 0</div>
             <div class="user-avatar">
-                <img src=./image/profile.jpg alt="User">
+                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="User">
             </div>
         </div>
     </nav>
@@ -136,9 +141,9 @@
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <span class="user-name-text">DzzXNzz</span>
+            <span class="user-name-text">Alwaysnyzzz</span>
             <div class="sidebar-pfp">
-                <img src=./image/image.jpg alt="PFP">
+                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="PFP">
             </div>
         </div>
         <ul class="sidebar-menu">
@@ -157,14 +162,14 @@
             <div class="contact-card card-wa">
                 <h3>WhatsApp</h3>
                 <p>Chat langsung dengan admin via WhatsApp</p>
-                <a href="#" class="btn-detail">Lihat Detail</a>
+                <a href="contact/wa" class="btn-detail">Lihat Detail</a>
             </div>
 
             <!-- Card Telegram -->
             <div class="contact-card card-tg">
                 <h3>Telegram</h3>
                 <p>Bergabung di grup Telegram kami</p>
-                <a href="#" class="btn-detail">Lihat Detail</a>
+                <a href="contact/telegram" class="btn-detail">Lihat Detail</a>
             </div>
 
             <!-- Card Bot -->
@@ -177,5 +182,24 @@
     </main>
 
     <script src="script.js"></script>
+    <!-- Script tambahan untuk memastikan sidebar berfungsi -->
+    <script>
+        // Pastikan sidebar bisa dibuka (inisialisasi ulang jika perlu)
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            if (menuBtn && sidebar && overlay) {
+                menuBtn.onclick = function() {
+                    sidebar.classList.add('active');
+                    overlay.classList.add('active');
+                };
+                overlay.onclick = function() {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                };
+            }
+        });
+    </script>
 </body>
 </html>

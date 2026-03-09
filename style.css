@@ -33,7 +33,7 @@ body { background-color: var(--bg-dark); color: white; font-family: 'Poppins', s
     border-right: 1px solid var(--neon-cyan);
     padding: 30px 20px;
 }
-.sidebar.active { left: 0; box-shadow: 10px 0 30px rgba(0, 229, 255, 0.2); }
+.sidebar.active { left: 0;} /*box-shadow: 10px 0 30px rgba(0, 229, 255, 0.2); }*/
 .user-name-text {
     color: var(--neon-cyan);
     font-weight: bold;

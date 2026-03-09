@@ -1,8 +1,12 @@
 {
   "rewrites": [
     { "source": "/donasi", "destination": "/donasi.html" },
-    { "source": "/pay", "destination": "/pay.html" },
-    { "source": "/success", "destination": "/success.html" },
+    { "source": "/pay", "destination": "/halaman/pay.html" },
+    { "source": "/success", "destination": "/halaman/success.html" },
+    { "source": "/product", "destination": "/product.html" },
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/contact/wa", "destination": "/contact/wa.html" },
+    { "source": "/contact/telegram", "destination": "/contact/telegram.html" },
     { "source": "/(.*)", "destination": "/$1.html" }
   ]
 }
