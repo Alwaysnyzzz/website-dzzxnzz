@@ -3,24 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - DzzXNzz</title>
-    <!-- CSS: loading (folder css) + style utama (root) -->
-    <link rel="stylesheet" href="css/loading.css">
+    <title>DzzXNzz - Home</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/modern.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Loading overlay (opsional) */
+        #loading-screen { position:fixed; top:0; left:0; width:100%; height:100%; background-color:#020202; z-index:99999; display:flex; flex-direction:column; justify-content:center; align-items:center; transition:0.6s ease; }
+        .loader-rings { position:relative; width:80px; height:80px; margin-bottom:30px; }
+        .ring { position:absolute; border-radius:50%; border:3.5px solid transparent; }
+        .ring-outer { width:100%; height:100%; border-top-color:#00e5ff; border-bottom-color:#00e5ff; animation:spinStop 2s ease-in-out infinite; }
+        .ring-inner { width:54px; height:54px; top:13px; left:13px; border-left-color:#bf00ff; border-right-color:#bf00ff; animation:spinStopReverse 2s ease-in-out infinite; }
+        @keyframes spinStop { 0%{transform:rotate(0deg);} 45%{transform:rotate(360deg);} 55%{transform:rotate(360deg);} 100%{transform:rotate(720deg);} }
+        @keyframes spinStopReverse { 0%{transform:rotate(0deg);} 45%{transform:rotate(-360deg);} 55%{transform:rotate(-360deg);} 100%{transform:rotate(-720deg);} }
+        .loading-text { color:#00e5ff; font-size:14px; font-weight:600; letter-spacing:2px; margin-bottom:15px; }
+        .progress-container { width:200px; height:24px; background:rgba(255,255,255,0.05); border:1.5px solid #00e5ff; border-radius:12px; position:relative; overflow:hidden; }
+        .progress-bar { height:100%; width:0%; background:rgba(0,229,255,0.3); box-shadow:inset 0 0 10px #00e5ff; }
+        #progress-text { position:absolute; width:100%; height:100%; top:0; left:0; display:flex; align-items:center; justify-content:center; color:white; font-size:11px; font-weight:700; }
+    </style>
 </head>
 <body>
-    <!-- LOADING SCREEN -->
     <div id="loading-screen">
-        <div class="loader-rings">
-            <div class="ring ring-outer"></div>
-            <div class="ring ring-inner"></div>
-        </div>
+        <div class="loader-rings"><div class="ring ring-outer"></div><div class="ring ring-inner"></div></div>
         <div class="loading-text">LOADING...</div>
-        <div class="progress-container">
-            <div class="progress-bar"></div>
-            <div id="progress-text">0%</div>
-        </div>
+        <div class="progress-container"><div class="progress-bar"></div><div id="progress-text">0%</div></div>
     </div>
 
     <canvas id="canvas"></canvas>
@@ -28,111 +35,138 @@
     <nav class="navbar">
         <div class="nav-left">
             <button id="menu-toggle">☰</button>
-            <span class="nav-brand">DzzXNzz Website</span>
+            <span class="nav-brand">DzzXNzz</span>
         </div>
         <div class="nav-right">
             <div class="coins-wrapper">COINS: 0</div>
-            <div class="user-avatar">
-                <img src=./image/profile.jpg alt="User">
-            </div>
+            <div class="user-avatar"><img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="User"></div>
         </div>
     </nav>
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <span class="user-name-text">DzzXNzz</span>
-            <div class="sidebar-pfp">
-                <img src=./image/image.jpg alt="PFP">
-            </div>
+            <span class="user-name-text">Alwaysnyzzz</span>
+            <div class="sidebar-pfp"><img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="PFP"></div>
         </div>
         <ul class="sidebar-menu">
             <li class="active"><a href="index">🏠 Home</a></li>
             <li><a href="product">📦 Product</a></li>
             <li><a href="donasi">❤️ Donasi</a></li>
             <li><a href="contact">📞 Contact</a></li>
-</ul>
+        </ul>
     </div>
     <div class="overlay" id="overlay"></div>
 
-    <main class="container">
-        <div class="welcome-section">
-            <h1 class="welcome-title">Selamat Datang Di DzzXNzz Website</h1>
-            <p class="welcome-desc">Pilih produk unggulan kami dengan harga terbaik.</p>
+    <main class="main-content">
+        <div class="page-title">
+            <h1>DzzXNzz</h1>
+            <p>Solusi hosting dan bot terbaik untuk Anda</p>
         </div>
-
-        <div class="product-grid">
-            <div class="card card-cyan selected">
-                <div class="card-header"><span>⚡</span> <span class="system-status">SYSTEM READY</span></div>
-                <h3>PANEL PTERODACTYL</h3>
-                <p>Hosting High Speed & Anti Lag.</p>
+        <div class="grid-4">
+            <div class="modern-card">
+                <div class="card-icon" style="color:var(--neon-cyan);"><i class="fas fa-server"></i></div>
+                <h3 class="card-title">Panel Pterodactyl</h3>
+                <p class="card-desc">Hosting panel dengan performa tinggi dan anti lag.</p>
+                <span class="card-tag">SYSTEM READY</span>
             </div>
-            <div class="card card-purple">
-                <div class="card-header"><span>🛡️</span> <span class="system-status">SYSTEM READY</span></div>
-                <h3>SEWA BOT JAGA GRUP</h3>
-                <p>Sistem Keamanan Grup 24 Jam.</p>
+            <div class="modern-card">
+                <div class="card-icon" style="color:var(--neon-purple);"><i class="fas fa-robot"></i></div>
+                <h3 class="card-title">Sewa Bot Jaga</h3>
+                <p class="card-desc">Keamanan grup 24 jam dengan fitur lengkap.</p>
+                <span class="card-tag">SYSTEM READY</span>
             </div>
-            <div class="card card-green">
-                <div class="card-header"><span>📦</span> <span class="system-status">CHECK NEW</span></div>
-                <h3>AUTO ORDER PRODUCT</h3>
-                <p>Kemudahan Dalam Order.</p>
+            <div class="modern-card">
+                <div class="card-icon" style="color:var(--neon-green);"><i class="fas fa-cube"></i></div>
+                <h3 class="card-title">Script & Tools</h3>
+                <p class="card-desc">Koleksi script terbaru untuk kebutuhan Anda.</p>
+                <span class="card-tag">CHECK NEW</span>
             </div>
-            <div class="card card-red">
-                <div class="card-header"><span>❤️</span> <span class="system-status">SUPPORT US</span></div>
-                <h3>DONASI</h3>
-                <p>Dukung perkembangan script kami.</p>
+            <div class="modern-card">
+                <div class="card-icon" style="color:var(--neon-red);"><i class="fas fa-heart"></i></div>
+                <h3 class="card-title">Donasi</h3>
+                <p class="card-desc">Dukung perkembangan website ini.</p>
+                <span class="card-tag">SUPPORT US</span>
             </div>
         </div>
     </main>
 
-    <!-- Script utama (root) -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div>
+                <div class="social-icons">
+    <a href="https://wa.me/6287713472756" target="_blank" class="social-icon wa"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://t.me/DzzXNzz" target="_blank" class="social-icon tg"><i class="fab fa-telegram-plane"></i></a>
+    <a href="mailto:alwaysnnyzz@gmail.com" class="social-icon email"><i class="fas fa-envelope"></i></a>
+</div>
+            </div>
+            <div>
+                <h4 class="footer-title">Layanan</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Cloud Hosting</a></li>
+                    <li><a href="#">VPS Servers</a></li>
+                    <li><a href="#">Dedicated IP</a></li>
+                    <li><a href="#">Bot Jaga</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Legal</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">SLA</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Kontak</h4>
+                <ul class="footer-links">
+                    <li><a href="contact">WhatsApp</a></li>
+                    <li><a href="contact">Telegram</a></li>
+                    <li><a href="contact">Email</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 DzzXNzz Host. All rights reserved.</span>
+            <span class="status-badge"><i class="fas fa-circle"></i> ALL SYSTEMS OPERATIONAL</span>
+        </div>
+    </footer>
+
     <script src="script.js"></script>
-    <!-- Script loading (inline, sudah termasuk di sini) -->
     <script>
         (function() {
             const loadingScreen = document.getElementById('loading-screen');
             const bar = document.querySelector('.progress-bar');
             const text = document.getElementById('progress-text');
-            
             if (sessionStorage.getItem('homeLoaded')) {
                 loadingScreen.style.opacity = '0';
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                }, 600);
+                setTimeout(() => loadingScreen.style.display = 'none', 600);
                 return;
             }
-
             let progress = 0;
-            const steps = [20, 40, 60, 80, 100];
+            const steps = [20,40,60,80,100];
             let stepIndex = 0;
-
             function goToNextStep() {
                 if (stepIndex >= steps.length) {
-                    sessionStorage.setItem('homeLoaded', 'true');
+                    sessionStorage.setItem('homeLoaded','true');
                     setTimeout(() => {
                         loadingScreen.style.opacity = '0';
-                        setTimeout(() => {
-                            loadingScreen.style.display = 'none';
-                        }, 600);
-                    }, 300);
+                        setTimeout(() => loadingScreen.style.display = 'none', 600);
+                    },300);
                     return;
                 }
-
                 const target = steps[stepIndex];
                 const interval = setInterval(() => {
                     if (progress < target) {
                         progress++;
-                        bar.style.width = progress + '%';
-                        text.textContent = progress + '%';
+                        bar.style.width = progress+'%';
+                        text.textContent = progress+'%';
                     } else {
                         clearInterval(interval);
                         stepIndex++;
-                        if (stepIndex < steps.length) {
-                            setTimeout(goToNextStep, 500);
-                        } else {
-                            goToNextStep();
-                        }
+                        if (stepIndex < steps.length) setTimeout(goToNextStep,500);
+                        else goToNextStep();
                     }
-                }, 20);
+                },20);
             }
             goToNextStep();
         })();

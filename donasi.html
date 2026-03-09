@@ -5,225 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donasi - DzzXNzz</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/modern.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Tambahan style khusus donasi */
-        .donasi-page {
-            max-width: 450px;
-            margin: 100px auto 40px;
-            padding: 0 20px;
-            text-align: center;
-        }
-        .donasi-title {
-            color: var(--neon-red);
-            text-shadow: 0 0 10px var(--neon-red);
-            font-size: 26px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .donasi-desc {
-            font-size: 12px;
-            color: #888;
-            margin-bottom: 30px;
-            font-weight: 300;
-        }
-        .donasi-card {
-            background: rgba(255,255,255,0.03);
-            border: 1.5px solid var(--neon-cyan);
-            border-radius: 15px;
-            padding: 20px 18px;
-            box-shadow: 0 0 15px var(--neon-cyan);
-            text-align: left;
-            transition: 0.2s;
-        }
-        .donasi-card h3 {
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-        .donasi-input {
-            width: 100%;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid var(--neon-cyan);
-            border-radius: 30px;
-            padding: 12px 18px;
-            color: white;
-            font-size: 14px;
-            font-family: 'Poppins', sans-serif;
-            outline: none;
-            margin-bottom: 5px;
-            box-shadow: 0 0 5px var(--neon-cyan);
-            transition: 0.2s;
-        }
-        .donasi-input:focus {
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 15px var(--neon-cyan);
-            background: rgba(0,229,255,0.1);
-        }
-        /* Pesan error minimal 500 */
-        .error-message {
-            color: #ff5555;
-            font-size: 12px;
-            margin-bottom: 10px;
-            text-align: left;
-            padding-left: 10px;
-            text-shadow: 0 0 5px #ff0000;
-            display: none;
-        }
-        .error-message.show {
-            display: block;
-        }
-        .donasi-btn {
-            width: 100%;
-            background: transparent;
-            border: 1.5px solid var(--neon-cyan);
-            border-radius: 30px;
-            padding: 12px 18px;
-            color: var(--neon-cyan);
-            font-weight: bold;
-            font-size: 14px;
-            font-family: 'Poppins', sans-serif;
-            cursor: pointer;
-            transition: 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 0 8px var(--neon-cyan);
-        }
-        .donasi-btn:hover {
-            background: var(--neon-cyan);
-            color: black;
-            box-shadow: 0 0 25px var(--neon-cyan);
-            transform: scale(1.02);
-        }
-        /* Loading overlay */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(5px);
-            visibility: hidden;
-            opacity: 0;
-            transition: 0.2s;
-        }
-        .loading-overlay.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .loader {
-            color: #ffffff;
-            font-size: 45px;
-            text-indent: -9999em;
-            overflow: hidden;
-            width: 1em;
-            height: 1em;
-            border-radius: 50%;
-            position: relative;
-            transform: translateZ(0);
-            animation: mltShdSpin 1.7s infinite ease, round 1.7s infinite ease;
-            margin-bottom: 20px;
-        }
-        @keyframes mltShdSpin {
-            0% { box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em; }
-            5%, 95% { box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em; }
-            10%, 59% { box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em; }
-            20% { box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em; }
-            38% { box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em; }
-            100% { box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em; }
-        }
-        @keyframes round {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .loading-text {
-            color: var(--neon-cyan);
-            font-size: 18px;
-            font-family: 'Poppins', sans-serif;
-            letter-spacing: 2px;
-            text-shadow: 0 0 8px var(--neon-cyan);
-        }
-        button, a, .btn, #menu-toggle, .sidebar-menu li a {
-            outline: none;
-        }
+        .donasi-card { background:rgba(18,20,26,0.8); backdrop-filter:blur(8px); border-radius:24px; padding:30px; border:1px solid var(--neon-red); box-shadow:0 20px 40px rgba(0,0,0,0.5); max-width:500px; margin:0 auto; }
+        .donasi-card h3 { font-size:24px; margin-bottom:20px; color:var(--neon-red); text-align:center; }
+        .donasi-input { width:100%; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); border-radius:50px; padding:15px 20px; color:#fff; font-size:16px; margin-bottom:15px; }
+        .donasi-input:focus { border-color:var(--neon-red); box-shadow:0 0 20px var(--neon-red); outline:none; }
+        .error-message { color:#ff5555; font-size:13px; margin-bottom:10px; text-align:center; display:none; }
+        .error-message.show { display:block; }
+        .donasi-btn { width:100%; background:transparent; border:2px solid var(--neon-red); color:var(--neon-red); padding:15px; border-radius:50px; font-weight:700; font-size:16px; cursor:pointer; transition:0.2s; }
+        .donasi-btn:hover { background:var(--neon-red); color:black; box-shadow:0 0 30px var(--neon-red); }
+        .loading-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:10000; display:flex; flex-direction:column; justify-content:center; align-items:center; backdrop-filter:blur(5px); visibility:hidden; opacity:0; transition:0.2s; }
+        .loading-overlay.active { visibility:visible; opacity:1; }
+        .loader { color:#fff; font-size:45px; text-indent:-9999em; overflow:hidden; width:1em; height:1em; border-radius:50%; position:relative; transform:translateZ(0); animation:mltShdSpin 1.7s infinite, round 1.7s infinite; margin-bottom:20px; }
+        @keyframes mltShdSpin { 0% { box-shadow:0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em; } 5%,95%{ box-shadow:0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em; } 10%,59%{ box-shadow:0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em; } 20% { box-shadow:0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em; } 38% { box-shadow:0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em; } 100% { box-shadow:0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em; } }
+        @keyframes round { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
+        .loading-text { color:var(--neon-cyan); font-size:18px; }
     </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="nav-left">
-            <button id="menu-toggle">☰</button>
-            <span class="nav-brand">DzzXNzz Website</span>
-        </div>
-        <div class="nav-right">
-            <div class="coins-wrapper">COINS: 0</div>
-            <div class="user-avatar">
-                <img src=./image/profile.jpg alt="User">
-            </div>
-        </div>
-    </nav>
-
-    <!-- Sidebar -->
+    <nav class="navbar">...</nav>
     <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <span class="user-name-text">DzzXNzz</span>
-            <div class="sidebar-pfp">
-                <img src=./image/image.jpg alt="PFP">
-            </div>
-        </div>
+        <div class="sidebar-header">...</div>
         <ul class="sidebar-menu">
             <li><a href="index">🏠 Home</a></li>
             <li><a href="product">📦 Product</a></li>
             <li class="active"><a href="donasi">❤️ Donasi</a></li>
             <li><a href="contact">📞 Contact</a></li>
-</ul>
+        </ul>
     </div>
     <div class="overlay" id="overlay"></div>
 
-    <!-- Konten Utama Donasi -->
-    <main>
-        <div class="donasi-page">
-            <h1 class="donasi-title">❤️ DONASI</h1>
-            <p class="donasi-desc">Banyak kamu yang berjaya, sekecil apapun berarti.</p>
+    <main class="main-content">
+        <div class="page-title">
+            <h1 style="color:var(--neon-red); text-shadow:0 0 20px var(--neon-red); background:none; -webkit-text-fill-color:var(--neon-red);">❤️ DONASI</h1>
+            <p>Dukung pengembangan website ini</p>
+        </div>
 
-            <div class="donasi-card">
-                <h3>Input Donasi</h3>
-                <input type="number" class="donasi-input" id="amount" placeholder="Masukkan nominal (Rp)" min="500" step="100">
-                <div class="error-message" id="errorMessage">Minimal donasi Rp 500</div>
-                <button class="donasi-btn" id="donasi-btn">DONASI SEKARANG</button>
-            </div>
+        <div class="donasi-card">
+            <h3>Input Donasi</h3>
+            <input type="number" class="donasi-input" id="amount" placeholder="Masukkan nominal (Rp)" min="500" step="100">
+            <div class="error-message" id="errorMessage">Minimal donasi Rp 500</div>
+            <button class="donasi-btn" id="donasi-btn">DONASI SEKARANG</button>
         </div>
     </main>
 
-    <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loader"></div>
         <div class="loading-text" id="loadingText">loading ...</div>
     </div>
 
+    <footer class="footer">...</footer>
     <script src="script.js"></script>
     <script>
-        // Inisialisasi sidebar
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuBtn = document.getElementById('menu-toggle');
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-            if (menuBtn && sidebar && overlay) {
-                menuBtn.onclick = () => { sidebar.classList.add('active'); overlay.classList.add('active'); };
-                overlay.onclick = () => { sidebar.classList.remove('active'); overlay.classList.remove('active'); };
-            }
-        });
-
-        // Fungsi loading overlay dengan teks berubah
         let loadingInterval;
         function showLoadingOverlay(duration, text, callback) {
             const overlay = document.getElementById('loadingOverlay');
@@ -235,7 +73,6 @@
                 dots = (dots + 1) % 4;
                 loadingText.textContent = text + ' ' + '.'.repeat(dots);
             }, 500);
-
             setTimeout(() => {
                 clearInterval(loadingInterval);
                 overlay.classList.remove('active');
@@ -243,25 +80,16 @@
             }, duration);
         }
 
-        // Validasi dengan pesan error CSS
         const errorMsg = document.getElementById('errorMessage');
         document.getElementById('donasi-btn').addEventListener('click', async (e) => {
             e.preventDefault();
             const amount = document.getElementById('amount').value;
-
-            // Validasi minimal 500
             if (!amount || amount < 500) {
                 errorMsg.classList.add('show');
-                // Hilangkan pesan setelah 3 detik (opsional)
-                setTimeout(() => {
-                    errorMsg.classList.remove('show');
-                }, 3000);
+                setTimeout(() => errorMsg.classList.remove('show'), 3000);
                 return;
-            } else {
-                errorMsg.classList.remove('show');
             }
-
-            // Tampilkan loading 2.6 detik dengan teks "Membuat Qris..."
+            errorMsg.classList.remove('show');
             showLoadingOverlay(2600, 'Membuat Qris', async () => {
                 try {
                     const res = await fetch('/api/create-transaction', {
@@ -269,13 +97,9 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ amount: parseInt(amount) })
                     });
-
                     const data = await res.json();
-                    if (res.ok) {
-                        window.location.href = `/pay?order_id=${data.order_id}`;
-                    } else {
-                        alert('Error: ' + (data.error || 'Gagal'));
-                    }
+                    if (res.ok) window.location.href = `/pay?order_id=${data.order_id}`;
+                    else alert('Error: ' + (data.error || 'Gagal'));
                 } catch (err) {
                     console.error(err);
                     alert('Gagal menghubungi server.');

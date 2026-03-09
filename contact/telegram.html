@@ -5,377 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Telegram - DzzXNzz</title>
     <link rel="stylesheet" href="../style.css">
-    <!-- Font Awesome untuk ikon -->
+    <link rel="stylesheet" href="../css/modern.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Reset dan style dasar */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: #020202;
-            color: white;
-            font-family: 'Poppins', sans-serif;
-            overflow-x: hidden;
-            min-height: 100vh;
-            position: relative;
-        }
-
-        #canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.9;
-        }
-
-        /* Navbar dengan tombol kembali merah */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            height: 70px;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 25px;
-            border-bottom: 1px solid rgba(0, 229, 255, 0.2);
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .btn-back {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: transparent;
-            border: 2px solid #ff4444;
-            color: #ff4444;
-            padding: 8px 18px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 15px;
-            transition: 0.3s;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(255, 68, 68, 0.3);
-        }
-
-        .btn-back:hover {
-            background: #ff4444;
-            color: black;
-            box-shadow: 0 0 20px #ff4444;
-            transform: translateX(-3px);
-        }
-
-        .btn-back i {
-            font-size: 18px;
-        }
-
-        .nav-brand {
-            color: var(--neon-cyan);
-            font-weight: 700;
-            font-size: 18px;
-            letter-spacing: 1px;
-            text-shadow: 0 0 8px var(--neon-cyan);
-            background: rgba(0, 229, 255, 0.1);
-            padding: 5px 12px;
-            border-radius: 30px;
-            border: 1px solid rgba(0, 229, 255, 0.3);
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .coins-wrapper {
-            border: 1.5px solid var(--neon-cyan);
-            padding: 5px 15px;
-            border-radius: 25px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--neon-cyan);
-            background: rgba(0, 229, 255, 0.05);
-            box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--neon-cyan);
-            border-radius: 50%;
-            overflow: hidden;
-            background: #111;
-            box-shadow: 0 0 10px var(--neon-cyan);
-        }
-
-        .user-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Sembunyikan sidebar */
-        .sidebar, .overlay {
-            display: none;
-        }
-
-        /* Kontainer utama */
-        .detail-container {
-            max-width: 500px;
-            margin: 100px auto 40px;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .page-title {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .page-title h1 {
-            color: #0088cc;
-            font-size: 36px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 0 15px #0088cc;
-            margin-bottom: 5px;
-        }
-
-        .page-title .subtitle {
-            color: rgba(255,255,255,0.6);
-            font-size: 14px;
-            letter-spacing: 2px;
-        }
-
-        .card-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        /* Card dengan desain elegan dan sisi terang */
-        .info-card {
-            background: rgba(15, 15, 15, 0.7);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 25px;
-            padding: 25px;
-            border: 2px solid #0088cc;
-            box-shadow: 0 0 30px rgba(0, 136, 204, 0.4), inset 0 0 20px rgba(0, 136, 204, 0.2);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .info-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 0 50px rgba(0, 136, 204, 0.7), inset 0 0 30px rgba(0, 136, 204, 0.4);
-        }
-
-        .info-card::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: 25px;
-            background: linear-gradient(45deg, #0088cc, transparent 40%);
-            opacity: 0;
-            transition: 0.4s;
-            z-index: -1;
-        }
-
-        .info-card:hover::after {
-            opacity: 0.3;
-        }
-
-        .info-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid rgba(0, 136, 204, 0.3);
-            padding-bottom: 15px;
-        }
-
-        .info-label {
-            color: #0088cc;
-            font-size: 24px;
-            font-weight: 700;
-            text-shadow: 0 0 8px #0088cc;
-        }
-
-        .info-status {
-            color: #0088cc;
-            font-size: 13px;
-            font-weight: 600;
-            border: 1px solid #0088cc;
-            padding: 5px 15px;
-            border-radius: 30px;
-            background: rgba(0,136,204,0.1);
-            box-shadow: 0 0 10px rgba(0,136,204,0.3);
-        }
-
-        .info-detail {
-            color: white;
-            font-size: 18px;
-            margin-bottom: 25px;
-            word-break: break-word;
-            background: rgba(0,0,0,0.3);
-            padding: 15px;
-            border-radius: 15px;
-            border-left: 4px solid #0088cc;
-            font-weight: 500;
-        }
-
-        .btn-action {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 14px 35px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 16px;
-            transition: 0.3s;
-            cursor: pointer;
-            width: fit-content;
-            margin: 0 auto;
-            letter-spacing: 1px;
-        }
-
-        .btn-tg {
-            background: black;
-            border: 2px solid #0088cc;
-            color: #0088cc;
-            box-shadow: 0 0 15px rgba(0, 136, 204, 0.3);
-        }
-
-        .btn-tg:hover {
-            background: #0088cc;
-            color: black;
-            box-shadow: 0 0 30px #0088cc;
-            transform: scale(1.05);
-        }
-
-        .btn-tg i {
-            color: #0088cc;
-            font-size: 18px;
-        }
-
-        .btn-tg:hover i {
-            color: black;
-        }
-
-        .btn-tg-channel {
-            background: #0088cc;
-            border: 2px solid black;
-            color: black;
-            box-shadow: 0 0 15px rgba(0, 136, 204, 0.5);
-        }
-
-        .btn-tg-channel:hover {
-            background: black;
-            color: #0088cc;
-            border-color: #0088cc;
-            box-shadow: 0 0 30px #0088cc;
-            transform: scale(1.05);
-        }
-
-        .btn-tg-channel:hover i {
-            color: #0088cc;
-        }
-
-        .btn-tg-channel i {
-            color: black;
-            font-size: 18px;
-        }
-
-        .fa-rocket {
-            font-size: 16px;
-        }
-
-        button, a, .btn, .btn-back {
-            outline: none;
-        }
-
-        @media (max-width: 500px) {
-            .navbar {
-                padding: 0 15px;
-            }
-            .nav-brand {
-                font-size: 14px;
-                padding: 4px 8px;
-            }
-            .btn-back {
-                padding: 6px 12px;
-                font-size: 13px;
-            }
-            .coins-wrapper {
-                padding: 4px 10px;
-                font-size: 10px;
-            }
-            .user-avatar {
-                width: 35px;
-                height: 35px;
-            }
-            .detail-container {
-                margin-top: 90px;
-                padding: 10px;
-            }
-            .page-title h1 {
-                font-size: 28px;
-            }
-            .info-label {
-                font-size: 20px;
-            }
-            .info-detail {
-                font-size: 16px;
-            }
-            .btn-action {
-                padding: 12px 25px;
-                font-size: 14px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .nav-brand {
-                display: none;
-            }
-        }
+        .detail-container { max-width:500px; margin:100px auto; padding:20px; }
+        .detail-card { background:rgba(18,20,26,0.8); backdrop-filter:blur(8px); border-radius:24px; padding:30px; border:2px solid #0088cc; box-shadow:0 20px 40px rgba(0,0,0,0.5); }
+        .detail-title { color:#0088cc; font-size:36px; text-align:center; margin-bottom:30px; text-shadow:0 0 20px #0088cc; }
+        .info-item { background:rgba(0,0,0,0.3); border-radius:15px; padding:15px; margin-bottom:15px; border-left:4px solid #0088cc; }
+        .info-label { color:#0088cc; font-size:18px; font-weight:600; margin-bottom:8px; }
+        .info-content { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+        .info-text { color:white; font-size:14px; word-break:break-word; }
+        .btn-hubungi { display:inline-block; background:black; border:2px solid #0088cc; color:#0088cc; padding:8px 20px; border-radius:30px; text-decoration:none; font-weight:600; transition:0.2s; }
+        .btn-hubungi:hover { background:#0088cc; color:black; }
+        .btn-back { display:block; background:transparent; border:2px solid var(--neon-cyan); color:var(--neon-cyan); padding:12px 20px; border-radius:40px; text-align:center; text-decoration:none; font-weight:bold; margin-top:30px; }
+        .btn-back:hover { background:var(--neon-cyan); color:black; }
+        .btn-back-nav { display:flex; align-items:center; gap:5px; background:transparent; border:2px solid #ff4444; color:#ff4444; padding:6px 12px; border-radius:30px; text-decoration:none; font-weight:600; }
+        .btn-back-nav:hover { background:#ff4444; color:black; }
     </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
 
+    <!-- Navbar dengan tombol kembali merah -->
     <nav class="navbar">
         <div class="nav-left">
-            <a href="../contact" class="btn-back">
-                <i class="fas fa-arrow-left"></i>
-                <span>Kembali</span>
+            <a href="../contact" class="btn-back-nav">
+                <span style="font-size:18px;">←</span> Kembali
             </a>
             <span class="nav-brand">DzzXNzz</span>
         </div>
@@ -387,52 +43,90 @@
         </div>
     </nav>
 
-    <main>
-        <div class="detail-container">
-            <div class="page-title">
-                <h1>Telegram</h1>
-                <div class="subtitle">Hubungi Kami via Telegram</div>
-            </div>
+    <!-- Sidebar tidak ditampilkan -->
+    <div class="sidebar" id="sidebar" style="display:none;"></div>
+    <div class="overlay" id="overlay" style="display:none;"></div>
 
-            <div class="card-grid">
+    <main class="main-content">
+        <div class="detail-container">
+            <div class="detail-card">
+                <h1 class="detail-title"><i class="fab fa-telegram-plane"></i> Telegram</h1>
+
                 <!-- Akun Utama -->
-                <div class="info-card">
-                    <div class="info-header">
-                        <span class="info-label"><i class="fab fa-telegram-plane"></i> Akun Utama</span>
-                        <span class="info-status">ONLINE</span>
+                <div class="info-item">
+                    <div class="info-label">Akun Utama</div>
+                    <div class="info-content">
+                        <span class="info-text">t.me/DzzXNzz</span>
+                        <a href="https://t.me/DzzXNzz" target="_blank" class="btn-hubungi"><i class="fab fa-telegram-plane"></i> Hubungi</a>
                     </div>
-                    <div class="info-detail">t.me/DzzXNzz</div>
-                    <a href="https://t.me/DzzXNzz" target="_blank" class="btn-action btn-tg">
-                        <i class="fab fa-telegram-plane"></i> Hubungi <i class="fas fa-rocket"></i>
-                    </a>
                 </div>
 
                 <!-- Akun Cadangan -->
-                <div class="info-card">
-                    <div class="info-header">
-                        <span class="info-label"><i class="fab fa-telegram-plane"></i> Akun Cadangan</span>
-                        <span class="info-status">ONLINE</span>
+                <div class="info-item">
+                    <div class="info-label">Akun Cadangan</div>
+                    <div class="info-content">
+                        <span class="info-text">t.me/dzznyzz</span>
+                        <a href="https://t.me/dzznyzz" target="_blank" class="btn-hubungi"><i class="fab fa-telegram-plane"></i> Hubungi</a>
                     </div>
-                    <div class="info-detail">t.me/dzznyzz</div>
-                    <a href="https://t.me/dzznyzz" target="_blank" class="btn-action btn-tg">
-                        <i class="fab fa-telegram-plane"></i> Hubungi <i class="fas fa-rocket"></i>
-                    </a>
                 </div>
 
                 <!-- Channel Testi -->
-                <div class="info-card">
-                    <div class="info-header">
-                        <span class="info-label"><i class="fab fa-telegram-plane"></i> Channel Testi</span>
-                        <span class="info-status">AKTIF</span>
+                <div class="info-item">
+                    <div class="info-label">Channel Testi</div>
+                    <div class="info-content">
+                        <span class="info-text">t.me/aboutbotnyzz</span>
+                        <a href="https://t.me/aboutbotnyzz" target="_blank" class="btn-hubungi" style="background:#0088cc; color:black;">Kunjungi</a>
                     </div>
-                    <div class="info-detail">t.me/aboutbotnyzz</div>
-                    <a href="https://t.me/aboutbotnyzz" target="_blank" class="btn-action btn-tg-channel">
-                        <i class="fab fa-telegram-plane"></i> Kunjungi <i class="fas fa-rocket"></i>
-                    </a>
                 </div>
+
+                <a href="../contact" class="btn-back">Kembali ke Contact</a>
             </div>
         </div>
     </main>
+
+    <!-- Footer sama seperti halaman lain -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div>
+                <div class="footer-logo">DzzXNzz</div>
+                <p class="footer-desc">Provider hosting generasi baru yang fokus pada performa, keamanan, dan kemudahan penggunaan untuk developer dan kreator.</p>
+                <div class="social-icons">
+                    <a href="https://wa.me/6287713472756" target="_blank" class="social-icon wa"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://t.me/DzzXNzz" target="_blank" class="social-icon tg"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="mailto:alwaysnnyzz@gmail.com" class="social-icon email"><i class="fas fa-envelope"></i> alwaysnnyzz@gmail.com</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="footer-title">Layanan</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Cloud Hosting</a></li>
+                    <li><a href="#">VPS Servers</a></li>
+                    <li><a href="#">Dedicated IP</a></li>
+                    <li><a href="#">Bot Jaga</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Legal</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">SLA</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Kontak</h4>
+                <ul class="footer-links">
+                    <li><a href="../contact">WhatsApp</a></li>
+                    <li><a href="../contact">Telegram</a></li>
+                    <li><a href="../contact">Email</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 DzzXNzz Host. All rights reserved.</span>
+            <span class="status-badge"><i class="fas fa-circle"></i> ALL SYSTEMS OPERATIONAL</span>
+        </div>
+    </footer>
 
     <script src="../script.js"></script>
 </body>
