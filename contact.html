@@ -8,10 +8,55 @@
     <link rel="stylesheet" href="css/modern.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Memastikan button dalam card full width */
+        .contact-card .card-btn-full {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 15px;
+            padding: 14px 0;
+            border-radius: 40px;
+            font-weight: 600;
+            transition: 0.2s;
+            border: 2px solid;
+            background: transparent;
+            text-decoration: none;
+        }
+        .contact-card .card-btn-full i {
+            margin-right: 8px;
+        }
+        /* Warna button sesuai card */
+        .card-wa .card-btn-full {
+            border-color: #25D366;
+            color: #25D366;
+        }
+        .card-wa .card-btn-full:hover {
+            background: #25D366;
+            color: black;
+        }
+        .card-tg .card-btn-full {
+            border-color: #0088cc;
+            color: #0088cc;
+        }
+        .card-tg .card-btn-full:hover {
+            background: #0088cc;
+            color: black;
+        }
+        .card-bot .card-btn-full {
+            border-color: #ff4444;
+            color: #ff4444;
+        }
+        .card-bot .card-btn-full:hover {
+            background: #ff4444;
+            color: black;
+        }
+    </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
 
+    <!-- Navbar dengan hamburger -->
     <nav class="navbar">
         <div class="nav-left">
             <button id="menu-toggle">☰</button>
@@ -19,14 +64,19 @@
         </div>
         <div class="nav-right">
             <div class="coins-wrapper">COINS: 0</div>
-            <div class="user-avatar"><img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="User"></div>
+            <div class="user-avatar">
+                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="User">
+            </div>
         </div>
     </nav>
 
+    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <span class="user-name-text">Alwaysnyzzz</span>
-            <div class="sidebar-pfp"><img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="PFP"></div>
+            <div class="sidebar-pfp">
+                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="PFP">
+            </div>
         </div>
         <ul class="sidebar-menu">
             <li><a href="index">🏠 Home</a></li>
@@ -37,6 +87,7 @@
     </div>
     <div class="overlay" id="overlay"></div>
 
+    <!-- Konten Utama -->
     <main class="main-content">
         <div class="page-title">
             <h1>Kontak Kami</h1>
@@ -44,28 +95,76 @@
         </div>
 
         <div class="grid-3">
-            <div class="modern-card">
+            <!-- Card WhatsApp -->
+            <div class="modern-card contact-card card-wa">
                 <div class="card-icon" style="color:#25D366;"><i class="fab fa-whatsapp"></i></div>
                 <h3 class="card-title">WhatsApp</h3>
                 <p class="card-desc">Chat langsung dengan admin via WhatsApp, responsif dan cepat.</p>
-                <a href="contact/wa" class="card-tag" style="color:#25D366; border-color:#25D366; background:rgba(37,211,102,0.1);"><i class="fab fa-whatsapp"></i> Lihat Detail</a>
+                <a href="contact/wa" class="card-btn-full"><i class="fab fa-whatsapp"></i> Lihat Detail</a>
             </div>
-            <div class="modern-card">
+
+            <!-- Card Telegram -->
+            <div class="modern-card contact-card card-tg">
                 <div class="card-icon" style="color:#0088cc;"><i class="fab fa-telegram-plane"></i></div>
                 <h3 class="card-title">Telegram</h3>
                 <p class="card-desc">Bergabung di grup Telegram atau hubungi admin langsung.</p>
-                <a href="contact/telegram" class="card-tag" style="color:#0088cc; border-color:#0088cc; background:rgba(0,136,204,0.1);"><i class="fab fa-telegram-plane"></i> Lihat Detail</a>
+                <a href="contact/telegram" class="card-btn-full"><i class="fab fa-telegram-plane"></i> Lihat Detail</a>
             </div>
-            <div class="modern-card">
+
+            <!-- Card Bot -->
+            <div class="modern-card contact-card card-bot">
                 <div class="card-icon" style="color:#ff4444;"><i class="fas fa-robot"></i></div>
                 <h3 class="card-title">Bot</h3>
                 <p class="card-desc">Bot interaktif siap membantu 24/7 dengan berbagai fitur.</p>
-                <a href="#" class="card-tag" style="color:#ff4444; border-color:#ff4444; background:rgba(255,68,68,0.1);"><i class="fas fa-robot"></i> Lihat Detail</a>
+                <a href="#" class="card-btn-full"><i class="fas fa-robot"></i> Lihat Detail</a>
             </div>
         </div>
     </main>
 
-    <footer class="footer">...</footer> <!-- sama persis dengan index -->
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div>
+                <div class="footer-logo">DzzXNzz</div>
+                <p class="footer-desc">Provider hosting generasi baru yang fokus pada performa, keamanan, dan kemudahan penggunaan untuk developer dan kreator.</p>
+                <div class="social-icons">
+                    <a href="https://wa.me/6287713472756" target="_blank" class="social-icon wa"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://t.me/DzzXNzz" target="_blank" class="social-icon tg"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="mailto:alwaysnnyzz@gmail.com" class="social-icon email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="footer-title">Layanan</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Cloud Hosting</a></li>
+                    <li><a href="#">VPS Servers</a></li>
+                    <li><a href="#">Dedicated IP</a></li>
+                    <li><a href="#">Bot Jaga</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Legal</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">SLA</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Kontak</h4>
+                <ul class="footer-links">
+                    <li><a href="contact">WhatsApp</a></li>
+                    <li><a href="contact">Telegram</a></li>
+                    <li><a href="contact">Email</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 DzzXNzz Host. All rights reserved.</span>
+            <span class="status-badge"><i class="fas fa-circle"></i> ALL SYSTEMS OPERATIONAL</span>
+        </div>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
