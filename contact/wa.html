@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WhatsApp - DzzXNzz</title>
     <link rel="stylesheet" href="../style.css">
+    <!-- Font Awesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         /* Navbar dimodifikasi: tombol kembali merah di kiri */
@@ -35,7 +37,6 @@
             gap: 10px;
         }
 
-        /* Tombol kembali merah */
         .btn-back-nav {
             display: flex;
             align-items: center;
@@ -96,17 +97,17 @@
             padding: 0 20px;
         }
 
-        /* Gaya card seperti di home */
+        /* Card gaya home */
         .info-card {
             background: rgba(255,255,255,0.03);
             border: 1.5px solid #25D366;
             border-radius: 15px;
-            padding: 20px;
+            padding: 25px 20px;
             margin-bottom: 20px;
             box-shadow: 0 0 15px rgba(37, 211, 102, 0.2);
             backdrop-filter: blur(2px);
             transition: all 0.3s ease;
-            cursor: pointer;
+            text-align: center;
         }
 
         .info-card:hover {
@@ -119,54 +120,95 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .info-label {
             color: #25D366;
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: 700;
             text-shadow: 0 0 5px #25D366;
         }
 
         .info-status {
             color: #25D366;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
             letter-spacing: 0.5px;
+            border: 1px solid #25D366;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: rgba(37,211,102,0.1);
         }
 
-        .info-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .info-text {
+        .info-detail {
             color: white;
-            font-size: 14px;
+            font-size: 16px;
+            margin-bottom: 20px;
             word-break: break-word;
+            background: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 10px;
         }
 
+        /* Tombol aksi dengan dua variasi */
         .btn-action {
-            display: inline-block;
-            background: transparent;
-            border: 1.5px solid #25D366;
-            color: #25D366;
-            padding: 8px 20px;
-            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 30px;
+            border-radius: 40px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 16px;
             transition: 0.2s;
+            border: 2px solid;
+            cursor: pointer;
+            width: fit-content;
+            margin: 0 auto;
         }
 
-        .btn-action:hover {
+        .btn-wa {
+            background: black;
+            border-color: #25D366;
+            color: #25D366;
+        }
+
+        .btn-wa:hover {
             background: #25D366;
             color: black;
             box-shadow: 0 0 20px #25D366;
+        }
+
+        .btn-wa i {
+            color: #25D366;
+        }
+
+        .btn-wa:hover i {
+            color: black;
+        }
+
+        .btn-wa-channel {
+            background: #25D366;
+            border-color: black;
+            color: black;
+        }
+
+        .btn-wa-channel:hover {
+            background: black;
+            color: #25D366;
+            border-color: #25D366;
+            box-shadow: 0 0 20px #25D366;
+        }
+
+        .btn-wa-channel:hover i {
+            color: #25D366;
+        }
+
+        /* Ikon meluncur (roket) */
+        .fa-rocket {
+            font-size: 14px;
         }
 
         /* Hilangkan outline */
@@ -174,7 +216,7 @@
             outline: none;
         }
 
-        /* Sembunyikan sidebar dan overlay karena tidak dipakai */
+        /* Sembunyikan sidebar */
         .sidebar, .overlay {
             display: none;
         }
@@ -199,8 +241,6 @@
         </div>
     </nav>
 
-    <!-- Sidebar dan overlay disembunyikan via CSS, jadi tidak perlu elemen -->
-
     <main>
         <div class="detail-container">
             <!-- Card No Utama -->
@@ -209,10 +249,10 @@
                     <span class="info-label">No Utama</span>
                     <span class="info-status">ONLINE</span>
                 </div>
-                <div class="info-content">
-                    <span class="info-text">wa.me/6287713472756</span>
-                    <a href="https://wa.me/6287713472756" target="_blank" class="btn-action">Hubungi</a>
-                </div>
+                <div class="info-detail">wa.me/6287713472756</div>
+                <a href="https://wa.me/6287713472756" target="_blank" class="btn-action btn-wa">
+                    <i class="fab fa-whatsapp"></i> Hubungi <i class="fas fa-rocket"></i>
+                </a>
             </div>
 
             <!-- Card No Cadangan -->
@@ -221,10 +261,10 @@
                     <span class="info-label">No Cadangan</span>
                     <span class="info-status">ONLINE</span>
                 </div>
-                <div class="info-content">
-                    <span class="info-text">wa.me/6288989695549</span>
-                    <a href="https://wa.me/6288989695549" target="_blank" class="btn-action">Hubungi</a>
-                </div>
+                <div class="info-detail">wa.me/6288989695549</div>
+                <a href="https://wa.me/6288989695549" target="_blank" class="btn-action btn-wa">
+                    <i class="fab fa-whatsapp"></i> Hubungi <i class="fas fa-rocket"></i>
+                </a>
             </div>
 
             <!-- Card Channel Testi -->
@@ -233,15 +273,14 @@
                     <span class="info-label">Channel Testi</span>
                     <span class="info-status">AKTIF</span>
                 </div>
-                <div class="info-content">
-                    <span class="info-text">WhatsApp Channel</span>
-                    <a href="https://whatsapp.com/channel/0029Vb6YWHPJ3juqr8vzSc1d" target="_blank" class="btn-action">Kunjungi</a>
-                </div>
+                <div class="info-detail">WhatsApp Channel</div>
+                <a href="https://whatsapp.com/channel/0029Vb6YWHPJ3juqr8vzSc1d" target="_blank" class="btn-action btn-wa-channel">
+                    <i class="fab fa-whatsapp"></i> Kunjungi <i class="fas fa-rocket"></i>
+                </a>
             </div>
         </div>
     </main>
 
     <script src="../script.js"></script>
-    <!-- Tidak perlu inisialisasi sidebar -->
 </body>
 </html>

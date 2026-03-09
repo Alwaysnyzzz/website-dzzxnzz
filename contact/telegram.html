@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Telegram - DzzXNzz</title>
     <link rel="stylesheet" href="../style.css">
+    <!-- Font Awesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         /* Navbar dimodifikasi: tombol kembali merah di kiri */
@@ -88,23 +90,24 @@
             object-fit: cover;
         }
 
+        /* Kontainer utama */
         .detail-container {
             max-width: 450px;
             margin: 100px auto 40px;
             padding: 0 20px;
         }
 
-        /* Gaya card seperti di home, warna biru */
+        /* Card gaya home */
         .info-card {
             background: rgba(255,255,255,0.03);
             border: 1.5px solid #0088cc;
             border-radius: 15px;
-            padding: 20px;
+            padding: 25px 20px;
             margin-bottom: 20px;
             box-shadow: 0 0 15px rgba(0, 136, 204, 0.2);
             backdrop-filter: blur(2px);
             transition: all 0.3s ease;
-            cursor: pointer;
+            text-align: center;
         }
 
         .info-card:hover {
@@ -117,60 +120,103 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .info-label {
             color: #0088cc;
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: 700;
             text-shadow: 0 0 5px #0088cc;
         }
 
         .info-status {
             color: #0088cc;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
             letter-spacing: 0.5px;
+            border: 1px solid #0088cc;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: rgba(0,136,204,0.1);
         }
 
-        .info-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .info-text {
+        .info-detail {
             color: white;
-            font-size: 14px;
+            font-size: 16px;
+            margin-bottom: 20px;
             word-break: break-word;
+            background: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 10px;
         }
 
+        /* Tombol aksi dengan dua variasi */
         .btn-action {
-            display: inline-block;
-            background: transparent;
-            border: 1.5px solid #0088cc;
-            color: #0088cc;
-            padding: 8px 20px;
-            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 30px;
+            border-radius: 40px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 16px;
             transition: 0.2s;
+            border: 2px solid;
+            cursor: pointer;
+            width: fit-content;
+            margin: 0 auto;
         }
 
-        .btn-action:hover {
+        .btn-tg {
+            background: black;
+            border-color: #0088cc;
+            color: #0088cc;
+        }
+
+        .btn-tg:hover {
             background: #0088cc;
             color: black;
             box-shadow: 0 0 20px #0088cc;
         }
 
+        .btn-tg i {
+            color: #0088cc;
+        }
+
+        .btn-tg:hover i {
+            color: black;
+        }
+
+        .btn-tg-channel {
+            background: #0088cc;
+            border-color: black;
+            color: black;
+        }
+
+        .btn-tg-channel:hover {
+            background: black;
+            color: #0088cc;
+            border-color: #0088cc;
+            box-shadow: 0 0 20px #0088cc;
+        }
+
+        .btn-tg-channel:hover i {
+            color: #0088cc;
+        }
+
+        /* Ikon meluncur (roket) */
+        .fa-rocket {
+            font-size: 14px;
+        }
+
+        /* Hilangkan outline */
         button, a, .btn, .btn-back-nav {
             outline: none;
         }
 
+        /* Sembunyikan sidebar */
         .sidebar, .overlay {
             display: none;
         }
@@ -179,6 +225,7 @@
 <body>
     <canvas id="canvas"></canvas>
 
+    <!-- Navbar dengan tombol kembali merah -->
     <nav class="navbar">
         <div class="nav-left">
             <a href="../contact" class="btn-back-nav">
@@ -202,10 +249,10 @@
                     <span class="info-label">Akun Utama</span>
                     <span class="info-status">ONLINE</span>
                 </div>
-                <div class="info-content">
-                    <span class="info-text">t.me/DzzXNzz</span>
-                    <a href="https://t.me/DzzXNzz" target="_blank" class="btn-action">Hubungi</a>
-                </div>
+                <div class="info-detail">t.me/DzzXNzz</div>
+                <a href="https://t.me/DzzXNzz" target="_blank" class="btn-action btn-tg">
+                    <i class="fab fa-telegram-plane"></i> Hubungi <i class="fas fa-rocket"></i>
+                </a>
             </div>
 
             <!-- Akun Cadangan -->
@@ -214,10 +261,10 @@
                     <span class="info-label">Akun Cadangan</span>
                     <span class="info-status">ONLINE</span>
                 </div>
-                <div class="info-content">
-                    <span class="info-text">t.me/dzznyzz</span>
-                    <a href="https://t.me/dzznyzz" target="_blank" class="btn-action">Hubungi</a>
-                </div>
+                <div class="info-detail">t.me/dzznyzz</div>
+                <a href="https://t.me/dzznyzz" target="_blank" class="btn-action btn-tg">
+                    <i class="fab fa-telegram-plane"></i> Hubungi <i class="fas fa-rocket"></i>
+                </a>
             </div>
 
             <!-- Channel Testi -->
@@ -226,10 +273,10 @@
                     <span class="info-label">Channel Testi</span>
                     <span class="info-status">AKTIF</span>
                 </div>
-                <div class="info-content">
-                    <span class="info-text">t.me/aboutbotnyzz</span>
-                    <a href="https://t.me/aboutbotnyzz" target="_blank" class="btn-action">Kunjungi</a>
-                </div>
+                <div class="info-detail">t.me/aboutbotnyzz</div>
+                <a href="https://t.me/aboutbotnyzz" target="_blank" class="btn-action btn-tg-channel">
+                    <i class="fab fa-telegram-plane"></i> Kunjungi <i class="fas fa-rocket"></i>
+                </a>
             </div>
         </div>
     </main>
