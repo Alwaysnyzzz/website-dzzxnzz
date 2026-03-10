@@ -61,6 +61,7 @@
     line-height: 1.6;
 }
 
+/* ===== TOMBOL DENGAN EFEK SESUAI WARNA (TIDAK ADA BIRU) ===== */
 .btn-detail {
     display: block;
     width: 100%;
@@ -73,11 +74,21 @@
     font-weight: 600;
     transition: 0.2s;
     cursor: pointer;
+    outline: none; /* hilangkan outline biru */
+    -webkit-tap-highlight-color: transparent; /* hilangkan highlight biru di mobile */
 }
 
+/* Efek hover - warna sesuai tombol (diatur inline di HTML) */
+.btn-detail:hover {
+    filter: brightness(1.2);
+}
+
+/* Efek saat disentuh/diklik */
 .btn-detail:active {
     transform: scale(0.97);
     opacity: 0.7;
+    transition: transform 0.1s, opacity 0.1s;
+    /* tidak ada perubahan warna biru */
 }
 
 /* ===== MODAL STYLES ===== */
@@ -139,10 +150,17 @@
     font-weight: bold;
     cursor: pointer;
     transition: 0.2s;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .close:hover {
     color: white;
+}
+
+.close:active {
+    transform: scale(0.9);
+    opacity: 0.7;
 }
 
 .modal-body {
@@ -177,6 +195,7 @@
     word-break: break-word;
 }
 
+/* ===== TOMBOL DALAM MODAL ===== */
 .btn-action {
     display: inline-block;
     background: black;
@@ -187,9 +206,22 @@
     font-weight: 600;
     transition: 0.2s;
     font-size: 14px;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .btn-action:hover {
-    background: currentColor;
-    color: black;
+    filter: brightness(1.2);
+}
+
+.btn-action:active {
+    transform: scale(0.95);
+    opacity: 0.7;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+    .grid-3 {
+        grid-template-columns: 1fr;
+    }
 }
