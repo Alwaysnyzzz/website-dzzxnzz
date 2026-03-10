@@ -1,5 +1,5 @@
+// Loading screen logic (untuk halaman home)
 document.addEventListener('DOMContentLoaded', function() {
-    // Loading screen
     const loadingScreen = document.getElementById('loading-screen');
     if (loadingScreen) {
         const bar = document.querySelector('.progress-bar');
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 
-    // Canvas stars
+    // Canvas bintang (background)
     const canvas = document.getElementById('canvas');
     if (canvas) {
         const ctx = canvas.getContext('2d');

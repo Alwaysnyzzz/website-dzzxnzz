@@ -1,36 +1,20 @@
-// Modal handling for contact page
+// Modal handling untuk halaman contact
 document.addEventListener('DOMContentLoaded', function() {
-    // Ambil semua card yang memiliki data-modal
     const cards = document.querySelectorAll('.modern-card[data-modal]');
     const modals = document.querySelectorAll('.modal');
     const closeButtons = document.querySelectorAll('.close');
 
-    // Fungsi untuk membuka modal
     function openModal(modalId) {
         const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.add('active');
-        }
+        if (modal) modal.classList.add('active');
     }
 
-    // Fungsi untuk menutup semua modal
     function closeAllModals() {
-        modals.forEach(modal => {
-            modal.classList.remove('active');
-        });
+        modals.forEach(modal => modal.classList.remove('active'));
     }
 
-    // Event listener untuk setiap card
+    // Event listener untuk tombol "Lihat Detail" di setiap card
     cards.forEach(card => {
-        card.addEventListener('click', function(e) {
-            // Cegah jika yang diklik adalah tombol atau link
-            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
-            
-            const modalId = this.getAttribute('data-modal');
-            openModal(modalId);
-        });
-
-        // Jika tombol "Lihat Detail" di dalam card diklik
         const btn = card.querySelector('.btn-detail');
         if (btn) {
             btn.addEventListener('click', function(e) {
@@ -41,26 +25,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Event listener untuk tombol close (X)
+    // Tombol close (X)
     closeButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
-            closeAllModals();
-        });
+        btn.addEventListener('click', closeAllModals);
     });
 
-    // Tutup modal jika klik di luar konten modal
+    // Klik di luar modal untuk menutup
     modals.forEach(modal => {
         modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                closeAllModals();
-            }
+            if (e.target === modal) closeAllModals();
         });
     });
 
-    // Tutup modal dengan tombol ESC
+    // Tekan ESC untuk menutup
     window.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeAllModals();
-        }
+        if (e.key === 'Escape') closeAllModals();
     });
 });
