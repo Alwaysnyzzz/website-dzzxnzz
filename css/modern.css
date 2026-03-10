@@ -202,3 +202,12 @@
     background: var(--neon-cyan);
     color: black;
 }
+/* Efek saat tombol ditekan (active) */
+.btn-detail:active,
+.sidebar-menu a:active,
+#menu-toggle:active,
+.back-button:btn-action:active {
+    transform: scale(0.97);
+    opacity: 0.7;
+    transition: transform 0.1s, opacity 0.1s;
+}
