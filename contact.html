@@ -8,55 +8,11 @@
     <link rel="stylesheet" href="css/modern.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* Memastikan button dalam card full width */
-        .contact-card .card-btn-full {
-            display: block;
-            width: 100%;
-            text-align: center;
-            margin-top: 15px;
-            padding: 14px 0;
-            border-radius: 40px;
-            font-weight: 600;
-            transition: 0.2s;
-            border: 2px solid;
-            background: transparent;
-            text-decoration: none;
-        }
-        .contact-card .card-btn-full i {
-            margin-right: 8px;
-        }
-        /* Warna button sesuai card */
-        .card-wa .card-btn-full {
-            border-color: #25D366;
-            color: #25D366;
-        }
-        .card-wa .card-btn-full:hover {
-            background: #25D366;
-            color: black;
-        }
-        .card-tg .card-btn-full {
-            border-color: #0088cc;
-            color: #0088cc;
-        }
-        .card-tg .card-btn-full:hover {
-            background: #0088cc;
-            color: black;
-        }
-        .card-bot .card-btn-full {
-            border-color: #ff4444;
-            color: #ff4444;
-        }
-        .card-bot .card-btn-full:hover {
-            background: #ff4444;
-            color: black;
-        }
-    </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
 
-    <!-- Navbar dengan hamburger -->
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-left">
             <button id="menu-toggle">☰</button>
@@ -65,7 +21,7 @@
         <div class="nav-right">
             <div class="coins-wrapper">COINS: 0</div>
             <div class="user-avatar">
-                <img src=./image/profile.jpg alt="User">
+                <img src="./image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true'">
             </div>
         </div>
     </nav>
@@ -75,7 +31,7 @@
         <div class="sidebar-header">
             <span class="user-name-text">DzzXNzz</span>
             <div class="sidebar-pfp">
-                <img src=./image/image.jpg alt="PFP">
+                <img src="./image/image.jpg" alt="PFP" onerror="this.src='https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true'">
             </div>
         </div>
         <ul class="sidebar-menu">
@@ -87,7 +43,7 @@
     </div>
     <div class="overlay" id="overlay"></div>
 
-    <!-- Konten Utama -->
+    <!-- Main Content -->
     <main class="main-content">
         <div class="page-title">
             <h1>Kontak Kami</h1>
@@ -95,28 +51,26 @@
         </div>
 
         <div class="grid-3">
-            <!-- Card WhatsApp -->
-            <div class="modern-card contact-card card-wa">
+            <!-- WhatsApp -->
+            <div class="modern-card">
                 <div class="card-icon" style="color:#25D366;"><i class="fab fa-whatsapp"></i></div>
                 <h3 class="card-title">WhatsApp</h3>
-                <p class="card-desc">Chat langsung dengan admin via WhatsApp, responsif dan cepat.</p>
-                <a href="contact/wa" class="card-btn-full"><i class="fab fa-whatsapp"></i> Lihat Detail</a>
+                <p class="card-desc">Chat langsung dengan admin via WhatsApp.</p>
+                <a href="contact/wa" class="btn-detail" style="border-color:#25D366; color:#25D366;"><i class="fab fa-whatsapp"></i> Lihat Detail</a>
             </div>
-
-            <!-- Card Telegram -->
-            <div class="modern-card contact-card card-tg">
+            <!-- Telegram -->
+            <div class="modern-card">
                 <div class="card-icon" style="color:#0088cc;"><i class="fab fa-telegram-plane"></i></div>
                 <h3 class="card-title">Telegram</h3>
-                <p class="card-desc">Bergabung di grup Telegram atau hubungi admin langsung.</p>
-                <a href="contact/telegram" class="card-btn-full"><i class="fab fa-telegram-plane"></i> Lihat Detail</a>
+                <p class="card-desc">Hubungi admin via Telegram.</p>
+                <a href="contact/telegram" class="btn-detail" style="border-color:#0088cc; color:#0088cc;"><i class="fab fa-telegram-plane"></i> Lihat Detail</a>
             </div>
-
-            <!-- Card Bot -->
-            <div class="modern-card contact-card card-bot">
+            <!-- Bot -->
+            <div class="modern-card">
                 <div class="card-icon" style="color:#ff4444;"><i class="fas fa-robot"></i></div>
                 <h3 class="card-title">Bot</h3>
-                <p class="card-desc">Bot interaktif siap membantu 24/7 dengan berbagai fitur.</p>
-                <a href="#" class="card-btn-full"><i class="fas fa-robot"></i> Lihat Detail</a>
+                <p class="card-desc">Bot interaktif 24/7.</p>
+                <a href="#" class="btn-detail" style="border-color:#ff4444; color:#ff4444;"><i class="fas fa-robot"></i> Lihat Detail</a>
             </div>
         </div>
     </main>

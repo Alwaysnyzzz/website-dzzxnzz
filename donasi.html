@@ -4,11 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donasi - DzzXNzz</title>
+    <!-- CSS Eksternal -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/loading.css">
     <link rel="stylesheet" href="css/modern.css">
+    <!-- Font Awesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* Gaya khusus halaman donasi */
+        .donasi-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
         .donasi-card {
             background: rgba(18,20,26,0.8);
             backdrop-filter: blur(8px);
@@ -16,8 +24,6 @@
             padding: 30px;
             border: 1px solid var(--neon-red);
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            max-width: 500px;
-            margin: 0 auto;
         }
         .donasi-card h3 {
             font-size: 24px;
@@ -47,9 +53,7 @@
             text-align: center;
             display: none;
         }
-        .error-message.show {
-            display: block;
-        }
+        .error-message.show { display: block; }
         .donasi-btn {
             width: 100%;
             background: transparent;
@@ -67,7 +71,7 @@
             color: black;
             box-shadow: 0 0 30px var(--neon-red);
         }
-        /* Loading overlay (tetap) */
+        /* Loading overlay (khusus proses donasi) */
         .loading-overlay {
             position: fixed; top:0; left:0; width:100%; height:100%;
             background: rgba(0,0,0,0.9); z-index:10000;
@@ -75,9 +79,7 @@
             backdrop-filter: blur(5px);
             visibility: hidden; opacity: 0; transition: 0.2s;
         }
-        .loading-overlay.active {
-            visibility: visible; opacity: 1;
-        }
+        .loading-overlay.active { visibility: visible; opacity: 1; }
         .loader {
             color: #fff; font-size:45px; text-indent:-9999em; overflow:hidden;
             width:1em; height:1em; border-radius:50%; position:relative;
@@ -93,20 +95,15 @@
             38% { box-shadow:0 -0.83em 0 -0.4em,-0.377em -0.74em 0 -0.42em,-0.645em -0.522em 0 -0.44em,-0.775em -0.297em 0 -0.46em,-0.82em -0.09em 0 -0.477em; }
             100% { box-shadow:0 -0.83em 0 -0.4em,0 -0.83em 0 -0.42em,0 -0.83em 0 -0.44em,0 -0.83em 0 -0.46em,0 -0.83em 0 -0.477em; }
         }
-        @keyframes round {
-            0% { transform:rotate(0deg); }
-            100% { transform:rotate(360deg); }
-        }
-        .loading-text {
-            color: var(--neon-cyan);
-            font-size: 18px;
-        }
+        @keyframes round { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
+        .loading-text { color: var(--neon-cyan); font-size: 18px; }
     </style>
 </head>
 <body>
+    <!-- Canvas untuk bintang (tetap ada) -->
     <canvas id="canvas"></canvas>
 
-    <!-- Navbar dengan hamburger -->
+    <!-- Navbar (sama seperti halaman lain) -->
     <nav class="navbar">
         <div class="nav-left">
             <button id="menu-toggle">☰</button>
@@ -115,17 +112,17 @@
         <div class="nav-right">
             <div class="coins-wrapper">COINS: 0</div>
             <div class="user-avatar">
-                <img src=./image/profile.jpg alt=="User">
+                <img src="./image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true'">
             </div>
         </div>
     </nav>
 
-    <!-- Sidebar -->
+    <!-- Sidebar (active di Donasi) -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <span class="user-name-text">DzzXNzz</span>
             <div class="sidebar-pfp">
-                <img src=./image/image.jpg alt="PFP">
+                <img src="./image/image.jpg" alt="PFP" onerror="this.src='https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true'">
             </div>
         </div>
         <ul class="sidebar-menu">
@@ -137,22 +134,24 @@
     </div>
     <div class="overlay" id="overlay"></div>
 
-    <!-- Konten Utama -->
+    <!-- Main Content -->
     <main class="main-content">
         <div class="page-title">
-            <h1 style="color:var(--neon-red); text-shadow:0 0 20px var(--neon-red); -webkit-text-fill-color:var(--neon-red);">❤️ DONASI</h1>
+            <h1 style="color:var(--neon-red); -webkit-text-fill-color:var(--neon-red); text-shadow:0 0 20px var(--neon-red);">❤️ DONASI</h1>
             <p>Dukung pengembangan website ini</p>
         </div>
 
-        <div class="donasi-card">
-            <h3>Input Donasi</h3>
-            <input type="number" class="donasi-input" id="amount" placeholder="Masukkan nominal (Rp)" min="500" step="100">
-            <div class="error-message" id="errorMessage">Minimal donasi Rp 500</div>
-            <button class="donasi-btn" id="donasi-btn">DONASI SEKARANG</button>
+        <div class="donasi-container">
+            <div class="donasi-card">
+                <h3>Input Donasi</h3>
+                <input type="number" class="donasi-input" id="amount" placeholder="Masukkan nominal (Rp)" min="500" step="100">
+                <div class="error-message" id="errorMessage">Minimal donasi Rp 500</div>
+                <button class="donasi-btn" id="donasi-btn">DONASI SEKARANG</button>
+            </div>
         </div>
     </main>
 
-    <!-- Loading Overlay -->
+    <!-- Loading Overlay (untuk proses donasi) -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loader"></div>
         <div class="loading-text" id="loadingText">loading ...</div>
@@ -202,9 +201,11 @@
         </div>
     </footer>
 
+    <!-- Script utama (untuk fungsi umum seperti sidebar toggle dan canvas) -->
     <script src="script.js"></script>
+    <!-- Script khusus donasi -->
     <script>
-        // Fungsi loading overlay
+        // Fungsi loading overlay dengan teks berubah
         let loadingInterval;
         function showLoadingOverlay(duration, text, callback) {
             const overlay = document.getElementById('loadingOverlay');
@@ -223,6 +224,7 @@
             }, duration);
         }
 
+        // Validasi minimal 500 dengan pesan error
         const errorMsg = document.getElementById('errorMessage');
         document.getElementById('donasi-btn').addEventListener('click', async (e) => {
             e.preventDefault();
@@ -233,6 +235,8 @@
                 return;
             }
             errorMsg.classList.remove('show');
+
+            // Tampilkan loading 2.6 detik dengan teks "Membuat Qris"
             showLoadingOverlay(2600, 'Membuat Qris', async () => {
                 try {
                     const res = await fetch('/api/create-transaction', {

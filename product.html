@@ -4,88 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product - DzzXNzz</title>
+    <!-- CSS Eksternal -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/loading.css">
     <link rel="stylesheet" href="css/modern.css">
+    <!-- Font Awesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* Halaman product dengan dua card layanan */
-        .service-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-
-        .service-card {
-            background: rgba(18,20,26,0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 24px;
-            padding: 30px;
-            border: 1px solid rgba(0,229,255,0.3);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            transition: 0.3s;
-            text-align: center;
-        }
-
-        .service-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--neon-cyan);
-            box-shadow: 0 25px 50px rgba(0,229,255,0.3);
-        }
-
-        .service-icon {
-            font-size: 48px;
-            color: var(--neon-cyan);
-            margin-bottom: 20px;
-        }
-
-        .service-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 15px;
-        }
-
-        .service-desc {
-            color: #ccc;
-            font-size: 14px;
-            line-height: 1.7;
-            margin-bottom: 25px;
-        }
-
-        .service-btn {
-            display: inline-block;
-            background: transparent;
-            border: 2px solid var(--neon-cyan);
-            color: var(--neon-cyan);
-            padding: 10px 30px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.2s;
-        }
-
-        .service-btn:hover {
-            background: var(--neon-cyan);
-            color: black;
-        }
-
-        /* Penyesuaian judul halaman */
-        .page-title h1 {
-            font-size: 36px;
-        }
-        .page-title p {
-            color: rgba(255,255,255,0.5);
-            font-size: 14px;
-        }
-    </style>
 </head>
 <body>
+    <!-- Canvas untuk bintang -->
     <canvas id="canvas"></canvas>
 
-    <!-- Navbar dengan hamburger -->
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-left">
             <button id="menu-toggle">☰</button>
@@ -94,7 +25,7 @@
         <div class="nav-right">
             <div class="coins-wrapper">COINS: 0</div>
             <div class="user-avatar">
-                <img src=./image/profile.jpg alt=="User">
+                <img src="./image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true'">
             </div>
         </div>
     </nav>
@@ -104,7 +35,7 @@
         <div class="sidebar-header">
             <span class="user-name-text">DzzXNzz</span>
             <div class="sidebar-pfp">
-                <img src=./image/image.jpg alt="PFP">
+                <img src="./image/image.jpg" alt="PFP" onerror="this.src='https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true'">
             </div>
         </div>
         <ul class="sidebar-menu">
@@ -116,33 +47,89 @@
     </div>
     <div class="overlay" id="overlay"></div>
 
-    <!-- Konten Utama -->
+    <!-- Main Content -->
     <main class="main-content">
         <div class="page-title">
             <h1>Layanan Kami</h1>
-            <p>Pilih metode yang sesuai untuk Anda</p>
+            <p>Pilih paket yang sesuai dengan kebutuhan Anda</p>
         </div>
 
-        <div class="service-grid">
-            <!-- Card Pemesanan -->
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-shopping-cart"></i></div>
-                <h3 class="service-title">Pemesanan</h3>
-                <p class="service-desc">Kami akan menghubungi Anda untuk memulai proses pembayaran.</p>
-                <a href="#" class="service-btn">Pesan Sekarang</a>
+        <!-- Grid Produk -->
+        <div class="grid-3">
+            <!-- Card 1 - Panel Pterodactyl -->
+            <div class="modern-card">
+                <span class="card-badge" style="background:var(--neon-purple); color:white;">POPULAR</span>
+                <h3 class="card-title">Panel Pterodactyl</h3>
+                <p class="card-desc">High performance server node untuk hosting panel.</p>
+                <div class="card-specs">
+                    <div class="spec-row">
+                        <span class="spec-label">CPU</span>
+                        <span class="spec-value">250%</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">RAM</span>
+                        <span class="spec-value">8048 MB</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">SSD</span>
+                        <span class="spec-value">8048 MB</span>
+                    </div>
+                </div>
+                <div class="card-price">
+                    Rp 10.000 <span class="price-period">/bulan</span>
+                </div>
+                <a href="#" class="btn-detail"><i class="fas fa-eye"></i> Lihat Detail</a>
             </div>
 
-            <!-- Card Daftar (Register) -->
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-user-plus"></i></div>
-                <h3 class="service-title">Daftar (Register)</h3>
-                <p class="service-desc">Kami akan mengirimkan email ke Anda untuk mendaftar dan melakukan pembayaran.</p>
-                <a href="#" class="service-btn">Daftar</a>
+            <!-- Card 2 - Sewa Bot Jaga -->
+            <div class="modern-card">
+                <span class="card-badge" style="background:var(--neon-cyan);">BOT</span>
+                <h3 class="card-title">Sewa Bot Jaga</h3>
+                <p class="card-desc">Sistem keamanan grup 24 jam dengan fitur lengkap.</p>
+                <div class="card-specs">
+                    <div class="spec-row">
+                        <span class="spec-label">Fitur</span>
+                        <span class="spec-value">Anti Spam</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Grup</span>
+                        <span class="spec-value">Unlimited</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Support</span>
+                        <span class="spec-value">24/7</span>
+                    </div>
+                </div>
+                <div class="card-price">
+                    Rp 15.000 <span class="price-period">/bulan</span>
+                </div>
+                <a href="#" class="btn-detail"><i class="fas fa-eye"></i> Lihat Detail</a>
+            </div>
+
+            <!-- Card 3 - Script & Tools -->
+            <div class="modern-card">
+                <span class="card-badge" style="background:var(--neon-green);">NEW</span>
+                <h3 class="card-title">Script & Tools</h3>
+                <p class="card-desc">Koleksi script terbaru untuk kebutuhan Anda.</p>
+                <div class="card-specs">
+                    <div class="spec-row">
+                        <span class="spec-label">Update</span>
+                        <span class="spec-value">Mingguan</span>
+                    </div>
+                    <div class="spec-row">
+                        <span class="spec-label">Akses</span>
+                        <span class="spec-value">Full</span>
+                    </div>
+                </div>
+                <div class="card-price">
+                    Rp 25.000 <span class="price-period">/bulan</span>
+                </div>
+                <a href="#" class="btn-detail"><i class="fas fa-eye"></i> Lihat Detail</a>
             </div>
         </div>
     </main>
 
-    <!-- Footer (sama seperti halaman lain) -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
             <div>
@@ -186,6 +173,7 @@
         </div>
     </footer>
 
+    <!-- Script -->
     <script src="script.js"></script>
 </body>
 </html>

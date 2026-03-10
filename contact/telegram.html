@@ -9,124 +9,122 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        .detail-container { max-width:500px; margin:100px auto; padding:20px; }
-        .detail-card { background:rgba(18,20,26,0.8); backdrop-filter:blur(8px); border-radius:24px; padding:30px; border:2px solid #0088cc; box-shadow:0 20px 40px rgba(0,0,0,0.5); }
-        .detail-title { color:#0088cc; font-size:36px; text-align:center; margin-bottom:30px; text-shadow:0 0 20px #0088cc; }
-        .info-item { background:rgba(0,0,0,0.3); border-radius:15px; padding:15px; margin-bottom:15px; border-left:4px solid #0088cc; }
-        .info-label { color:#0088cc; font-size:18px; font-weight:600; margin-bottom:8px; }
-        .info-content { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
-        .info-text { color:white; font-size:14px; word-break:break-word; }
-        .btn-hubungi { display:inline-block; background:black; border:2px solid #0088cc; color:#0088cc; padding:8px 20px; border-radius:30px; text-decoration:none; font-weight:600; transition:0.2s; }
-        .btn-hubungi:hover { background:#0088cc; color:black; }
-        .btn-back { display:block; background:transparent; border:2px solid var(--neon-cyan); color:var(--neon-cyan); padding:12px 20px; border-radius:40px; text-align:center; text-decoration:none; font-weight:bold; margin-top:30px; }
-        .btn-back:hover { background:var(--neon-cyan); color:black; }
-        .btn-back-nav { display:flex; align-items:center; gap:5px; background:transparent; border:2px solid #ff4444; color:#ff4444; padding:6px 12px; border-radius:30px; text-decoration:none; font-weight:600; }
-        .btn-back-nav:hover { background:#ff4444; color:black; }
+        body { background: #020202; }
+        .detail-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: transparent;
+            border: 2px solid #ff4444;
+            color: #ff4444;
+            padding: 8px 16px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: 0.2s;
+        }
+        .back-button:hover {
+            background: #ff4444;
+            color: black;
+        }
+        .detail-card {
+            background: rgba(18,20,26,0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 24px;
+            padding: 30px;
+            border: 2px solid #0088cc;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .detail-title {
+            color: #0088cc;
+            font-size: 32px;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px #0088cc;
+        }
+        .info-item {
+            background: rgba(0,0,0,0.3);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #0088cc;
+        }
+        .info-label {
+            color: #0088cc;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .info-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .info-text {
+            color: white;
+            font-size: 14px;
+            word-break: break-word;
+        }
+        .btn-action {
+            display: inline-block;
+            background: black;
+            border: 2px solid #0088cc;
+            color: #0088cc;
+            padding: 8px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .btn-action:hover {
+            background: #0088cc;
+            color: black;
+        }
     </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
 
-    <!-- Navbar dengan tombol kembali merah -->
-    <nav class="navbar">
-        <div class="nav-left">
-            <a href="../contact" class="btn-back-nav">
-                <span style="font-size:18px;">←</span> Kembali
-            </a>
-            <span class="nav-brand">DzzXNzz</span>
-        </div>
-        <div class="nav-right">
-            <div class="coins-wrapper">COINS: 0</div>
-            <div class="user-avatar">
-                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="User">
-            </div>
-        </div>
-    </nav>
+    <div class="detail-container">
+        <!-- Tombol kembali ke contact -->
+        <a href="../contact" class="back-button"><i class="fas fa-arrow-left"></i> Kembali</a>
 
-    <!-- Sidebar tidak ditampilkan -->
-    <div class="sidebar" id="sidebar" style="display:none;"></div>
-    <div class="overlay" id="overlay" style="display:none;"></div>
+        <div class="detail-card">
+            <h1 class="detail-title"><i class="fab fa-telegram-plane"></i> Telegram</h1>
 
-    <main class="main-content">
-        <div class="detail-container">
-            <div class="detail-card">
-                <h1 class="detail-title"><i class="fab fa-telegram-plane"></i> Telegram</h1>
-
-                <!-- Akun Utama -->
-                <div class="info-item">
-                    <div class="info-label">Akun Utama</div>
-                    <div class="info-content">
-                        <span class="info-text">t.me/DzzXNzz</span>
-                        <a href="https://t.me/DzzXNzz" target="_blank" class="btn-hubungi"><i class="fab fa-telegram-plane"></i> Hubungi</a>
-                    </div>
-                </div>
-
-                <!-- Akun Cadangan -->
-                <div class="info-item">
-                    <div class="info-label">Akun Cadangan</div>
-                    <div class="info-content">
-                        <span class="info-text">t.me/dzznyzz</span>
-                        <a href="https://t.me/dzznyzz" target="_blank" class="btn-hubungi"><i class="fab fa-telegram-plane"></i> Hubungi</a>
-                    </div>
-                </div>
-
-                <!-- Channel Testi -->
-                <div class="info-item">
-                    <div class="info-label">Channel Testi</div>
-                    <div class="info-content">
-                        <span class="info-text">t.me/aboutbotnyzz</span>
-                        <a href="https://t.me/aboutbotnyzz" target="_blank" class="btn-hubungi" style="background:#0088cc; color:black;">Kunjungi</a>
-                    </div>
-                </div>
-
-                <a href="../contact" class="btn-back">Kembali ke Contact</a>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer sama seperti halaman lain -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div>
-                <div class="footer-logo">DzzXNzz</div>
-                <p class="footer-desc">Provider hosting generasi baru yang fokus pada performa, keamanan, dan kemudahan penggunaan untuk developer dan kreator.</p>
-                <div class="social-icons">
-                    <a href="https://wa.me/6287713472756" target="_blank" class="social-icon wa"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://t.me/DzzXNzz" target="_blank" class="social-icon tg"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="mailto:alwaysnnyzz@gmail.com" class="social-icon email"><i class="fas fa-envelope"></i> alwaysnnyzz@gmail.com</a>
+            <div class="info-item">
+                <div class="info-label">Akun Utama</div>
+                <div class="info-content">
+                    <span class="info-text">t.me/DzzXNzz</span>
+                    <a href="https://t.me/DzzXNzz" target="_blank" class="btn-action">Hubungi</a>
                 </div>
             </div>
-            <div>
-                <h4 class="footer-title">Layanan</h4>
-                <ul class="footer-links">
-                    <li><a href="#">Cloud Hosting</a></li>
-                    <li><a href="#">VPS Servers</a></li>
-                    <li><a href="#">Dedicated IP</a></li>
-                    <li><a href="#">Bot Jaga</a></li>
-                </ul>
+
+            <div class="info-item">
+                <div class="info-label">Akun Cadangan</div>
+                <div class="info-content">
+                    <span class="info-text">t.me/dzznyzz</span>
+                    <a href="https://t.me/dzznyzz" target="_blank" class="btn-action">Hubungi</a>
+                </div>
             </div>
-            <div>
-                <h4 class="footer-title">Legal</h4>
-                <ul class="footer-links">
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">SLA</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="footer-title">Kontak</h4>
-                <ul class="footer-links">
-                    <li><a href="../contact">WhatsApp</a></li>
-                    <li><a href="../contact">Telegram</a></li>
-                    <li><a href="../contact">Email</a></li>
-                </ul>
+
+            <div class="info-item">
+                <div class="info-label">Channel Testi</div>
+                <div class="info-content">
+                    <span class="info-text">t.me/aboutbotnyzz</span>
+                    <a href="https://t.me/aboutbotnyzz" target="_blank" class="btn-action" style="background:#0088cc; color:black;">Kunjungi</a>
+                </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <span>© 2026 DzzXNzz Host. All rights reserved.</span>
-            <span class="status-badge"><i class="fas fa-circle"></i> ALL SYSTEMS OPERATIONAL</span>
-        </div>
-    </footer>
+    </div>
 
     <script src="../script.js"></script>
 </body>
