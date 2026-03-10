@@ -1,3 +1,85 @@
+/* ===== CARD STYLES UNTUK CONTACT ===== */
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.modern-card {
+    background: rgba(18,20,26,0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0,229,255,0.2);
+    border-radius: 20px;
+    padding: 25px;
+    transition: 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.modern-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 15px 30px rgba(0,229,255,0.3);
+}
+
+.modern-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 30%, rgba(0,229,255,0.1), transparent 70%);
+    opacity: 0;
+    transition: 0.5s;
+    pointer-events: none;
+}
+
+.modern-card:hover::before {
+    opacity: 1;
+}
+
+.card-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 0 8px currentColor);
+}
+
+.card-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #fff;
+    text-shadow: 0 0 5px rgba(0,229,255,0.5);
+}
+
+.card-desc {
+    color: #aaa;
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.btn-detail {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: transparent;
+    border: 2px solid;
+    padding: 12px 0;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.btn-detail:active {
+    transform: scale(0.97);
+    opacity: 0.7;
+}
+
 /* ===== MODAL STYLES ===== */
 .modal {
     display: none;
@@ -12,9 +94,11 @@
     align-items: center;
     justify-content: center;
 }
+
 .modal.active {
     display: flex;
 }
+
 .modal-content {
     background: rgba(18,20,26,0.95);
     backdrop-filter: blur(10px);
@@ -26,10 +110,12 @@
     box-shadow: 0 20px 40px rgba(0,0,0,0.7);
     animation: modalFadeIn 0.3s;
 }
+
 @keyframes modalFadeIn {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
 .modal-header {
     display: flex;
     justify-content: space-between;
@@ -38,6 +124,7 @@
     padding-bottom: 10px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
 }
+
 .modal-header h2 {
     font-size: 24px;
     font-weight: 700;
@@ -45,6 +132,7 @@
     align-items: center;
     gap: 10px;
 }
+
 .close {
     color: #aaa;
     font-size: 28px;
@@ -52,24 +140,29 @@
     cursor: pointer;
     transition: 0.2s;
 }
+
 .close:hover {
     color: white;
 }
+
 .modal-body {
     margin-bottom: 20px;
 }
+
 .info-item {
     background: rgba(0,0,0,0.3);
     border-radius: 15px;
     padding: 15px;
     margin-bottom: 15px;
 }
+
 .info-label {
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 8px;
     color: inherit;
 }
+
 .info-content {
     display: flex;
     justify-content: space-between;
@@ -77,11 +170,13 @@
     flex-wrap: wrap;
     gap: 10px;
 }
+
 .info-content span {
     color: #ccc;
     font-size: 14px;
     word-break: break-word;
 }
+
 .btn-action {
     display: inline-block;
     background: black;
@@ -93,26 +188,8 @@
     transition: 0.2s;
     font-size: 14px;
 }
+
 .btn-action:hover {
     background: currentColor;
     color: black;
-}
-
-/* ===== CARD BUTTON (full width) ===== */
-.btn-detail {
-    display: block;
-    width: 100%;
-    text-align: center;
-    background: transparent;
-    border: 2px solid;
-    padding: 12px 0;
-    border-radius: 40px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.2s;
-    cursor: pointer;
-}
-.btn-detail:active {
-    transform: scale(0.97);
-    opacity: 0.7;
 }
