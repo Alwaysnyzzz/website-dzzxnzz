@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
         donasiBtn.addEventListener("click", (e) => {
             e.preventDefault();
             const nominal = donasiInput.value;
-            if (!nominal || nominal < 1000) {
-                alert("Minimal donasi Rp 1.000");
+            if (!nominal || nominal < 500) {
+                alert("Minimal donasi Rp 500");
                 donasiInput.focus();
                 return;
             }
