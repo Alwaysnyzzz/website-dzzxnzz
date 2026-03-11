@@ -3,77 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pembayaran Sukses - DzzXNzz</title>
+    <title>Sukses - DzzXNzz</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../css/success.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <canvas id="canvas"></canvas>
 
-    <!-- Navbar sederhana -->
+    <!-- Navbar (tanpa menu toggle untuk halaman sukses) -->
     <nav class="navbar">
         <div class="nav-left">
-            <span class="nav-brand">DzzXNzz Website</span>
+            <span class="nav-brand">DzzXNzz</span>
         </div>
         <div class="nav-right">
             <div class="coins-wrapper">COINS: 0</div>
             <div class="user-avatar">
-                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="User">
+                <img src="../image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
             </div>
         </div>
     </nav>
 
-    <!-- Sidebar disembunyikan -->
-    <div class="sidebar" id="sidebar"></div>
-    <div class="overlay" id="overlay"></div>
-
-    <main>
-        <div class="success-container">
-            <div class="success-card">
-                <h2 class="success-title">✓ Pembayaran Berhasil</h2>
-                <div class="success-detail">
-                    <div class="detail-row">
-                        <span class="detail-label">Produk :</span>
-                        <span class="detail-value">QRIS Donation</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Payment :</span>
-                        <span class="detail-value">QRIS</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Layanan :</span>
-                        <span class="detail-value">Pakasir</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Order ID :</span>
-                        <span class="detail-value" id="order-id">-</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Waktu :</span>
-                        <span class="detail-value" id="waktu">-</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Tanggal :</span>
-                        <span class="detail-value" id="tanggal">-</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Status :</span>
-                        <span class="detail-value status-done">done</span>
-                    </div>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="success-card">
+            <h2 class="success-title">✔ Pembayaran Berhasil</h2>
+            <div class="success-detail">
+                <div class="detail-row">
+                    <span class="detail-label">Produk :</span>
+                    <span class="detail-value" id="produk">QRIS Donation</span>
                 </div>
-
-                <!-- Teks dan tombol kirim ke admin -->
-                <p class="info-kirim">kirim struk pembayaran ke admin</p>
-                <button class="btn-kirim">Kirim</button>
-
-                <!-- Tombol kembali ke dashboard -->
-                <a href="/" class="btn-back">Kembali ke Dashboard</a>
+                <div class="detail-row">
+                    <span class="detail-label">Payment :</span>
+                    <span class="detail-value" id="payment">QRIS</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Layanan :</span>
+                    <span class="detail-value" id="layanan">Pakasir</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Order ID :</span>
+                    <span class="detail-value" id="order-id">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Waktu :</span>
+                    <span class="detail-value" id="waktu">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Tanggal :</span>
+                    <span class="detail-value" id="tanggal">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Status :</span>
+                    <span class="detail-value status-done">done</span>
+                </div>
             </div>
+
+            <!-- Tombol Kirim (tetap ada) -->
+            <p class="info-kirim">kirim struk pembayaran ke admin</p>
+            <button class="btn-kirim" id="btnKirim">Kirim</button>
         </div>
     </main>
 
-    <script src="../script.js"></script>
+    <!-- Modal Popup Sukses -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-card">
+            <div class="modal-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 class="modal-title">Transaksi Sukses!</h3>
+            <p class="modal-message">Pembayaran Anda telah berhasil diproses.</p>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-primary" id="btnHome">Kembali ke Home</button>
+                <button class="modal-btn modal-btn-secondary" id="btnStruk">Lihat Struk</button>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/success.js"></script>
+    <script src="../script.js"></script>
 </body>
 </html>

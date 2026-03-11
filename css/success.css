@@ -1,56 +1,62 @@
-/* success.css - Gaya untuk halaman sukses pembayaran */
-
-/* Kontainer utama */
-.success-container {
-    max-width: 450px;
-    margin: 100px auto 40px;
-    padding: 0 20px;
+/* ===== SUCCESS PAGE ===== */
+.main-content {
+    padding: 100px 20px 40px;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
-/* Kartu sukses */
 .success-card {
-    background: rgba(20, 20, 20, 0.9);
-    border-radius: 15px;
+    background: rgba(18,20,26,0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
     padding: 30px 25px;
-    border: 2px solid #00ff88; /* neon hijau */
-    box-shadow: 0 0 25px rgba(0, 255, 136, 0.5);
-    text-align: center;
+    border: 2px solid #00ff88;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 20px #00ff88;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Judul sukses */
+.success-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 30%, rgba(0,255,136,0.1), transparent 70%);
+    opacity: 0.3;
+    pointer-events: none;
+}
+
 .success-title {
     color: #00ff88;
-    font-size: 24px;
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
     margin-bottom: 25px;
     text-shadow: 0 0 10px #00ff88;
 }
 
-/* Detail transaksi */
 .success-detail {
-    text-align: left;
-    margin-bottom: 30px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    padding: 15px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 25px;
 }
 
-/* Baris detail */
 .detail-row {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 12px;
     font-size: 14px;
-    line-height: 1.5;
 }
 
-/* Label detail */
 .detail-label {
     flex: 0 0 100px;
     color: #aaa;
     font-weight: 400;
 }
 
-/* Nilai detail */
 .detail-value {
     flex: 1;
     color: white;
@@ -58,85 +64,150 @@
     word-break: break-word;
 }
 
-/* Status selesai dengan warna hijau */
 .detail-value.status-done {
     color: #00ff88;
-    font-weight: bold;
+    font-weight: 700;
     text-shadow: 0 0 5px #00ff88;
 }
 
-/* Teks informasi kirim ke admin */
 .info-kirim {
+    text-align: center;
     color: #ccc;
     font-size: 14px;
-    margin: 20px 0 10px;
-    text-align: center;
+    margin-bottom: 15px;
 }
 
-/* Tombol Kirim (hijau) */
 .btn-kirim {
-    background: #44ff44;
-    border: none;
-    color: black;
-    padding: 10px 30px;
-    border-radius: 30px;
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+    padding: 12px 25px;
+    background: transparent;
+    border: 2px solid #00ff88;
+    color: #00ff88;
+    border-radius: 40px;
+    font-weight: 600;
     font-size: 16px;
-    font-weight: bold;
     cursor: pointer;
     transition: 0.2s;
-    margin-bottom: 15px;
-    display: inline-block;
-    box-shadow: 0 0 10px rgba(68, 255, 68, 0.5);
 }
 
 .btn-kirim:hover {
-    background: #00ff00;
-    box-shadow: 0 0 20px #44ff44;
-    transform: scale(1.02);
-}
-
-/* Tombol Kembali ke Dashboard (cyan) */
-.btn-back {
-    display: inline-block;
-    background: transparent;
-    border: 2px solid var(--neon-cyan, #00e5ff);
-    color: var(--neon-cyan, #00e5ff);
-    padding: 12px 30px;
-    border-radius: 40px;
-    font-size: 16px;
-    font-weight: bold;
-    text-decoration: none;
-    transition: 0.2s;
-    margin-top: 10px;
-}
-
-.btn-back:hover {
-    background: var(--neon-cyan, #00e5ff);
+    background: #00ff88;
     color: black;
-    box-shadow: 0 0 20px var(--neon-cyan);
+    box-shadow: 0 0 20px #00ff88;
+    transform: translateY(-2px);
 }
 
-/* Sembunyikan menu toggle dan sidebar (karena tidak dipakai di halaman sukses) */
-#menu-toggle,
-.sidebar,
-.overlay {
-    display: none;
+/* ===== MODAL POPUP ===== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s;
 }
 
-/* Responsif untuk layar kecil */
-@media (max-width: 400px) {
-    .detail-label {
-        flex: 0 0 80px;
-        font-size: 13px;
-    }
-    .detail-value {
-        font-size: 13px;
-    }
-    .success-card {
-        padding: 20px 15px;
-    }
-    .btn-kirim, .btn-back {
-        width: 100%;
-        box-sizing: border-box;
-    }
+.modal-overlay.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal-card {
+    background: rgba(20,25,35,0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 30px 25px;
+    max-width: 350px;
+    width: 90%;
+    border: 2px solid #00ff88;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px #00ff88;
+    text-align: center;
+    animation: modalFadeIn 0.3s;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-icon {
+    font-size: 60px;
+    color: #00ff88;
+    margin-bottom: 15px;
+    text-shadow: 0 0 20px #00ff88;
+}
+
+.modal-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.modal-message {
+    color: #ccc;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.modal-btn {
+    flex: 1;
+    padding: 12px 0;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 2px solid;
+    background: transparent;
+}
+
+.modal-btn-primary {
+    border-color: #00ff88;
+    color: #00ff88;
+}
+
+.modal-btn-primary:hover {
+    background: #00ff88;
+    color: black;
+    box-shadow: 0 0 20px #00ff88;
+    transform: translateY(-2px);
+}
+
+.modal-btn-secondary {
+    border-color: #00e5ff;
+    color: #00e5ff;
+}
+
+.modal-btn-secondary:hover {
+    background: #00e5ff;
+    color: black;
+    box-shadow: 0 0 20px #00e5ff;
+    transform: translateY(-2px);
+}
+
+/* Responsif */
+@media (max-width: 480px) {
+    .success-title { font-size: 24px; }
+    .detail-label { flex-basis: 80px; font-size: 13px; }
+    .detail-value { font-size: 13px; }
+    .btn-kirim { width: 100%; }
+    .modal-actions { flex-direction: column; }
 }

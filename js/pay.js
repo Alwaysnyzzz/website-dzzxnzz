@@ -113,23 +113,26 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===== Tombol Cek Status =====
-    cekStatusBtn.addEventListener('click', async function() {
-        try {
-            const res = await fetch(`/api/check-status?order_id=${orderId}&amount=${transactionAmount}`);
-            const data = await res.json();
-            if (res.ok) {
-                alert('Status: ' + data.status);
-                if (data.status === 'completed') {
-                    window.location.href = `/success?order_id=${orderId}`;
-                }
+// ===== Tombol Cek Status =====
+cekStatusBtn.addEventListener('click', async function() {
+    try {
+        const res = await fetch(`/api/check-status?order_id=${orderId}&amount=${transactionAmount}`);
+        const data = await res.json();
+        if (res.ok) {
+            if (data.status === 'completed') {
+                // Redirect langsung tanpa alert
+                window.location.href = `/success?order_id=${orderId}`;
             } else {
-                alert('Gagal cek status: ' + (data.error || ''));
+                // Tampilkan alert hanya jika status bukan completed (opsional)
+                alert('Status: ' + data.status);
             }
-        } catch (err) {
-            alert('Error: ' + err.message);
+        } else {
+            alert('Gagal cek status: ' + (data.error || ''));
         }
-    });
-
+    } catch (err) {
+        alert('Error: ' + err.message);
+    }
+});
     // ===== Tombol Batalkan =====
     batalkanBtn.addEventListener('click', async function() {
         if (!confirm('Yakin ingin membatalkan transaksi ini?')) return;
