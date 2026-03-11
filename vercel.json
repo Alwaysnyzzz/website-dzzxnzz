@@ -1,5 +1,6 @@
 {
   "rewrites": [
+    { "source": "/home", "destination": "/index.html" },
     { "source": "/donasi", "destination": "/donasi.html" },
     { "source": "/pay", "destination": "/halaman/pay.html" },
     { "source": "/success", "destination": "/halaman/success.html" },
@@ -8,7 +9,7 @@
     { "source": "/contact/wa", "destination": "/contact/wa.html" },
     { "source": "/contact/telegram", "destination": "/contact/telegram.html" },
     { "source": "/login", "destination": "/login.html" },
-    { "source": "/dashboard", "destination": "/dashboard.html" },
+    { "source": "/register", "destination": "/register.html" },
     { "source": "/(.*)", "destination": "/$1.html" }
   ]
 }
