@@ -31,7 +31,6 @@
       position: relative;
     }
 
-    /* BACKGROUND LAYERS (same as login) */
     .bg-blob {
       position: absolute;
       width: 120vw;
@@ -73,7 +72,6 @@
 
     canvas { position: absolute; top: 0; left: 0; z-index: 1; pointer-events: none; }
 
-    /* REGISTER CARD */
     .register-card {
       position: relative;
       z-index: 10;
@@ -103,13 +101,13 @@
     @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
     @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
 
-    /* CONTENT */
     .logo-container {
       position: relative;
       width: 90px;
       height: 90px;
       margin: 0 auto 20px;
     }
+
     .logo-img {
       width: 100%; height: 100%;
       border-radius: 50%;
@@ -117,6 +115,7 @@
       border: 2px solid rgba(255,255,255,0.2);
       padding: 4px;
     }
+
     .logo-glow {
       position: absolute;
       inset: -5px;
@@ -124,6 +123,7 @@
       border: 2px dashed var(--primary);
       animation: rotateRing 10s linear infinite;
     }
+
     @keyframes rotateRing { to { transform: rotate(360deg); } }
 
     h1 {
@@ -136,6 +136,7 @@
       -webkit-text-fill-color: transparent;
       letter-spacing: 2px;
     }
+
     .subtitle {
       text-align: center;
       font-size: 14px;
@@ -145,7 +146,6 @@
       text-transform: uppercase;
     }
 
-    /* FORM */
     .input-group { position: relative; margin-bottom: 25px; }
     .input-group label {
       display: block;
@@ -193,7 +193,6 @@
     }
     #password:focus + i, #confirmPassword:focus + i { color: var(--secondary); }
 
-    /* BUTTON */
     .btn-register {
       width: 100%;
       padding: 18px;
@@ -258,7 +257,6 @@
       animation: slideUp 0.5s ease;
     }
 
-    /* FOOTER LINK */
     .footer {
       margin-top: 30px;
       text-align: center;
@@ -281,7 +279,6 @@
       background: rgba(255,255,255,0.05);
     }
 
-    /* STAGGER ANIMATIONS */
     .logo-container { animation: slideUp 0.6s 0.1s backwards; }
     h1, .subtitle { animation: slideUp 0.6s 0.2s backwards; }
     .input-group:nth-child(1) { animation: slideUp 0.6s 0.3s backwards; }
@@ -327,10 +324,10 @@
 
     <form id="registerForm">
       <div class="input-group">
-        <label>Email</label>
+        <label>Username</label>
         <div class="input-wrapper">
-          <input type="email" id="email" placeholder="your@email.com" required autofocus>
-          <i class="fas fa-envelope"></i>
+          <input type="text" id="username" placeholder="username" required autofocus>
+          <i class="fas fa-user"></i>
         </div>
       </div>
       <div class="input-group">
@@ -360,7 +357,6 @@
   </div>
 
   <script>
-    // Particle system (same as login)
     const canvas = document.getElementById('particleCanvas');
     const ctx = canvas.getContext('2d');
     let w, h, particles = [];
@@ -416,7 +412,6 @@
     resize();
     animate();
 
-    // Register handling
     const form = document.getElementById('registerForm');
     const btn = document.querySelector('.btn-register');
     const btnText = document.getElementById('btnText');
@@ -431,11 +426,11 @@
       errorMsg.style.display = 'none';
       successMsg.style.display = 'none';
 
-      const email = document.getElementById('email').value.trim();
+      const username = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value.trim();
       const confirm = document.getElementById('confirmPassword').value.trim();
 
-      if (!email || !password || !confirm) {
+      if (!username || !password || !confirm) {
         showError('Semua field harus diisi!');
         return;
       }
@@ -454,16 +449,19 @@
       btnText.style.display = 'none';
       loader.style.display = 'block';
 
+      // Untuk sementara, kita gunakan username sebagai email (asumsi username diisi dengan email)
+      // Jika ingin benar-benar menggunakan username, perlu penyesuaian backend.
+      const email = username; // asumsi username diisi dengan email
+
       try {
         const res = await fetch('/api/auth/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password, name: email.split('@')[0] })
+          body: JSON.stringify({ email, password, name: username })
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Registrasi gagal');
 
-        // Show success message
         successMsg.style.display = 'block';
         successText.textContent = 'Registrasi berhasil! Mengalihkan ke login...';
         setTimeout(() => {

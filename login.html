@@ -25,13 +25,12 @@
       height: 100vh;
       display: flex;
       justify-content: center;
-      align-items: flex-start; /* Digeser ke atas */
+      align-items: flex-start;
       padding-top: 5vh;
       overflow: hidden;
       position: relative;
     }
 
-    /* BACKGROUND LAYERS */
     .bg-blob {
       position: absolute;
       width: 120vw;
@@ -73,7 +72,6 @@
 
     canvas { position: absolute; top: 0; left: 0; z-index: 1; pointer-events: none; }
 
-    /* LOGIN CARD */
     .login-card {
       position: relative;
       z-index: 10;
@@ -103,7 +101,6 @@
     @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
     @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
 
-    /* CONTENT */
     .logo-container {
       position: relative;
       width: 90px;
@@ -149,7 +146,6 @@
       text-transform: uppercase;
     }
 
-    /* FORM */
     .input-group { position: relative; margin-bottom: 25px; }
     .input-group label {
       display: block;
@@ -194,7 +190,6 @@
     #password:focus { border-color: var(--secondary); box-shadow: 0 0 15px rgba(0, 255, 136, 0.2); }
     #password:focus + i { color: var(--secondary); }
 
-    /* BUTTON */
     .btn-login {
       width: 100%;
       padding: 18px;
@@ -246,7 +241,6 @@
     }
     .error-message i { margin-right: 8px; }
 
-    /* FOOTER LINK */
     .footer {
       margin-top: 30px;
       text-align: center;
@@ -269,7 +263,6 @@
       background: rgba(255,255,255,0.05);
     }
 
-    /* STAGGER ANIMATIONS */
     .logo-container { animation: slideUp 0.6s 0.1s backwards; }
     h1, .subtitle { animation: slideUp 0.6s 0.2s backwards; }
     .input-group:nth-child(1) { animation: slideUp 0.6s 0.3s backwards; }
@@ -310,10 +303,10 @@
 
     <form id="loginForm">
       <div class="input-group">
-        <label>Email</label>
+        <label>Username</label>
         <div class="input-wrapper">
-          <input type="email" id="email" placeholder="your@email.com" required autofocus>
-          <i class="fas fa-envelope"></i>
+          <input type="text" id="username" placeholder="username" required autofocus>
+          <i class="fas fa-user"></i>
         </div>
       </div>
       <div class="input-group">
@@ -336,7 +329,6 @@
   </div>
 
   <script>
-    // Particle system
     const canvas = document.getElementById('particleCanvas');
     const ctx = canvas.getContext('2d');
     let w, h, particles = [];
@@ -392,7 +384,6 @@
     resize();
     animate();
 
-    // Login handling
     const form = document.getElementById('loginForm');
     const btn = document.querySelector('.btn-login');
     const btnText = document.getElementById('btnText');
@@ -403,17 +394,25 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       errorMsg.style.display = 'none';
-      const email = document.getElementById('email').value.trim();
+
+      const username = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value.trim();
-      if (!email || !password) {
-        showError('Email dan password harus diisi!');
+
+      if (!username || !password) {
+        showError('Username dan password harus diisi!');
         return;
       }
+
       btn.disabled = true;
       btn.style.opacity = '0.8';
       btn.style.pointerEvents = 'none';
       btnText.style.display = 'none';
       loader.style.display = 'block';
+
+      // Untuk sementara, kita kirim username sebagai email (asumsi username = email)
+      // Jika backend menggunakan email, kita perlu mengubahnya. Atau kita bisa menggunakan field username di metadata.
+      // Demi sederhana, kita kirim username sebagai email (asumsi user memasukkan email di field username).
+      const email = username; // asumsi username diisi dengan email
 
       try {
         const res = await fetch('/api/auth/login', {
@@ -424,7 +423,7 @@
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Login gagal');
         localStorage.setItem('sb-session', JSON.stringify(data.session));
-        window.location.href = 'dashboard.html';
+        window.location.href = 'index.html';
       } catch (err) {
         showError(err.message);
       } finally {
@@ -437,11 +436,8 @@
     });
 
     function showError(msg) {
-      errorMsg.style.background = 'rgba(255,0,85,0.1)';
-      errorMsg.style.borderColor = 'rgba(255,0,85,0.3)';
-      errorMsg.style.color = '#ff6b9d';
-      errorText.textContent = msg;
       errorMsg.style.display = 'block';
+      errorText.textContent = msg;
       setTimeout(() => { errorMsg.style.display = 'none'; }, 5000);
     }
   </script>
