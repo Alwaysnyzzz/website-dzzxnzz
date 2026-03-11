@@ -3,17 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - DzzXNzz</title>
-    <!-- CSS Global -->
+    <title>Register - DzzXNzz</title>
     <link rel="stylesheet" href="style.css">
-    <!-- CSS Loading (untuk animasi ring) -->
     <link rel="stylesheet" href="css/loading.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Override warna sesuai permintaan: neon biru + neon hijau */
         :root {
             --neon-cyan: #00e5ff;
             --neon-green: #00ff88;
@@ -33,7 +28,6 @@
             margin: 0;
             position: relative;
         }
-        /* Canvas bintang (akan diisi oleh script.js) */
         #canvas {
             position: fixed;
             top: 0;
@@ -43,7 +37,7 @@
             z-index: -1;
             pointer-events: none;
         }
-        .login-card {
+        .register-card {
             background: rgba(18,20,26,0.9);
             backdrop-filter: blur(10px);
             border: 2px solid var(--neon-cyan);
@@ -56,7 +50,6 @@
             position: relative;
             z-index: 1;
         }
-        /* Foto profil */
         .profile-avatar {
             width: 80px;
             height: 80px;
@@ -95,7 +88,7 @@
             border-color: var(--neon-green);
             box-shadow: 0 0 15px var(--neon-green);
         }
-        .btn-login {
+        .btn-register {
             width: 100%;
             padding: 14px;
             border-radius: 50px;
@@ -110,7 +103,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .btn-login:hover {
+        .btn-register:hover {
             box-shadow: 0 0 20px var(--neon-cyan), 0 0 20px var(--neon-green);
             transform: scale(1.02);
         }
@@ -137,7 +130,6 @@
         .error { color: #ff5555; }
         .success { color: var(--neon-green); }
 
-        /* Loading overlay (untuk proses) */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -159,7 +151,6 @@
             visibility: visible;
             opacity: 1;
         }
-        /* Gunakan loader dari loading.css */
         .loading-overlay .loader-rings {
             width: 80px;
             height: 80px;
@@ -175,7 +166,6 @@
 <body>
     <canvas id="canvas"></canvas>
 
-    <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loader-rings">
             <div class="ring ring-outer"></div>
@@ -184,23 +174,23 @@
         <div class="loading-text" id="loadingText">Processing...</div>
     </div>
 
-    <div class="login-card">
-        <!-- Foto profil -->
+    <div class="register-card">
         <div class="profile-avatar">
             <img src="./image/profile.jpg" alt="Profile" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
         </div>
 
-        <h1><i class="fas fa-lock"></i> Login</h1>
+        <h1><i class="fas fa-user-plus"></i> Register</h1>
         
         <input type="email" id="email" placeholder="Email" autocomplete="email">
-        <input type="password" id="password" placeholder="Password" autocomplete="current-password">
+        <input type="password" id="password" placeholder="Password" autocomplete="new-password">
+        <input type="password" id="confirmPassword" placeholder="Ulangi Password">
         
         <div id="message" class="message"></div>
         
-        <button class="btn-login" onclick="handleLogin()">Login</button>
+        <button class="btn-register" onclick="handleRegister()">Register</button>
 
         <div class="links">
-            <a href="register.html">Belum Punya Akun? Register</a>
+            <a href="login.html">Sudah Punya Akun? Login</a>
         </div>
     </div>
 
@@ -225,34 +215,41 @@
             loadingOverlay.classList.remove('active')
         }
 
-        async function handleLogin() {
+        async function handleRegister() {
             const email = document.getElementById('email').value
             const password = document.getElementById('password').value
+            const confirm = document.getElementById('confirmPassword').value
 
-            if (!email || !password) {
-                showMessage('Email dan password harus diisi', 'error')
+            if (!email || !password || !confirm) {
+                showMessage('Semua field harus diisi', 'error')
+                return
+            }
+            if (password.length < 6) {
+                showMessage('Password minimal 6 karakter', 'error')
+                return
+            }
+            if (password !== confirm) {
+                showMessage('Password tidak cocok', 'error')
                 return
             }
 
             showMessage('Memproses...', '')
-            showLoading('Logging in')
+            showLoading('Registering')
 
             try {
-                const res = await fetch('/api/auth/login', {
+                const res = await fetch('/api/auth/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
+                    body: JSON.stringify({ email, password, name: email.split('@')[0] })
                 })
                 const data = await res.json()
                 hideLoading()
 
                 if (!res.ok) throw new Error(data.error)
 
-                localStorage.setItem('sb-session', JSON.stringify(data.session))
-                showMessage('Login berhasil! Mengalihkan...', 'success')
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html'
-                }, 1000)
+                showMessage('Registrasi berhasil! Silakan login.', 'success')
+                document.getElementById('password').value = ''
+                document.getElementById('confirmPassword').value = ''
 
             } catch (err) {
                 hideLoading()
@@ -265,7 +262,7 @@
             messageEl.className = 'message ' + type
         }
 
-        // Canvas stars (diambil dari script.js)
+        // Canvas stars (sama seperti login)
         (function() {
             const canvas = document.getElementById('canvas')
             if (!canvas) return
