@@ -9,8 +9,8 @@
 
   <style>
     :root {
-      --primary: #00e5ff; /* Neon Cyan */
-      --secondary: #00ff88; /* Neon Hijau */
+      --primary: #00e5ff;
+      --secondary: #00ff88;
       --bg-dark: #050508;
       --glass: rgba(20, 25, 35, 0.6);
       --border: rgba(255, 255, 255, 0.1);
@@ -25,13 +25,13 @@
       height: 100vh;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start; /* Digeser ke atas */
+      padding-top: 5vh;
       overflow: hidden;
       position: relative;
     }
 
-    /* === BACKGROUND LAYERS === */
-    
+    /* BACKGROUND LAYERS */
     .bg-blob {
       position: absolute;
       width: 120vw;
@@ -62,12 +62,18 @@
       pointer-events: none;
     }
 
-    @keyframes pulseBlob { 0% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); } 100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); } }
-    @keyframes gridMove { 0% { transform: perspective(500px) rotateX(60deg) translateY(0); } 100% { transform: perspective(500px) rotateX(60deg) translateY(50px); } }
+    @keyframes pulseBlob {
+      0% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
+    }
+    @keyframes gridMove {
+      0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+      100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+    }
 
     canvas { position: absolute; top: 0; left: 0; z-index: 1; pointer-events: none; }
 
-    /* === LOGIN CARD === */
+    /* LOGIN CARD */
     .login-card {
       position: relative;
       z-index: 10;
@@ -97,8 +103,7 @@
     @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
     @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
 
-    /* === CONTENT STYLING === */
-    
+    /* CONTENT */
     .logo-container {
       position: relative;
       width: 90px;
@@ -144,9 +149,8 @@
       text-transform: uppercase;
     }
 
-    /* === FORM & INPUTS === */
+    /* FORM */
     .input-group { position: relative; margin-bottom: 25px; }
-
     .input-group label {
       display: block;
       font-size: 12px;
@@ -157,9 +161,7 @@
       text-transform: uppercase;
       margin-left: 5px;
     }
-
     .input-wrapper { position: relative; }
-
     .input-wrapper i {
       position: absolute;
       left: 18px;
@@ -170,7 +172,6 @@
       transition: 0.3s ease;
       z-index: 2;
     }
-
     input {
       width: 100%;
       padding: 16px 20px 16px 50px;
@@ -184,19 +185,16 @@
       outline: none;
       transition: all 0.3s ease;
     }
-
     input:focus {
       border-color: var(--primary);
       box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
       background: rgba(0, 0, 0, 0.6);
     }
-
     input:focus + i { color: var(--primary); transform: translateY(-50%) scale(1.2); }
-    
     #password:focus { border-color: var(--secondary); box-shadow: 0 0 15px rgba(0, 255, 136, 0.2); }
     #password:focus + i { color: var(--secondary); }
 
-    /* === BUTTON === */
+    /* BUTTON */
     .btn-login {
       width: 100%;
       padding: 18px;
@@ -214,7 +212,6 @@
       transition: 0.3s;
       box-shadow: 0 10px 20px rgba(0, 229, 255, 0.2);
     }
-
     .btn-login::before {
       content: '';
       position: absolute;
@@ -222,7 +219,6 @@
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
       transition: 0.5s;
     }
-
     .btn-login:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0, 255, 136, 0.3); }
     .btn-login:hover::before { left: 100%; }
     .btn-login:active { transform: scale(0.98); }
@@ -234,6 +230,7 @@
       border-radius: 50%; border-top-color: #fff;
       animation: spin 0.8s linear infinite; margin: 0 auto;
     }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     .error-message {
       display: none;
@@ -247,18 +244,32 @@
       color: #ff6b9d;
       animation: slideUp 0.5s ease;
     }
-
     .error-message i { margin-right: 8px; }
 
-    /* === FOOTER === */
-    .footer { margin-top: 30px; text-align: center; font-size: 13px; }
-    .footer a {
-      color: #888; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
-      transition: 0.3s; padding: 8px 16px; border-radius: 20px; border: 1px solid transparent;
+    /* FOOTER LINK */
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 13px;
     }
-    .footer a:hover { color: #fff; border-color: var(--border); background: rgba(255,255,255,0.05); }
+    .footer a {
+      color: #888;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.3s;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1px solid transparent;
+    }
+    .footer a:hover {
+      color: #fff;
+      border-color: var(--border);
+      background: rgba(255,255,255,0.05);
+    }
 
-    /* === STAGGER ANIMATION DELAYS === */
+    /* STAGGER ANIMATIONS */
     .logo-container { animation: slideUp 0.6s 0.1s backwards; }
     h1, .subtitle { animation: slideUp 0.6s 0.2s backwards; }
     .input-group:nth-child(1) { animation: slideUp 0.6s 0.3s backwards; }
@@ -266,27 +277,24 @@
     .btn-login { animation: slideUp 0.6s 0.5s backwards; }
     .footer { animation: slideUp 0.6s 0.6s backwards; }
 
-    @keyframes spin { to { transform: rotate(360deg); } }
-
     @media (max-width: 480px) {
       .login-card { padding: 30px 20px; width: 88%; }
       h1 { font-size: 22px; }
       .subtitle { font-size: 12px; margin-bottom: 25px; }
-      .logo-container { width: 70px; height: 70px; margin-bottom: 15px; }
+      .logo-container { width: 70px; height: 70px; }
       input { padding: 14px 15px 14px 45px; font-size: 14px; }
       .input-wrapper i { left: 15px; font-size: 14px; }
       .btn-login { padding: 15px; font-size: 12px; }
+      body { padding-top: 2vh; }
     }
   </style>
 </head>
 <body>
-
   <div class="bg-blob"></div>
   <div class="bg-grid"></div>
   <canvas id="particleCanvas"></canvas>
 
   <div class="login-card">
-    
     <div class="logo-container">
       <div class="logo-glow"></div>
       <img src="./image/profile.jpg" alt="Profile" class="logo-img" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
@@ -297,31 +305,28 @@
 
     <div class="error-message" id="errorMessage">
       <i class="fas fa-exclamation-triangle"></i>
-      <span id="errorText">Invalid username or password!</span>
+      <span id="errorText">Invalid credentials!</span>
     </div>
 
     <form id="loginForm">
       <div class="input-group">
         <label>Email</label>
         <div class="input-wrapper">
-          <input type="email" name="email" id="email" placeholder="your@email.com" required autocomplete="email" autofocus>
+          <input type="email" id="email" placeholder="your@email.com" required autofocus>
           <i class="fas fa-envelope"></i>
         </div>
       </div>
-
       <div class="input-group">
         <label>Password</label>
         <div class="input-wrapper">
-          <input type="password" name="password" id="password" placeholder="••••••••" required>
+          <input type="password" id="password" placeholder="••••••••" required>
           <i class="fas fa-lock"></i>
         </div>
       </div>
-
       <button type="submit" class="btn-login">
         <span id="btnText">LOGIN</span>
         <div class="loader" id="loader"></div>
       </button>
-
       <div class="footer">
         <a href="register.html">
           <i class="fas fa-user-plus"></i> Belum punya akun? Register
@@ -331,19 +336,17 @@
   </div>
 
   <script>
-    // === PARTICLE SYSTEM ===
+    // Particle system
     const canvas = document.getElementById('particleCanvas');
     const ctx = canvas.getContext('2d');
-    
-    let w, h;
-    let particles = [];
-    
+    let w, h, particles = [];
+
     function resize() {
       w = canvas.width = window.innerWidth;
       h = canvas.height = window.innerHeight;
       initParticles();
     }
-    
+
     class Particle {
       constructor() { this.reset(); }
       reset() {
@@ -362,7 +365,7 @@
       }
       draw() {
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
         ctx.fillStyle = this.color;
         ctx.globalAlpha = this.life;
         ctx.shadowBlur = 10;
@@ -372,70 +375,58 @@
         ctx.shadowBlur = 0;
       }
     }
-    
+
     function initParticles() {
       particles = [];
-      const count = window.innerWidth < 480 ? 40 : 80;
-      for(let i=0; i<count; i++) particles.push(new Particle());
+      const count = w < 480 ? 40 : 80;
+      for (let i=0; i<count; i++) particles.push(new Particle());
     }
-    
+
     function animate() {
       ctx.clearRect(0, 0, w, h);
       particles.forEach(p => { p.update(); p.draw(); });
       requestAnimationFrame(animate);
     }
-    
+
     window.addEventListener('resize', resize);
     resize();
     animate();
 
-    // === LOGIN INTERACTION ===
+    // Login handling
     const form = document.getElementById('loginForm');
     const btn = document.querySelector('.btn-login');
     const btnText = document.getElementById('btnText');
     const loader = document.getElementById('loader');
-    const errorMessage = document.getElementById('errorMessage');
+    const errorMsg = document.getElementById('errorMessage');
     const errorText = document.getElementById('errorText');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
-      errorMessage.style.display = 'none';
-      
+      errorMsg.style.display = 'none';
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value.trim();
-      
       if (!email || !password) {
         showError('Email dan password harus diisi!');
         return;
       }
-      
       btn.disabled = true;
       btn.style.opacity = '0.8';
       btn.style.pointerEvents = 'none';
       btnText.style.display = 'none';
       loader.style.display = 'block';
-      
+
       try {
-        const response = await fetch('/api/auth/login', {
+        const res = await fetch('/api/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password })
         });
-        
-        const data = await response.json();
-        
-        if (!response.ok) throw new Error(data.error || 'Login gagal');
-        
-        // Simpan session
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Login gagal');
         localStorage.setItem('sb-session', JSON.stringify(data.session));
-        
-        // Redirect ke dashboard
         window.location.href = 'dashboard.html';
-        
-      } catch (error) {
-        console.error('Login error:', error);
-        showError(error.message || 'Terjadi kesalahan. Silakan coba lagi.');
+      } catch (err) {
+        showError(err.message);
       } finally {
         btn.disabled = false;
         btn.style.opacity = '1';
@@ -444,15 +435,14 @@
         loader.style.display = 'none';
       }
     });
-    
-    function showError(message) {
-      errorText.textContent = message;
-      errorMessage.style.display = 'block';
-      setTimeout(() => {
-        if (errorMessage.style.display === 'block') {
-          errorMessage.style.display = 'none';
-        }
-      }, 5000);
+
+    function showError(msg) {
+      errorMsg.style.background = 'rgba(255,0,85,0.1)';
+      errorMsg.style.borderColor = 'rgba(255,0,85,0.3)';
+      errorMsg.style.color = '#ff6b9d';
+      errorText.textContent = msg;
+      errorMsg.style.display = 'block';
+      setTimeout(() => { errorMsg.style.display = 'none'; }, 5000);
     }
   </script>
 </body>
