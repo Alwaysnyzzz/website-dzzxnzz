@@ -3,92 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Pembayaran - DzzXNzz</title>
-    <!-- CSS utama -->
+    <title>Pembayaran - DzzXNzz</title>
+    <!-- CSS Global -->
     <link rel="stylesheet" href="../style.css">
-    <!-- CSS khusus pay -->
+    <!-- CSS Khusus Pay -->
     <link rel="stylesheet" href="../css/pay.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Library QR Code -->
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- QR Code Library -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <style>
+        /* Pastikan navbar tidak punya menu toggle */
+        .navbar #menu-toggle {
+            display: none;
+        }
+        .nav-left {
+            margin-left: 0;
+        }
+    </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
 
-    <!-- Navbar -->
+    <!-- Navbar tanpa tombol menu -->
     <nav class="navbar">
         <div class="nav-left">
-            <span class="nav-brand">DzzXNzz Website</span>
+            <!-- Tombol menu dihilangkan -->
+            <span class="nav-brand">DzzXNzz</span>
         </div>
         <div class="nav-right">
             <div class="coins-wrapper">COINS: 0</div>
             <div class="user-avatar">
-                <img src="https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true" alt="User">
+                <img src="../image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
             </div>
         </div>
     </nav>
 
-    <!-- Sidebar (disembunyikan via CSS) -->
-    <div class="sidebar" id="sidebar"></div>
-    <div class="overlay" id="overlay"></div>
+    <!-- Sidebar tidak ada -->
 
-    <!-- Konten Utama -->
-    <main>
-        <div class="pay-container">
-            <div class="pay-card">
-                <div class="timer-container" id="timer">⏳ Menghitung...</div>
-                <div class="qr-frame">
-                    <div id="qrcode"></div>
-                </div>
-                <button class="btn-download" id="downloadBtn">📥 DOWNLOAD QR</button>
-                <div class="btn-group">
-                    <button class="btn" id="cek-status">🔄 CEK STATUS</button>
-                    <button class="btn btn-red" id="batalkan">❌ BATALKAN</button>
-                </div>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="payment-card">
+            <!-- Timer -->
+            <div class="timer-container" id="timer">
+                <i class="fas fa-hourglass-half"></i> Menghitung...
+            </div>
+
+            <!-- QR Code Frame -->
+            <div class="qr-frame">
+                <div id="qrcode"></div>
+            </div>
+
+            <!-- Download Button -->
+            <button class="btn-download" id="downloadBtn">
+                <i class="fas fa-download"></i> DOWNLOAD QR
+            </button>
+
+            <!-- Action Buttons -->
+            <div class="btn-group">
+                <button class="btn btn-primary" id="cek-status">
+                    <i class="fas fa-sync-alt"></i> CEK STATUS
+                </button>
+                <button class="btn btn-danger" id="batalkan">
+                    <i class="fas fa-times-circle"></i> BATALKAN
+                </button>
             </div>
         </div>
     </main>
 
-    <!-- Overlay Loading -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loader"></div>
-        <div class="loading-text" id="loadingText">loading ...</div>
-    </div>
-
-    <!-- Modal Batalkan -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-card">
-            <p>Apakah Anda Yakin Ingin Membatalkan Transaksi Ini?</p>
-            <div class="modal-buttons">
-                <button class="modal-btn ya" id="modalYa">Ya</button>
-                <button class="modal-btn tidak" id="modalTidak">Tidak</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Pending -->
-    <div class="modal-overlay pending-modal" id="pendingModal">
-        <div class="modal-card">
-            <p>Status masih pending, silahkan lakukan pembayaran</p>
-            <div class="modal-buttons">
-                <button class="modal-btn ok" id="pendingOk">OK</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Success Overlay -->
-    <div class="success-overlay" id="successOverlay">
-        <div class="checkmark-circle">
-            <div class="checkmark"></div>
-        </div>
-        <div class="success-message">Terima Kasih!</div>
-        <div class="success-submessage">Uang Anda sangat bermanfaat untuk pengembangan website ini.</div>
-        <button class="btn-bukti" id="btnBukti">📄 Bukti Pembayaran</button>
-    </div>
-
-    <!-- Script utama (root) -->
-    <script src="../script.js"></script>
-    <!-- Script khusus pay -->
+    <!-- Script Khusus Pay -->
     <script src="../js/pay.js"></script>
+    <!-- Script Global (hanya untuk canvas) -->
+    <script src="../script.js"></script>
 </body>
 </html>
