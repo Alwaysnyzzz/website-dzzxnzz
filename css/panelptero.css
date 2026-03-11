@@ -38,7 +38,6 @@
     100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
 }
 
-/* Particle Canvas */
 canvas#particleCanvas {
     position: fixed;
     top: 0;
@@ -53,7 +52,7 @@ canvas#particleCanvas {
 .panel-container {
     position: relative;
     z-index: 10;
-    max-width: 600px; /* lebih kecil */
+    max-width: 600px;
     margin: 100px auto 40px;
     padding: 0 20px;
 }
@@ -63,7 +62,7 @@ canvas#particleCanvas {
 }
 .page-header h1 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 32px; /* lebih kecil */
+    font-size: 32px;
     font-weight: 700;
     background: linear-gradient(135deg, #00e5ff, #00ff88);
     -webkit-background-clip: text;
@@ -94,7 +93,7 @@ canvas#particleCanvas {
     font-size: 14px;
     font-weight: 600;
     padding: 10px 20px;
-    border-radius: 40px; /* lengkung */
+    border-radius: 40px;
     cursor: pointer;
     transition: 0.2s;
     backdrop-filter: blur(5px);
@@ -118,14 +117,21 @@ canvas#particleCanvas {
     background: rgba(20, 25, 35, 0.7);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-radius: 60px; /* lebih lengkung */
-    padding: 25px 20px; /* lebih kecil */
-    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 60px;
+    padding: 25px 20px;
     box-shadow: 0 30px 60px rgba(0,0,0,0.7);
     animation: fadeIn 0.5s ease;
-    border-image: linear-gradient(135deg, #00e5ff, #00ff88) 1;
-    border-style: solid;
-    border-width: 2px;
+    position: relative;
+    overflow: hidden; /* memastikan semua konten terpotong mengikuti lengkungan */
+    border: none; /* hapus border biasa, kita pakai pseudo-element untuk gradien */
+}
+.panel-card::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    background: linear-gradient(135deg, #00e5ff, #00ff88);
+    border-radius: 62px; /* sedikit lebih besar agar menutupi tepi */
+    z-index: -1;
 }
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
@@ -139,14 +145,14 @@ canvas#particleCanvas {
     font-size: 12px;
     font-weight: 700;
     padding: 6px 20px;
-    border-radius: 30px; /* lengkung */
+    border-radius: 30px;
     margin-bottom: 15px;
     box-shadow: 0 0 20px #00e5ff;
     letter-spacing: 1px;
 }
 .card-title {
     font-family: 'Orbitron', sans-serif;
-    font-size: 24px; /* lebih kecil */
+    font-size: 24px;
     font-weight: 700;
     color: white;
     margin-bottom: 5px;
@@ -161,7 +167,7 @@ canvas#particleCanvas {
 /* Spek di samping (grid 2 kolom) */
 .spec-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* dua kolom agar spek di samping */
+    grid-template-columns: 1fr 1fr;
     gap: 12px;
     margin: 20px 0;
     background: rgba(0,0,0,0.3);
@@ -173,7 +179,7 @@ canvas#particleCanvas {
     text-align: center;
 }
 .spec-item i {
-    font-size: 22px; /* lebih kecil */
+    font-size: 22px;
     color: #00e5ff;
     margin-bottom: 3px;
     filter: drop-shadow(0 0 8px #00e5ff);
@@ -187,7 +193,7 @@ canvas#particleCanvas {
 }
 .spec-value {
     color: white;
-    font-size: 16px; /* lebih kecil */
+    font-size: 16px;
     font-weight: 700;
     font-family: 'Orbitron', sans-serif;
     text-shadow: 0 0 5px rgba(0,229,255,0.5);
@@ -197,7 +203,7 @@ canvas#particleCanvas {
 .extra-spec {
     background: rgba(0,229,255,0.1);
     border: 1px solid #00e5ff;
-    border-radius: 40px; /* lengkung */
+    border-radius: 40px;
     padding: 8px;
     text-align: center;
     margin: 15px 0;
@@ -209,7 +215,7 @@ canvas#particleCanvas {
 
 /* Harga */
 .price {
-    font-size: 30px; /* lebih kecil */
+    font-size: 30px;
     font-weight: 800;
     color: #00e5ff;
     margin: 15px 0;
@@ -226,10 +232,10 @@ canvas#particleCanvas {
 /* Tombol Pesan */
 .btn-pesan {
     width: 100%;
-    padding: 14px; /* lebih kecil */
+    padding: 14px;
     background: linear-gradient(135deg, #00e5ff, #00ff88);
     border: none;
-    border-radius: 50px; /* lengkung */
+    border-radius: 50px;
     color: black;
     font-family: 'Orbitron', sans-serif;
     font-size: 14px;
@@ -252,6 +258,6 @@ canvas#particleCanvas {
 @media (max-width: 500px) {
     .page-header h1 { font-size: 24px; }
     .duration-btn { padding: 8px 15px; font-size: 12px; }
-    .spec-grid { grid-template-columns: 1fr; } /* di HP jadi satu kolom */
+    .spec-grid { grid-template-columns: 1fr; }
     .price { font-size: 24px; }
 }
