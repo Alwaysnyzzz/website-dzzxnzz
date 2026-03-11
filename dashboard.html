@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - DzzXNzz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app" style="padding: 50px; text-align: center;">
+        <h1>Dashboard</h1>
+        <div id="user-info"></div>
+        <button onclick="handleLogout()">Logout</button>
+    </div>
+
+    <script>
+        window.onload = async function() {
+            // Ambil session dari localStorage
+            const session = localStorage.getItem('sb-session')
+            if (!session) {
+                window.location.href = 'login.html'
+                return
+            }
+
+            // Verifikasi session ke server (opsional, bisa juga decode JWT di client)
+            try {
+                const res = await fetch('/api/auth/user', {
+                    headers: {
+                        'Authorization': `Bearer ${JSON.parse(session).access_token}`
+                    }
+                })
+                const data = await res.json()
+                if (res.ok) {
+                    document.getElementById('user-info').innerHTML = `Welcome, ${data.user.email}`
+                } else {
+                    localStorage.removeItem('sb-session')
+                    window.location.href = 'login.html'
+                }
+            } catch (err) {
+                localStorage.removeItem('sb-session')
+                window.location.href = 'login.html'
+            }
+        }
+
+        async function handleLogout() {
+            localStorage.removeItem('sb-session')
+            window.location.href = 'login.html'
+        }
+    </script>
+</body>
+</html>
