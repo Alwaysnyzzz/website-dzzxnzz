@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Pterodactyl - DzzXNzz</title>
+    <!-- CSS Global -->
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../css/modern.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Gaya khusus halaman panel pterodactyl */
+        .panel-container {
+            max-width: 1200px;
+            margin: 100px auto 40px;
+            padding: 0 20px;
+        }
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .page-header h1 {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--neon-cyan), #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .page-header p {
+            color: #aaa;
+            font-size: 16px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .product-card {
+            background: rgba(18,20,26,0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--neon-cyan);
+            box-shadow: 0 0 15px var(--neon-cyan);
+            cursor: pointer;
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px var(--neon-cyan);
+        }
+        .product-card:active {
+            transform: scale(0.98);
+        }
+        .card-badge {
+            display: inline-block;
+            background: var(--neon-cyan);
+            color: black;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 30px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        .card-specs {
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+        }
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #ccc;
+        }
+        .spec-item span:last-child {
+            color: var(--neon-cyan);
+            font-weight: 600;
+        }
+        .card-price {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            margin: 15px 0;
+        }
+        .price-period {
+            font-size: 14px;
+            color: #aaa;
+        }
+        .btn-beli {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 12px 0;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .btn-beli:hover {
+            background: var(--neon-cyan);
+            color: black;
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <button id="menu-toggle">☰</button>
+            <span class="nav-brand">DzzXNzz</span>
+        </div>
+        <div class="nav-right">
+            <div class="coins-wrapper">COINS: 0</div>
+            <div class="user-avatar">
+                <img src="../image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="user-name-text">DzzXNzz</span>
+            <div class="sidebar-pfp">
+                <img src="../image/image.jpg" alt="PFP" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="../home">🏠 Home</a></li>
+            <li><a href="../product">📦 Product</a></li>
+            <li><a href="../donasi">❤️ Donasi</a></li>
+            <li><a href="../contact">📞 Contact</a></li>
+        </ul>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Konten Utama -->
+    <main class="panel-container">
+        <div class="page-header">
+            <h1>Panel Pterodactyl</h1>
+            <p>Pilih durasi sewa yang sesuai dengan kebutuhan Anda</p>
+        </div>
+
+        <div class="product-grid">
+            <!-- Card 10 Hari -->
+            <div class="product-card">
+                <div class="card-badge">10 Hari</div>
+                <h3 class="card-title">Panel Pterodactyl</h3>
+                <div class="card-specs">
+                    <div class="spec-item"><span>CPU</span><span>100%</span></div>
+                    <div class="spec-item"><span>RAM</span><span>3048 MB</span></div>
+                    <div class="spec-item"><span>SSD</span><span>10 GB</span></div>
+                    <div class="spec-item"><span>Bandwidth</span><span>Unlimited</span></div>
+                </div>
+                <div class="card-price">Rp 10.000 <span class="price-period">/10 hari</span></div>
+                <a href="#" class="btn-beli">Pilih Paket</a>
+            </div>
+
+            <!-- Card 15 Hari -->
+            <div class="product-card">
+                <div class="card-badge">15 Hari</div>
+                <h3 class="card-title">Panel Pterodactyl</h3>
+                <div class="card-specs">
+                    <div class="spec-item"><span>CPU</span><span>100%</span></div>
+                    <div class="spec-item"><span>RAM</span><span>3048 MB</span></div>
+                    <div class="spec-item"><span>SSD</span><span>10 GB</span></div>
+                    <div class="spec-item"><span>Bandwidth</span><span>Unlimited</span></div>
+                </div>
+                <div class="card-price">Rp 15.000 <span class="price-period">/15 hari</span></div>
+                <a href="#" class="btn-beli">Pilih Paket</a>
+            </div>
+
+            <!-- Card 20 Hari -->
+            <div class="product-card">
+                <div class="card-badge">20 Hari</div>
+                <h3 class="card-title">Panel Pterodactyl</h3>
+                <div class="card-specs">
+                    <div class="spec-item"><span>CPU</span><span>100%</span></div>
+                    <div class="spec-item"><span>RAM</span><span>3048 MB</span></div>
+                    <div class="spec-item"><span>SSD</span><span>10 GB</span></div>
+                    <div class="spec-item"><span>Bandwidth</span><span>Unlimited</span></div>
+                </div>
+                <div class="card-price">Rp 20.000 <span class="price-period">/20 hari</span></div>
+                <a href="#" class="btn-beli">Pilih Paket</a>
+            </div>
+
+            <!-- Card 30 Hari -->
+            <div class="product-card">
+                <div class="card-badge">30 Hari</div>
+                <h3 class="card-title">Panel Pterodactyl</h3>
+                <div class="card-specs">
+                    <div class="spec-item"><span>CPU</span><span>100%</span></div>
+                    <div class="spec-item"><span>RAM</span><span>3048 MB</span></div>
+                    <div class="spec-item"><span>SSD</span><span>10 GB</span></div>
+                    <div class="spec-item"><span>Bandwidth</span><span>Unlimited</span></div>
+                </div>
+                <div class="card-price">Rp 30.000 <span class="price-period">/30 hari</span></div>
+                <a href="#" class="btn-beli">Pilih Paket</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div>
+                <div class="footer-logo">DzzXNzz</div>
+                <p class="footer-desc">Provider hosting generasi baru yang fokus pada performa, keamanan, dan kemudahan penggunaan.</p>
+                <div class="social-icons">
+                    <a href="https://wa.me/6287713472756" target="_blank" class="social-icon wa"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://t.me/DzzXNzz" target="_blank" class="social-icon tg"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="mailto:alwaysnnyzz@gmail.com" class="social-icon email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="footer-title">Layanan</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Cloud Hosting</a></li>
+                    <li><a href="#">VPS Servers</a></li>
+                    <li><a href="#">Dedicated IP</a></li>
+                    <li><a href="#">Bot Jaga</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Legal</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">SLA</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Kontak</h4>
+                <ul class="footer-links">
+                    <li><a href="../contact">WhatsApp</a></li>
+                    <li><a href="../contact">Telegram</a></li>
+                    <li><a href="../contact">Email</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 DzzXNzz Host. All rights reserved.</span>
+            <span class="status-badge"><i class="fas fa-circle"></i> ALL SYSTEMS OPERATIONAL</span>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>

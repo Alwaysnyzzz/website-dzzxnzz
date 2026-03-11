@@ -1,3 +1,4 @@
+/* ===== style.css ===== */
 :root {
     --neon-cyan: #00e5ff;
     --neon-purple: #bf00ff;
@@ -49,13 +50,11 @@ body {
     border-bottom: 1px solid rgba(0,229,255,0.2);
     z-index: 1000;
 }
-
 .nav-left, .nav-right {
     display: flex;
     align-items: center;
     gap: 15px;
 }
-
 #menu-toggle {
     background: none;
     border: none;
@@ -64,7 +63,6 @@ body {
     cursor: pointer;
     text-shadow: 0 0 8px var(--neon-cyan);
 }
-
 .nav-brand {
     color: var(--neon-cyan);
     font-weight: 700;
@@ -75,7 +73,6 @@ body {
     border: 1px solid rgba(0,229,255,0.3);
     text-shadow: 0 0 8px var(--neon-cyan);
 }
-
 .coins-wrapper {
     border: 1.5px solid var(--neon-cyan);
     padding: 5px 15px;
@@ -87,7 +84,6 @@ body {
     box-shadow: 0 0 10px var(--neon-cyan);
     text-shadow: 0 0 5px var(--neon-cyan);
 }
-
 .user-avatar {
     width: 40px;
     height: 40px;
@@ -97,7 +93,6 @@ body {
     background: #111;
     box-shadow: 0 0 10px var(--neon-cyan);
 }
-
 .user-avatar img {
     width: 100%;
     height: 100%;
@@ -119,15 +114,12 @@ body {
     padding: 30px 20px;
     box-shadow: 5px 0 30px rgba(0,0,0,0.7);
 }
-
 .sidebar.active {
     left: 0;
 }
-
 .sidebar-header {
     margin-bottom: 30px;
 }
-
 .user-name-text {
     color: var(--neon-cyan);
     font-weight: bold;
@@ -137,7 +129,6 @@ body {
     margin-bottom: 15px;
     text-shadow: 0 0 8px var(--neon-cyan);
 }
-
 .sidebar-pfp {
     width: 100%;
     height: 110px;
@@ -147,21 +138,17 @@ body {
     margin-bottom: 25px;
     box-shadow: 0 0 15px var(--neon-cyan);
 }
-
 .sidebar-pfp img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-
 .sidebar-menu {
     list-style: none;
 }
-
 .sidebar-menu li {
     margin-bottom: 5px;
 }
-
 .sidebar-menu a {
     display: block;
     padding: 12px 15px;
@@ -171,7 +158,6 @@ body {
     border-radius: 12px;
     transition: 0.2s;
 }
-
 .sidebar-menu li.active a {
     background: rgba(0,229,255,0.15);
     color: var(--neon-cyan);
@@ -179,13 +165,11 @@ body {
     box-shadow: 0 0 10px rgba(0,229,255,0.3);
     border-left: 3px solid var(--neon-cyan);
 }
-
 .sidebar-menu a:hover {
     background: rgba(0,229,255,0.1);
     color: var(--neon-cyan);
     padding-left: 20px;
 }
-
 .overlay {
     position: fixed;
     top: 0;
@@ -196,7 +180,6 @@ body {
     display: none;
     z-index: 1500;
 }
-
 .overlay.active {
     display: block;
 }
@@ -207,12 +190,10 @@ body {
     max-width: 1200px;
     margin: 0 auto;
 }
-
 .page-title {
     text-align: center;
     margin-bottom: 50px;
 }
-
 .page-title h1 {
     font-size: 42px;
     font-weight: 800;
@@ -225,7 +206,6 @@ body {
     display: inline-block;
     padding-bottom: 10px;
 }
-
 .page-title h1::after {
     content: '';
     position: absolute;
@@ -238,7 +218,6 @@ body {
     border-radius: 3px;
     box-shadow: 0 0 10px var(--neon-cyan);
 }
-
 .page-title p {
     color: rgba(255,255,255,0.6);
     font-size: 16px;
@@ -253,7 +232,6 @@ body {
     padding: 50px 20px 20px;
     margin-top: 60px;
 }
-
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -261,7 +239,6 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 40px;
 }
-
 .footer-logo {
     color: var(--neon-cyan);
     font-size: 24px;
@@ -269,21 +246,18 @@ body {
     margin-bottom: 15px;
     text-shadow: 0 0 8px var(--neon-cyan);
 }
-
 .footer-desc {
     color: #aaa;
     font-size: 14px;
     line-height: 1.7;
     margin-bottom: 20px;
 }
-
 .social-icons {
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
     margin-top: 15px;
 }
-
 .social-icon {
     width: 45px;
     height: 45px;
@@ -296,31 +270,26 @@ body {
     transition: 0.2s;
     text-decoration: none;
 }
-
 .social-icon.wa {
     border-color: #25D366;
     color: #25D366;
     box-shadow: 0 0 10px #25D366;
 }
-
 .social-icon.tg {
     border-color: #0088cc;
     color: #0088cc;
     box-shadow: 0 0 10px #0088cc;
 }
-
 .social-icon.email {
     border-color: #ff4444;
     color: #ff4444;
     box-shadow: 0 0 10px #ff4444;
 }
-
 .social-icon:hover {
     background: currentColor;
     color: black;
     transform: scale(1.1);
 }
-
 .footer-title {
     color: #fff;
     font-size: 18px;
@@ -328,28 +297,23 @@ body {
     margin-bottom: 20px;
     text-shadow: 0 0 5px var(--neon-cyan);
 }
-
 .footer-links {
     list-style: none;
 }
-
 .footer-links li {
     margin-bottom: 12px;
 }
-
 .footer-links a {
     color: #aaa;
     text-decoration: none;
     transition: 0.2s;
     font-size: 14px;
 }
-
 .footer-links a:hover {
     color: var(--neon-cyan);
     padding-left: 5px;
     text-shadow: 0 0 5px var(--neon-cyan);
 }
-
 .footer-bottom {
     border-top: 1px solid rgba(255,255,255,0.05);
     margin-top: 40px;
@@ -362,7 +326,6 @@ body {
     color: #777;
     font-size: 13px;
 }
-
 .status-badge {
     display: inline-flex;
     align-items: center;
@@ -375,10 +338,15 @@ body {
     font-size: 12px;
     box-shadow: 0 0 8px #0f0;
 }
-
 .status-badge i {
     font-size: 8px;
     color: #0f0;
+}
+
+/* ===== PERBAIKAN: HAPUS GLOW PADA BADGE ===== */
+.home-card .card-tag,
+.product-card .card-badge {
+    box-shadow: none !important;
 }
 
 /* Responsif */
