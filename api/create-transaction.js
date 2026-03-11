@@ -13,8 +13,8 @@ export default async function handler(req, res) {
   const { amount } = req.body;
   console.log('Received amount:', amount);
 
-  if (!amount || amount < 1000) {
-    return res.status(400).json({ error: 'Minimal donasi Rp 1.000' });
+  if (!amount || amount < 500) {
+    return res.status(400).json({ error: 'Minimal donasi Rp 500' });
   }
 
   const order_id = 'DONASI-' + Date.now() + '-' + Math.random().toString(36).substring(2, 7);
