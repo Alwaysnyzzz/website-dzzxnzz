@@ -53,7 +53,7 @@ canvas#particleCanvas {
 .panel-container {
     position: relative;
     z-index: 10;
-    max-width: 700px; /* diperkecil */
+    max-width: 600px; /* lebih kecil */
     margin: 100px auto 40px;
     padding: 0 20px;
 }
@@ -63,7 +63,7 @@ canvas#particleCanvas {
 }
 .page-header h1 {
     font-family: 'Orbitron', sans-serif;
-    font-size: 36px; /* diperkecil */
+    font-size: 32px; /* lebih kecil */
     font-weight: 700;
     background: linear-gradient(135deg, #00e5ff, #00ff88);
     -webkit-background-clip: text;
@@ -74,7 +74,7 @@ canvas#particleCanvas {
 }
 .page-header p {
     color: rgba(255,255,255,0.6);
-    font-size: 16px;
+    font-size: 14px;
     letter-spacing: 1px;
 }
 
@@ -83,18 +83,18 @@ canvas#particleCanvas {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
-    margin: 40px 0;
+    gap: 10px;
+    margin: 30px 0;
 }
 .duration-btn {
     background: rgba(0,0,0,0.3);
     border: 2px solid #00e5ff;
     color: #00e5ff;
     font-family: 'Orbitron', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
-    padding: 12px 30px;
-    border-radius: 50px; /* sisi lengkung */
+    padding: 10px 20px;
+    border-radius: 40px; /* lengkung */
     cursor: pointer;
     transition: 0.2s;
     backdrop-filter: blur(5px);
@@ -118,8 +118,8 @@ canvas#particleCanvas {
     background: rgba(20, 25, 35, 0.7);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-radius: 50px; /* lebih lengkung */
-    padding: 30px 25px; /* diperkecil */
+    border-radius: 60px; /* lebih lengkung */
+    padding: 25px 20px; /* lebih kecil */
     border: 2px solid rgba(255,255,255,0.1);
     box-shadow: 0 30px 60px rgba(0,0,0,0.7);
     animation: fadeIn 0.5s ease;
@@ -136,17 +136,17 @@ canvas#particleCanvas {
     background: #00e5ff;
     color: black;
     font-family: 'Orbitron', sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 700;
-    padding: 8px 25px;
-    border-radius: 40px; /* lengkung */
-    margin-bottom: 20px;
+    padding: 6px 20px;
+    border-radius: 30px; /* lengkung */
+    margin-bottom: 15px;
     box-shadow: 0 0 20px #00e5ff;
     letter-spacing: 1px;
 }
 .card-title {
     font-family: 'Orbitron', sans-serif;
-    font-size: 28px; /* diperkecil */
+    font-size: 24px; /* lebih kecil */
     font-weight: 700;
     color: white;
     margin-bottom: 5px;
@@ -154,77 +154,85 @@ canvas#particleCanvas {
 }
 .card-title span {
     color: #00ff88;
-    font-size: 16px;
+    font-size: 14px;
     margin-left: 10px;
 }
+
+/* Spek di samping (grid 2 kolom) */
 .spec-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin: 25px 0;
+    grid-template-columns: 1fr 1fr; /* dua kolom agar spek di samping */
+    gap: 12px;
+    margin: 20px 0;
     background: rgba(0,0,0,0.3);
-    border-radius: 30px; /* lengkung */
-    padding: 20px;
+    border-radius: 40px; /* lengkung */
+    padding: 15px;
     border: 1px solid rgba(255,255,255,0.1);
 }
 .spec-item {
     text-align: center;
 }
 .spec-item i {
-    font-size: 24px; /* diperkecil */
+    font-size: 22px; /* lebih kecil */
     color: #00e5ff;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
     filter: drop-shadow(0 0 8px #00e5ff);
 }
 .spec-label {
     color: #aaa;
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     font-family: 'Rajdhani', sans-serif;
 }
 .spec-value {
     color: white;
-    font-size: 18px; /* diperkecil */
+    font-size: 16px; /* lebih kecil */
     font-weight: 700;
     font-family: 'Orbitron', sans-serif;
     text-shadow: 0 0 5px rgba(0,229,255,0.5);
 }
+
+/* Extra Spec */
 .extra-spec {
     background: rgba(0,229,255,0.1);
     border: 1px solid #00e5ff;
-    border-radius: 30px; /* lengkung */
-    padding: 10px;
+    border-radius: 40px; /* lengkung */
+    padding: 8px;
     text-align: center;
-    margin: 20px 0;
+    margin: 15px 0;
     backdrop-filter: blur(5px);
 }
 .extra-spec .spec-label {
     color: #00e5ff;
 }
+
+/* Harga */
 .price {
-    font-size: 36px; /* diperkecil */
+    font-size: 30px; /* lebih kecil */
     font-weight: 800;
     color: #00e5ff;
-    margin: 20px 0;
+    margin: 15px 0;
     text-align: center;
     font-family: 'Orbitron', sans-serif;
     text-shadow: 0 0 20px #00e5ff;
 }
 .price-period {
-    font-size: 14px;
+    font-size: 12px;
     color: #aaa;
     font-family: 'Poppins', sans-serif;
 }
+
+/* Tombol Pesan */
 .btn-pesan {
     width: 100%;
-    padding: 16px; /* diperkecil */
+    padding: 14px; /* lebih kecil */
     background: linear-gradient(135deg, #00e5ff, #00ff88);
     border: none;
     border-radius: 50px; /* lengkung */
     color: black;
     font-family: 'Orbitron', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     cursor: pointer;
     transition: 0.2s;
@@ -242,8 +250,8 @@ canvas#particleCanvas {
 
 /* Responsif */
 @media (max-width: 500px) {
-    .page-header h1 { font-size: 28px; }
-    .duration-btn { padding: 10px 20px; font-size: 14px; }
-    .spec-grid { grid-template-columns: 1fr; gap: 15px; }
-    .price { font-size: 28px; }
+    .page-header h1 { font-size: 24px; }
+    .duration-btn { padding: 8px 15px; font-size: 12px; }
+    .spec-grid { grid-template-columns: 1fr; } /* di HP jadi satu kolom */
+    .price { font-size: 24px; }
 }
