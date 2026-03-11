@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/home", "destination": "/index.html" },
+    { "source": "/product/panelptero", "destination": "/product/panelptero.html" },
     { "source": "/donasi", "destination": "/donasi.html" },
     { "source": "/pay", "destination": "/halaman/pay.html" },
     { "source": "/success", "destination": "/halaman/success.html" },
