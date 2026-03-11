@@ -107,7 +107,6 @@
       height: 90px;
       margin: 0 auto 20px;
     }
-
     .logo-img {
       width: 100%; height: 100%;
       border-radius: 50%;
@@ -115,7 +114,6 @@
       border: 2px solid rgba(255,255,255,0.2);
       padding: 4px;
     }
-
     .logo-glow {
       position: absolute;
       inset: -5px;
@@ -123,7 +121,6 @@
       border: 2px dashed var(--primary);
       animation: rotateRing 10s linear infinite;
     }
-
     @keyframes rotateRing { to { transform: rotate(360deg); } }
 
     h1 {
@@ -136,7 +133,6 @@
       -webkit-text-fill-color: transparent;
       letter-spacing: 2px;
     }
-
     .subtitle {
       text-align: center;
       font-size: 14px;
@@ -409,10 +405,8 @@
       btnText.style.display = 'none';
       loader.style.display = 'block';
 
-      // Untuk sementara, kita kirim username sebagai email (asumsi username = email)
-      // Jika backend menggunakan email, kita perlu mengubahnya. Atau kita bisa menggunakan field username di metadata.
-      // Demi sederhana, kita kirim username sebagai email (asumsi user memasukkan email di field username).
-      const email = username; // asumsi username diisi dengan email
+      // Generate email palsu dari username (harus sama dengan saat register)
+      const email = username + '@dzzxnzz.local';
 
       try {
         const res = await fetch('/api/auth/login', {
