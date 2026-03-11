@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let transactionAmount = 0;
     let qrCanvas = null;
     let timerInterval;
+    let loadingInterval;
 
     // Elemen DOM
     const timerEl = document.getElementById('timer');
@@ -20,6 +21,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const batalkanBtn = document.getElementById('batalkan');
     const downloadBtn = document.getElementById('downloadBtn');
     const qrContainer = document.getElementById('qrcode');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const loadingText = document.getElementById('loadingText');
+    const pendingModal = document.getElementById('pendingModal');
+    const pendingOk = document.getElementById('pendingOk');
+    const confirmModal = document.getElementById('confirmModal');
+    const confirmYa = document.getElementById('confirmYa');
+    const confirmTidak = document.getElementById('confirmTidak');
+
+    // ===== Fungsi Loading =====
+    function showLoading(text) {
+        if (!loadingOverlay) return;
+        loadingOverlay.classList.add('active');
+        loadingText.textContent = text + ' ...';
+        let dots = 0;
+        loadingInterval = setInterval(() => {
+            dots = (dots + 1) % 4;
+            loadingText.textContent = text + ' ' + '.'.repeat(dots);
+        }, 500);
+    }
+
+    function hideLoading() {
+        if (!loadingOverlay) return;
+        clearInterval(loadingInterval);
+        loadingOverlay.classList.remove('active');
+    }
 
     // ===== Load Transaksi dari API =====
     async function loadTransaction() {
@@ -113,46 +139,79 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===== Tombol Cek Status =====
-// ===== Tombol Cek Status =====
-cekStatusBtn.addEventListener('click', async function() {
-    try {
-        const res = await fetch(`/api/check-status?order_id=${orderId}&amount=${transactionAmount}`);
-        const data = await res.json();
-        if (res.ok) {
-            if (data.status === 'completed') {
-                // Redirect langsung tanpa alert
-                window.location.href = `/success?order_id=${orderId}`;
-            } else {
-                // Tampilkan alert hanya jika status bukan completed (opsional)
-                alert('Status: ' + data.status);
-            }
-        } else {
-            alert('Gagal cek status: ' + (data.error || ''));
-        }
-    } catch (err) {
-        alert('Error: ' + err.message);
-    }
-});
-    // ===== Tombol Batalkan =====
-    batalkanBtn.addEventListener('click', async function() {
-        if (!confirm('Yakin ingin membatalkan transaksi ini?')) return;
+    cekStatusBtn.addEventListener('click', async function() {
+        showLoading('Mengecek');
         try {
-            const res = await fetch('/api/cancel-transaction', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ order_id: orderId, amount: transactionAmount })
-            });
+            const res = await fetch(`/api/check-status?order_id=${orderId}&amount=${transactionAmount}`);
+            const data = await res.json();
+            hideLoading();
             if (res.ok) {
-                alert('Transaksi dibatalkan');
-                window.location.href = '/donasi';
+                if (data.status === 'completed') {
+                    // Redirect ke halaman sukses
+                    window.location.href = `/success?order_id=${orderId}`;
+                } else if (data.status === 'pending') {
+                    // Tampilkan modal pending
+                    if (pendingModal) pendingModal.classList.add('show');
+                } else {
+                    alert('Status: ' + data.status);
+                }
             } else {
-                const data = await res.json();
-                alert('Gagal: ' + (data.error || ''));
+                alert('Gagal cek status: ' + (data.error || ''));
             }
         } catch (err) {
+            hideLoading();
             alert('Error: ' + err.message);
         }
     });
+
+    // ===== Tombol Batalkan =====
+    batalkanBtn.addEventListener('click', function() {
+        showLoading('Membatalkan');
+        // Setelah 1 detik, tampilkan modal konfirmasi
+        setTimeout(() => {
+            hideLoading();
+            if (confirmModal) confirmModal.classList.add('show');
+        }, 1000);
+    });
+
+    // ===== Konfirmasi Batalkan =====
+    if (confirmYa) {
+        confirmYa.addEventListener('click', async function() {
+            confirmModal.classList.remove('show');
+            showLoading('Membatalkan');
+            try {
+                const res = await fetch('/api/cancel-transaction', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ order_id: orderId, amount: transactionAmount })
+                });
+                hideLoading();
+                if (res.ok) {
+                    alert('Transaksi dibatalkan');
+                    window.location.href = '/donasi';
+                } else {
+                    const data = await res.json();
+                    alert('Gagal: ' + (data.error || ''));
+                }
+            } catch (err) {
+                hideLoading();
+                alert('Error: ' + err.message);
+            }
+        });
+    }
+
+    if (confirmTidak) {
+        confirmTidak.addEventListener('click', function() {
+            confirmModal.classList.remove('show');
+        });
+    }
+
+    // ===== Tutup Modal Pending =====
+    if (pendingOk) {
+        pendingOk.addEventListener('click', function() {
+            if (pendingModal) pendingModal.classList.remove('show');
+        });
+    }
 
     // Mulai
     loadTransaction();

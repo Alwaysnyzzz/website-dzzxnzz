@@ -1,174 +1,313 @@
-// js/pay.js
+/* ===== PAYMENT PAGE STYLES ===== */
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Ambil order_id dari URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const orderId = urlParams.get('order_id');
-    if (!orderId) {
-        alert('Order ID tidak ditemukan!');
-        window.location.href = '/donasi';
-        return;
-    }
+.main-content {
+    padding: 100px 20px 40px;
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+}
 
-    let transactionAmount = 0;
-    let qrCanvas = null;
-    let timerInterval;
+.payment-card {
+    background: rgba(18,20,26,0.8);
+    backdrop-filter: blur(15px);
+    border-radius: 30px;
+    padding: 30px 25px;
+    border: 2px solid var(--neon-cyan);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.7), 0 0 30px var(--neon-cyan);
+    position: relative;
+    overflow: hidden;
+}
+.payment-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 30%, rgba(0,229,255,0.1), transparent 70%);
+    opacity: 0.3;
+    pointer-events: none;
+}
 
-    // Elemen DOM
-    const timerEl = document.getElementById('timer');
-    const cekStatusBtn = document.getElementById('cek-status');
-    const batalkanBtn = document.getElementById('batalkan');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const qrContainer = document.getElementById('qrcode');
-    const pendingModal = document.getElementById('pendingModal');
-    const pendingOk = document.getElementById('pendingOk');
+/* Timer */
+.timer-container {
+    background: rgba(255,0,0,0.1);
+    border: 2px solid #ff5555;
+    border-radius: 50px;
+    padding: 12px 20px;
+    margin-bottom: 25px;
+    text-align: center;
+    color: #ff5555;
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px #ff0000;
+    box-shadow: 0 0 20px rgba(255,85,85,0.3);
+    backdrop-filter: blur(5px);
+}
+.timer-container i {
+    margin-right: 10px;
+}
 
-    // ===== Load Transaksi dari API =====
-    async function loadTransaction() {
-        try {
-            const res = await fetch(`/api/get-transaction?order_id=${orderId}`);
-            const data = await res.json();
-            if (!data || data.error) {
-                alert('Transaksi tidak ditemukan');
-                window.location.href = '/donasi';
-                return;
-            }
+/* QR Code Frame */
+.qr-frame {
+    background: rgba(0,0,0,0.3);
+    border: 2px dashed var(--neon-cyan);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+    backdrop-filter: blur(5px);
+}
+#qrcode canvas {
+    width: 180px;
+    height: 180px;
+    border-radius: 10px;
+    padding: 5px;
+    background: white;
+}
 
-            transactionAmount = data.amount;
+/* Download Button */
+.btn-download {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 20px;
+    background: transparent;
+    border: 2px solid var(--neon-green);
+    color: var(--neon-green);
+    padding: 12px 30px;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+    text-decoration: none;
+    backdrop-filter: blur(5px);
+}
+.btn-download:hover {
+    background: var(--neon-green);
+    color: black;
+    box-shadow: 0 0 30px var(--neon-green);
+    transform: translateY(-2px);
+}
+.btn-download i {
+    margin-right: 8px;
+}
 
-            // Mulai countdown jika ada expired_at
-            if (data.expired_at) {
-                startCountdown(data.expired_at);
-            } else {
-                // Fallback 30 menit dari sekarang
-                const fallbackExpired = new Date(Date.now() + 30 * 60000).toISOString();
-                startCountdown(fallbackExpired);
-            }
+/* Action Buttons */
+.btn-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+.btn {
+    flex: 1;
+    padding: 14px 0;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+    text-align: center;
+    text-decoration: none;
+    backdrop-filter: blur(5px);
+    border: 2px solid;
+    background: transparent;
+}
+.btn-primary {
+    border-color: var(--neon-cyan);
+    color: var(--neon-cyan);
+}
+.btn-primary:hover {
+    background: var(--neon-cyan);
+    color: black;
+    box-shadow: 0 0 30px var(--neon-cyan);
+    transform: translateY(-2px);
+}
+.btn-danger {
+    border-color: var(--neon-red);
+    color: var(--neon-red);
+}
+.btn-danger:hover {
+    background: var(--neon-red);
+    color: black;
+    box-shadow: 0 0 30px var(--neon-red);
+    transform: translateY(-2px);
+}
 
-            // Generate QR Code
-            if (data.qr_string) {
-                qrContainer.innerHTML = '';
-                const canvas = document.createElement('canvas');
-                QRCode.toCanvas(canvas, data.qr_string, {
-                    width: 180,
-                    margin: 1,
-                    errorCorrectionLevel: 'H',
-                    color: { dark: '#000000', light: '#ffffff' }
-                }, function(error) {
-                    if (error) {
-                        console.error('QR Error:', error);
-                        qrContainer.innerHTML = '<p style="color:red;">Gagal generate QR</p>';
-                    } else {
-                        qrContainer.appendChild(canvas);
-                        qrCanvas = canvas;
-                    }
-                });
-            } else {
-                qrContainer.innerHTML = '<p style="color:red;">QR tidak tersedia</p>';
-            }
-        } catch (err) {
-            console.error(err);
-            alert('Gagal memuat transaksi');
-        }
-    }
+/* ===== LOADING OVERLAY ===== */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s;
+}
+.loading-overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+.loader-rings {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 30px;
+}
+.ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 3.5px solid transparent;
+}
+.ring-outer {
+    width: 100%;
+    height: 100%;
+    border-top-color: #00e5ff;
+    border-bottom-color: #00e5ff;
+    animation: spinStop 2s ease-in-out infinite;
+}
+.ring-inner {
+    width: 54px;
+    height: 54px;
+    top: 13px;
+    left: 13px;
+    border-left-color: #bf00ff;
+    border-right-color: #bf00ff;
+    animation: spinStopReverse 2s ease-in-out infinite;
+}
+@keyframes spinStop {
+    0% { transform: rotate(0deg); }
+    45% { transform: rotate(360deg); }
+    55% { transform: rotate(360deg); }
+    100% { transform: rotate(720deg); }
+}
+@keyframes spinStopReverse {
+    0% { transform: rotate(0deg); }
+    45% { transform: rotate(-360deg); }
+    55% { transform: rotate(-360deg); }
+    100% { transform: rotate(-720deg); }
+}
+.loading-text {
+    color: #00e5ff;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px #00e5ff;
+}
 
-    // ===== Countdown Timer =====
-    function startCountdown(expiredAt) {
-        const expiredTime = new Date(expiredAt).getTime();
+/* ===== MODAL STYLES ===== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s;
+}
 
-        function updateTimer() {
-            const now = new Date().getTime();
-            const distance = expiredTime - now;
+.modal-overlay.show {
+    visibility: visible;
+    opacity: 1;
+}
 
-            if (distance <= 0) {
-                clearInterval(timerInterval);
-                timerEl.innerHTML = '<i class="fas fa-hourglass-end"></i> EXPIRED';
-                timerEl.style.background = 'rgba(255,0,0,0.2)';
-                timerEl.style.borderColor = '#ff0000';
-                // Disable buttons
-                cekStatusBtn.disabled = true;
-                batalkanBtn.disabled = true;
-                downloadBtn.style.opacity = '0.5';
-                downloadBtn.disabled = true;
-                return;
-            }
+.modal-card {
+    background: rgba(20,25,35,0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 30px 25px;
+    max-width: 350px;
+    width: 90%;
+    border: 2px solid;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+    text-align: center;
+    animation: modalFadeIn 0.3s;
+}
 
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            timerEl.innerHTML = `<i class="fas fa-hourglass-half"></i> ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        }
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
 
-        updateTimer();
-        timerInterval = setInterval(updateTimer, 1000);
-    }
+.modal-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
 
-    // ===== Tombol Download QR =====
-    downloadBtn.addEventListener('click', function() {
-        if (qrCanvas) {
-            const link = document.createElement('a');
-            link.download = `qris-${orderId}.png`;
-            link.href = qrCanvas.toDataURL('image/png');
-            link.click();
-        } else {
-            alert('QR code belum tersedia');
-        }
-    });
+.modal-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #fff;
+}
 
-    // ===== Tombol Cek Status =====
-    cekStatusBtn.addEventListener('click', async function() {
-        try {
-            const res = await fetch(`/api/check-status?order_id=${orderId}&amount=${transactionAmount}`);
-            const data = await res.json();
-            if (res.ok) {
-                if (data.status === 'completed') {
-                    window.location.href = `/success?order_id=${orderId}`;
-                } else if (data.status === 'pending') {
-                    // Tampilkan modal pending
-                    if (pendingModal) {
-                        pendingModal.classList.add('show');
-                    }
-                } else {
-                    // Status lain (expired, failed, dll)
-                    alert('Status: ' + data.status);
-                }
-            } else {
-                alert('Gagal cek status: ' + (data.error || ''));
-            }
-        } catch (err) {
-            alert('Error: ' + err.message);
-        }
-    });
+.modal-message {
+    color: #ccc;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
 
-    // ===== Tombol Batalkan =====
-    batalkanBtn.addEventListener('click', async function() {
-        if (!confirm('Yakin ingin membatalkan transaksi ini?')) return;
-        try {
-            const res = await fetch('/api/cancel-transaction', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ order_id: orderId, amount: transactionAmount })
-            });
-            if (res.ok) {
-                alert('Transaksi dibatalkan');
-                window.location.href = '/donasi';
-            } else {
-                const data = await res.json();
-                alert('Gagal: ' + (data.error || ''));
-            }
-        } catch (err) {
-            alert('Error: ' + err.message);
-        }
-    });
+.modal-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
 
-    // ===== Tutup Modal Pending =====
-    if (pendingOk) {
-        pendingOk.addEventListener('click', function() {
-            if (pendingModal) {
-                pendingModal.classList.remove('show');
-            }
-        });
-    }
+.modal-btn {
+    flex: 1;
+    padding: 12px 0;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 2px solid;
+    background: transparent;
+}
 
-    // Mulai
-    loadTransaction();
-});
+.modal-btn-primary {
+    border-color: #00ff88;
+    color: #00ff88;
+}
+.modal-btn-primary:hover {
+    background: #00ff88;
+    color: black;
+    box-shadow: 0 0 20px #00ff88;
+}
+.modal-btn-danger {
+    border-color: #ff5555;
+    color: #ff5555;
+}
+.modal-btn-danger:hover {
+    background: #ff5555;
+    color: black;
+    box-shadow: 0 0 20px #ff5555;
+}
+
+/* Responsif */
+@media (max-width: 480px) {
+    .timer-container { font-size: 20px; padding: 10px; }
+    #qrcode canvas { width: 150px; height: 150px; }
+    .btn-download { padding: 10px 20px; font-size: 14px; }
+    .btn { padding: 12px 0; font-size: 14px; }
+}
