@@ -3,187 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product - DzzXNzz</title>
+    <title>Panel Pterodactyl - DzzXNzz</title>
     <!-- CSS Global -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="css/modern.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../css/modern.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* ===== GAYA CARD PRODUK ===== */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
+        /* Gaya khusus halaman panel */
+        .panel-container {
+            max-width: 800px;
+            margin: 100px auto 40px;
+            padding: 0 20px;
         }
-        .product-card {
-            background: rgba(18,20,26,0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-            cursor: default; /* cursor default, bukan pointer */
-            border: 1px solid transparent;
-        }
-        .product-card:hover {
-            transform: translateY(-8px);
-        }
-        /* Hapus semua efek klik pada card */
-        .product-card:active {
-            transform: none !important;
-            box-shadow: none !important;
-        }
-        /* Warna border dan glow disesuaikan per card (hanya untuk hover) */
-        .product-card.popular {
-            border-color: var(--neon-purple);
-            box-shadow: 0 0 15px var(--neon-purple);
-        }
-        .product-card.popular:hover {
-            box-shadow: 0 15px 30px var(--neon-purple);
-        }
-
-        .product-card.bot {
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 15px var(--neon-cyan);
-        }
-        .product-card.bot:hover {
-            box-shadow: 0 15px 30px var(--neon-cyan);
-        }
-
-        .product-card.new {
-            border-color: var(--neon-green);
-            box-shadow: 0 0 15px var(--neon-green);
-        }
-        .product-card.new:hover {
-            box-shadow: 0 15px 30px var(--neon-green);
-        }
-
-        /* Badge dengan warna solid */
-        .card-badge {
-            display: inline-block;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-        .popular .card-badge {
-            background: var(--neon-purple);
-            color: white;
-            box-shadow: 0 0 10px var(--neon-purple);
-        }
-        .bot .card-badge {
-            background: var(--neon-cyan);
-            color: black;
-            box-shadow: 0 0 10px var(--neon-cyan);
-        }
-        .new .card-badge {
-            background: var(--neon-green);
-            color: black;
-            box-shadow: 0 0 10px var(--neon-green);
-        }
-
-        .card-title {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-        .card-desc {
-            color: #aaa;
-            font-size: 14px;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-        .feature-list {
-            margin: 15px 0;
-            padding: 15px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 12px;
-        }
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-            color: #ccc;
-            font-size: 14px;
-        }
-        .feature-item i {
-            width: 20px;
-        }
-        .popular .feature-item i {
-            color: var(--neon-purple);
-        }
-        .bot .feature-item i {
-            color: var(--neon-cyan);
-        }
-        .new .feature-item i {
-            color: var(--neon-green);
-        }
-        .card-price {
-            font-size: 24px;
-            font-weight: 700;
-            margin: 15px 0;
-        }
-        .popular .card-price {
-            color: var(--neon-purple);
-        }
-        .bot .card-price {
-            color: var(--neon-cyan);
-        }
-        .new .card-price {
-            color: var(--neon-green);
-        }
-        .price-period {
-            font-size: 14px;
-            color: #aaa;
-        }
-        .btn-detail {
-            display: block;
-            width: 100%;
+        .page-header {
             text-align: center;
+            margin-bottom: 30px;
+        }
+        .page-header h1 {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--neon-cyan), #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .page-header p {
+            color: #aaa;
+            font-size: 16px;
+        }
+
+        /* Button durasi */
+        .duration-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .duration-btn {
             background: transparent;
-            border: 2px solid;
-            padding: 12px 0;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.2s;
-            cursor: pointer; /* tombol tetap pointer */
-        }
-        .popular .btn-detail {
-            border-color: var(--neon-purple);
-            color: var(--neon-purple);
-        }
-        .popular .btn-detail:hover {
-            background: var(--neon-purple);
-            color: black;
-            box-shadow: 0 0 20px var(--neon-purple);
-        }
-        .bot .btn-detail {
-            border-color: var(--neon-cyan);
+            border: 2px solid var(--neon-cyan);
             color: var(--neon-cyan);
+            padding: 12px 25px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            min-width: 100px;
         }
-        .bot .btn-detail:hover {
+        .duration-btn:hover {
             background: var(--neon-cyan);
             color: black;
             box-shadow: 0 0 20px var(--neon-cyan);
         }
-        .new .btn-detail {
-            border-color: var(--neon-green);
-            color: var(--neon-green);
-        }
-        .new .btn-detail:hover {
-            background: var(--neon-green);
+        .duration-btn.active {
+            background: var(--neon-cyan);
             color: black;
-            box-shadow: 0 0 20px var(--neon-green);
+        }
+
+        /* Card kosong (placeholder) */
+        .empty-card {
+            background: rgba(18,20,26,0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 50px 25px;
+            border: 2px dashed var(--neon-cyan);
+            box-shadow: 0 0 20px var(--neon-cyan);
+            text-align: center;
+            margin-top: 30px;
+        }
+        .empty-card p {
+            color: #aaa;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .empty-card i {
+            font-size: 48px;
+            color: var(--neon-cyan);
+            opacity: 0.5;
         }
     </style>
 </head>
@@ -199,7 +100,7 @@
         <div class="nav-right">
             <div class="coins-wrapper">COINS: 0</div>
             <div class="user-avatar">
-                <img src="./image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
+                <img src="../image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
             </div>
         </div>
     </nav>
@@ -209,94 +110,37 @@
         <div class="sidebar-header">
             <span class="user-name-text">DzzXNzz</span>
             <div class="sidebar-pfp">
-                <img src="./image/image.jpg" alt="PFP" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
+                <img src="../image/image.jpg" alt="PFP" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
             </div>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="home">🏠 Home</a></li>
-            <li class="active"><a href="product">📦 Product</a></li>
-            <li><a href="donasi">❤️ Donasi</a></li>
-            <li><a href="contact">📞 Contact</a></li>
+            <li><a href="../home">🏠 Home</a></li>
+            <li><a href="../product">📦 Product</a></li>
+            <li><a href="../donasi">❤️ Donasi</a></li>
+            <li><a href="../contact">📞 Contact</a></li>
         </ul>
     </div>
     <div class="overlay" id="overlay"></div>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="page-title">
-            <h1>Layanan Kami</h1>
-            <p>Pilih paket yang sesuai dengan kebutuhan Anda</p>
+    <!-- Konten Utama -->
+    <main class="panel-container">
+        <div class="page-header">
+            <h1>Panel Pterodactyl</h1>
+            <p>Pilih durasi sewa</p>
         </div>
 
-        <div class="product-grid">
-            <!-- Card 1 - Panel Pterodactyl (Popular / Ungu) -->
-            <div class="product-card popular">
-                <div class="card-badge">POPULAR</div>
-                <h3 class="card-title">Panel Pterodactyl</h3>
-                <p class="card-desc">Panel yang fast respon dan siap digunakan untuk keperluan hosting.</p>
-                <div class="feature-list">
-                    <div class="feature-item">
-                        <i class="fas fa-bolt"></i>
-                        <span>Fast respon untuk performa optimal</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Siap pakai untuk kebutuhan hosting</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-shield-alt"></i>
-                        <span>Keamanan terjamin</span>
-                    </div>
-                </div>
-                <!-- Harga dihapus -->
-                <a href="/product/panelptero" class="btn-detail">Lihat Detail</a>
-            </div>
+        <!-- Button durasi -->
+        <div class="duration-buttons">
+            <button class="duration-btn">10 Hari</button>
+            <button class="duration-btn">15 Hari</button>
+            <button class="duration-btn">20 Hari</button>
+            <button class="duration-btn">30 Hari</button>
+        </div>
 
-            <!-- Card 2 - Sewa Bot Jaga (Bot / Cyan) -->
-            <div class="product-card bot">
-                <div class="card-badge">BOT</div>
-                <h3 class="card-title">Sewa Bot Jaga</h3>
-                <p class="card-desc">Sistem keamanan grup 24 jam dengan fitur lengkap.</p>
-                <div class="feature-list">
-                    <div class="feature-item">
-                        <i class="fas fa-robot"></i>
-                        <span>Anti spam & anti link</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-infinity"></i>
-                        <span>Unlimited grup</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-headset"></i>
-                        <span>Support 24/7</span>
-                    </div>
-                </div>
-                <div class="card-price">Rp 15.000 <span class="price-period">/bulan</span></div>
-                <a href="#" class="btn-detail">Lihat Detail</a>
-            </div>
-
-            <!-- Card 3 - Script & Tools (New / Hijau) -->
-            <div class="product-card new">
-                <div class="card-badge">NEW</div>
-                <h3 class="card-title">Script & Tools</h3>
-                <p class="card-desc">Koleksi script terbaru untuk kebutuhan Anda.</p>
-                <div class="feature-list">
-                    <div class="feature-item">
-                        <i class="fas fa-calendar-alt"></i>
-                        <span>Update mingguan</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-unlock"></i>
-                        <span>Akses full</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-file-code"></i>
-                        <span>100+ script tersedia</span>
-                    </div>
-                </div>
-                <div class="card-price">Rp 25.000 <span class="price-period">/bulan</span></div>
-                <a href="#" class="btn-detail">Lihat Detail</a>
-            </div>
+        <!-- Card kosong (belum ada konten) -->
+        <div class="empty-card">
+            <i class="fas fa-server"></i>
+            <p>Pilih durasi di atas untuk melihat detail panel</p>
         </div>
     </main>
 
@@ -305,7 +149,7 @@
         <div class="footer-container">
             <div>
                 <div class="footer-logo">DzzXNzz</div>
-                <p class="footer-desc">Provider hosting generasi baru yang fokus pada performa, keamanan, dan kemudahan penggunaan untuk developer dan kreator.</p>
+                <p class="footer-desc">Provider hosting generasi baru yang fokus pada performa, keamanan, dan kemudahan penggunaan.</p>
                 <div class="social-icons">
                     <a href="https://wa.me/6287713472756" target="_blank" class="social-icon wa"><i class="fab fa-whatsapp"></i></a>
                     <a href="https://t.me/DzzXNzz" target="_blank" class="social-icon tg"><i class="fab fa-telegram-plane"></i></a>
@@ -332,9 +176,9 @@
             <div>
                 <h4 class="footer-title">Kontak</h4>
                 <ul class="footer-links">
-                    <li><a href="contact">WhatsApp</a></li>
-                    <li><a href="contact">Telegram</a></li>
-                    <li><a href="contact">Email</a></li>
+                    <li><a href="../contact">WhatsApp</a></li>
+                    <li><a href="../contact">Telegram</a></li>
+                    <li><a href="../contact">Email</a></li>
                 </ul>
             </div>
         </div>
@@ -344,6 +188,15 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="../script.js"></script>
+    <script>
+        // Optional: tambahkan interaksi button (misal class active)
+        document.querySelectorAll('.duration-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
 </body>
 </html>
