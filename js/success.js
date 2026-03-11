@@ -9,12 +9,49 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    // Ambil data transaksi dari API untuk mengisi detail
+    // Elemen DOM
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const successCard = document.getElementById('successCard');
+    const loadingText = document.getElementById('loadingText');
+    const orderIdEl = document.getElementById('order-id');
+    const waktuEl = document.getElementById('waktu');
+    const tanggalEl = document.getElementById('tanggal');
+    const produkEl = document.getElementById('produk');
+    const paymentEl = document.getElementById('payment');
+    const layananEl = document.getElementById('layanan');
+    const btnHome = document.getElementById('btnHome');
+    const btnStruk = document.getElementById('btnStruk');
+
+    let loadingInterval;
+
+    // Fungsi loading dengan animasi titik
+    function startLoading(text) {
+        if (!loadingOverlay || !loadingText) return;
+        loadingOverlay.classList.remove('hidden');
+        loadingText.textContent = text + ' ...';
+        let dots = 0;
+        loadingInterval = setInterval(() => {
+            dots = (dots + 1) % 4;
+            loadingText.textContent = text + ' ' + '.'.repeat(dots);
+        }, 500);
+    }
+
+    function stopLoading() {
+        if (!loadingOverlay) return;
+        clearInterval(loadingInterval);
+        loadingOverlay.classList.add('hidden');
+    }
+
+    // Mulai loading
+    startLoading('Memuat struk');
+
+    // Ambil data transaksi dari API
     fetch(`/api/get-transaction?order_id=${orderId}`)
         .then(res => res.json())
         .then(data => {
             if (data && !data.error) {
-                document.getElementById('order-id').textContent = data.order_id;
+                orderIdEl.textContent = data.order_id;
+                // Waktu dan tanggal dari created_at atau expired_at
                 const timestamp = data.created_at || data.expired_at;
                 if (timestamp) {
                     const date = new Date(timestamp);
@@ -29,46 +66,45 @@ document.addEventListener('DOMContentLoaded', function() {
                         month: 'long', 
                         year: 'numeric' 
                     });
-                    document.getElementById('waktu').textContent = waktu;
-                    document.getElementById('tanggal').textContent = tanggal;
+                    waktuEl.textContent = waktu;
+                    tanggalEl.textContent = tanggal;
                 } else {
                     const now = new Date();
-                    document.getElementById('waktu').textContent = now.toLocaleTimeString('id-ID');
-                    document.getElementById('tanggal').textContent = now.toLocaleDateString('id-ID');
+                    waktuEl.textContent = now.toLocaleTimeString('id-ID');
+                    tanggalEl.textContent = now.toLocaleDateString('id-ID');
                 }
             } else {
                 const now = new Date();
-                document.getElementById('waktu').textContent = now.toLocaleTimeString('id-ID');
-                document.getElementById('tanggal').textContent = now.toLocaleDateString('id-ID');
+                waktuEl.textContent = now.toLocaleTimeString('id-ID');
+                tanggalEl.textContent = now.toLocaleDateString('id-ID');
             }
+            
+            // Sembunyikan loading dan tampilkan card
+            stopLoading();
+            if (successCard) successCard.style.display = 'block';
         })
         .catch(err => {
             console.error('Gagal ambil data transaksi:', err);
             const now = new Date();
-            document.getElementById('waktu').textContent = now.toLocaleTimeString('id-ID');
-            document.getElementById('tanggal').textContent = now.toLocaleDateString('id-ID');
+            waktuEl.textContent = now.toLocaleTimeString('id-ID');
+            tanggalEl.textContent = now.toLocaleDateString('id-ID');
+            stopLoading();
+            if (successCard) successCard.style.display = 'block';
         });
 
-    // Tampilkan modal setelah halaman dimuat
-    setTimeout(() => {
-        const modal = document.getElementById('successModal');
-        if (modal) {
-            modal.classList.add('show');
-        }
-    }, 500);
-
     // Tombol Kembali ke Home
-    document.getElementById('btnHome').addEventListener('click', function() {
-        window.location.href = '/';
-    });
+    if (btnHome) {
+        btnHome.addEventListener('click', function() {
+            window.location.href = '/';
+        });
+    }
 
-    // Tombol Lihat Struk (masih contoh)
-    document.getElementById('btnStruk').addEventListener('click', function() {
-        alert('Fitur lihat struk akan segera tersedia');
-    });
-
-    // ===== PERUBAHAN: Tombol Kirim sekarang redirect ke Contact =====
-    document.getElementById('btnKirim').addEventListener('click', function() {
-        window.location.href = '/contact';
-    });
+    // Tombol Lihat Struk (sementara alert, bisa dikembangkan untuk download PDF)
+    if (btnStruk) {
+        btnStruk.addEventListener('click', function() {
+            alert('Fitur lihat struk akan segera tersedia (PDF)');
+            // Nanti bisa redirect ke halaman invoice atau generate PDF
+            // window.location.href = '/invoice?order_id=' + orderId;
+        });
+    }
 });

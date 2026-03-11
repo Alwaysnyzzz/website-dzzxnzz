@@ -1,4 +1,5 @@
-/* ===== SUCCESS PAGE ===== */
+/* ===== SUCCESS PAGE STYLES ===== */
+
 .main-content {
     padding: 100px 20px 40px;
     max-width: 500px;
@@ -14,6 +15,7 @@
     box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 20px #00ff88;
     position: relative;
     overflow: hidden;
+    animation: fadeIn 0.5s ease;
 }
 
 .success-card::before {
@@ -26,6 +28,11 @@
     background: radial-gradient(circle at 30% 30%, rgba(0,255,136,0.1), transparent 70%);
     opacity: 0.3;
     pointer-events: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .success-title {
@@ -70,104 +77,13 @@
     text-shadow: 0 0 5px #00ff88;
 }
 
-.info-kirim {
-    text-align: center;
-    color: #ccc;
-    font-size: 14px;
-    margin-bottom: 15px;
-}
-
-.btn-kirim {
-    display: block;
-    width: 100%;
-    max-width: 200px;
-    margin: 0 auto;
-    padding: 12px 25px;
-    background: transparent;
-    border: 2px solid #00ff88;
-    color: #00ff88;
-    border-radius: 40px;
-    font-weight: 600;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.btn-kirim:hover {
-    background: #00ff88;
-    color: black;
-    box-shadow: 0 0 20px #00ff88;
-    transform: translateY(-2px);
-}
-
-/* ===== MODAL POPUP ===== */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.8);
-    backdrop-filter: blur(5px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.3s;
-}
-
-.modal-overlay.show {
-    visibility: visible;
-    opacity: 1;
-}
-
-.modal-card {
-    background: rgba(20,25,35,0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 24px;
-    padding: 30px 25px;
-    max-width: 350px;
-    width: 90%;
-    border: 2px solid #00ff88;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 40px #00ff88;
-    text-align: center;
-    animation: modalFadeIn 0.3s;
-}
-
-@keyframes modalFadeIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-}
-
-.modal-icon {
-    font-size: 60px;
-    color: #00ff88;
-    margin-bottom: 15px;
-    text-shadow: 0 0 20px #00ff88;
-}
-
-.modal-title {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #fff;
-}
-
-.modal-message {
-    color: #ccc;
-    font-size: 14px;
-    margin-bottom: 25px;
-}
-
-.modal-actions {
+.action-buttons {
     display: flex;
     gap: 15px;
     justify-content: center;
 }
 
-.modal-btn {
+.btn-home, .btn-struk {
     flex: 1;
     padding: 12px 0;
     border-radius: 40px;
@@ -177,30 +93,97 @@
     transition: 0.2s;
     border: 2px solid;
     background: transparent;
+    text-align: center;
 }
 
-.modal-btn-primary {
+.btn-home {
+    border-color: #00e5ff;
+    color: #00e5ff;
+}
+.btn-home:hover {
+    background: #00e5ff;
+    color: black;
+    box-shadow: 0 0 20px #00e5ff;
+    transform: translateY(-2px);
+}
+
+.btn-struk {
     border-color: #00ff88;
     color: #00ff88;
 }
-
-.modal-btn-primary:hover {
+.btn-struk:hover {
     background: #00ff88;
     color: black;
     box-shadow: 0 0 20px #00ff88;
     transform: translateY(-2px);
 }
 
-.modal-btn-secondary {
-    border-color: #00e5ff;
-    color: #00e5ff;
+/* ===== LOADING OVERLAY ===== */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: 0.3s;
 }
-
-.modal-btn-secondary:hover {
-    background: #00e5ff;
-    color: black;
-    box-shadow: 0 0 20px #00e5ff;
-    transform: translateY(-2px);
+.loading-overlay.hidden {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+.loader-rings {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 30px;
+}
+.ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 3.5px solid transparent;
+}
+.ring-outer {
+    width: 100%;
+    height: 100%;
+    border-top-color: #00e5ff;
+    border-bottom-color: #00e5ff;
+    animation: spinStop 2s ease-in-out infinite;
+}
+.ring-inner {
+    width: 54px;
+    height: 54px;
+    top: 13px;
+    left: 13px;
+    border-left-color: #bf00ff;
+    border-right-color: #bf00ff;
+    animation: spinStopReverse 2s ease-in-out infinite;
+}
+@keyframes spinStop {
+    0% { transform: rotate(0deg); }
+    45% { transform: rotate(360deg); }
+    55% { transform: rotate(360deg); }
+    100% { transform: rotate(720deg); }
+}
+@keyframes spinStopReverse {
+    0% { transform: rotate(0deg); }
+    45% { transform: rotate(-360deg); }
+    55% { transform: rotate(-360deg); }
+    100% { transform: rotate(-720deg); }
+}
+.loading-text {
+    color: #00e5ff;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px #00e5ff;
 }
 
 /* Responsif */
@@ -208,6 +191,6 @@
     .success-title { font-size: 24px; }
     .detail-label { flex-basis: 80px; font-size: 13px; }
     .detail-value { font-size: 13px; }
-    .btn-kirim { width: 100%; }
-    .modal-actions { flex-direction: column; }
+    .action-buttons { flex-direction: column; }
+    .btn-home, .btn-struk { width: 100%; }
 }
