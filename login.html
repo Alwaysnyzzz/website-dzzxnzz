@@ -417,7 +417,7 @@
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Login gagal');
         localStorage.setItem('sb-session', JSON.stringify(data.session));
-        window.location.href = 'index';
+        window.location.href = 'home';
       } catch (err) {
         showError(err.message);
       } finally {
