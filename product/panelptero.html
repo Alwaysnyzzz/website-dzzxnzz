@@ -12,15 +12,14 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Gaya khusus halaman panel pterodactyl */
         .panel-container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 100px auto 40px;
             padding: 0 20px;
         }
         .page-header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
         .page-header h1 {
             font-size: 36px;
@@ -34,30 +33,54 @@
             color: #aaa;
             font-size: 16px;
         }
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
+
+        /* Button durasi */
+        .duration-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
         }
-        .product-card {
-            background: rgba(18,20,26,0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid var(--neon-cyan);
-            box-shadow: 0 0 15px var(--neon-cyan);
+        .duration-btn {
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 12px 25px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 16px;
             cursor: pointer;
+            transition: 0.2s;
+            min-width: 100px;
+            box-shadow: 0 0 10px rgba(0,229,255,0.2);
         }
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px var(--neon-cyan);
+        .duration-btn:hover {
+            background: var(--neon-cyan);
+            color: black;
+            box-shadow: 0 0 20px var(--neon-cyan);
+            transform: translateY(-2px);
         }
-        .product-card:active {
-            transform: scale(0.98);
+        .duration-btn.active {
+            background: var(--neon-cyan);
+            color: black;
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        /* Card panel */
+        .panel-card {
+            background: rgba(18,20,26,0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 30px;
+            border: 2px solid var(--neon-cyan);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px var(--neon-cyan);
+            margin-top: 30px;
+            animation: fadeIn 0.3s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .card-badge {
             display: inline-block;
@@ -65,61 +88,90 @@
             color: black;
             font-size: 14px;
             font-weight: 700;
-            padding: 6px 16px;
+            padding: 6px 20px;
             border-radius: 30px;
-            margin-bottom: 15px;
-            box-shadow: 0 0 10px var(--neon-cyan);
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px var(--neon-cyan);
         }
         .card-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-        .card-specs {
-            margin: 15px 0;
-            padding: 15px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 12px;
-        }
-        .spec-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: #ccc;
-        }
-        .spec-item span:last-child {
-            color: var(--neon-cyan);
-            font-weight: 600;
-        }
-        .card-price {
             font-size: 28px;
             font-weight: 700;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        .card-title span {
             color: var(--neon-cyan);
+            font-size: 18px;
+        }
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+            background: rgba(0,0,0,0.3);
+            border-radius: 16px;
+            padding: 20px;
+        }
+        .spec-item {
+            text-align: center;
+        }
+        .spec-item i {
+            font-size: 24px;
+            color: var(--neon-cyan);
+            margin-bottom: 5px;
+        }
+        .spec-label {
+            color: #aaa;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .spec-value {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .extra-spec {
+            background: rgba(0,229,255,0.1);
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
             margin: 15px 0;
+            border: 1px solid var(--neon-cyan);
+        }
+        .extra-spec .spec-label {
+            color: var(--neon-cyan);
+        }
+        .price {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--neon-cyan);
+            margin: 20px 0;
+            text-shadow: 0 0 15px var(--neon-cyan);
         }
         .price-period {
-            font-size: 14px;
+            font-size: 16px;
             color: #aaa;
         }
-        .btn-beli {
+        .btn-pesan {
             display: block;
             width: 100%;
-            text-align: center;
-            background: transparent;
-            border: 2px solid var(--neon-cyan);
-            color: var(--neon-cyan);
-            padding: 12px 0;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.2s;
-        }
-        .btn-beli:hover {
-            background: var(--neon-cyan);
+            padding: 16px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-green));
+            border: none;
+            border-radius: 50px;
             color: black;
-            box-shadow: 0 0 20px var(--neon-cyan);
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(0,229,255,0.5);
+        }
+        .btn-pesan:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px var(--neon-cyan);
         }
     </style>
 </head>
@@ -161,65 +213,53 @@
     <main class="panel-container">
         <div class="page-header">
             <h1>Panel Pterodactyl</h1>
-            <p>Pilih durasi sewa yang sesuai dengan kebutuhan Anda</p>
+            <p>Pilih durasi sewa yang sesuai kebutuhan</p>
         </div>
 
-        <div class="product-grid">
-            <!-- Card 10 Hari -->
-            <div class="product-card">
-                <div class="card-badge">10 Hari</div>
-                <h3 class="card-title">Panel Pterodactyl</h3>
-                <div class="card-specs">
-                    <div class="spec-item"><span>CPU</span><span>100%</span></div>
-                    <div class="spec-item"><span>RAM</span><span>3048 MB</span></div>
-                    <div class="spec-item"><span>SSD</span><span>10 GB</span></div>
-                    <div class="spec-item"><span>Bandwidth</span><span>Unlimited</span></div>
+        <!-- Button durasi -->
+        <div class="duration-buttons">
+            <button class="duration-btn" data-durasi="10">10 Hari</button>
+            <button class="duration-btn" data-durasi="15">15 Hari</button>
+            <button class="duration-btn" data-durasi="20">20 Hari</button>
+            <button class="duration-btn" data-durasi="30">30 Hari</button>
+        </div>
+
+        <!-- Card panel (akan berubah sesuai durasi) -->
+        <div class="panel-card" id="panelCard">
+            <div class="card-badge" id="durasiBadge">10 Hari</div>
+            <h2 class="card-title">Panel 3GB <span>PUBLIC</span></h2>
+            
+            <div class="spec-grid">
+                <div class="spec-item">
+                    <i class="fas fa-microchip"></i>
+                    <div class="spec-label">CPU</div>
+                    <div class="spec-value" id="cpu">100%</div>
                 </div>
-                <div class="card-price">Rp 10.000 <span class="price-period">/10 hari</span></div>
-                <a href="#" class="btn-beli">Pilih Paket</a>
+                <div class="spec-item">
+                    <i class="fas fa-memory"></i>
+                    <div class="spec-label">RAM</div>
+                    <div class="spec-value" id="ram">3027 MB</div>
+                </div>
+                <div class="spec-item">
+                    <i class="fas fa-hdd"></i>
+                    <div class="spec-label">SSD</div>
+                    <div class="spec-value" id="ssd">3027 MB</div>
+                </div>
+                <div class="spec-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <div class="spec-label">Core</div>
+                    <div class="spec-value" id="core">R17C4</div>
+                </div>
             </div>
 
-            <!-- Card 15 Hari -->
-            <div class="product-card">
-                <div class="card-badge">15 Hari</div>
-                <h3 class="card-title">Panel Pterodactyl</h3>
-                <div class="card-specs">
-                    <div class="spec-item"><span>CPU</span><span>100%</span></div>
-                    <div class="spec-item"><span>RAM</span><span>3048 MB</span></div>
-                    <div class="spec-item"><span>SSD</span><span>10 GB</span></div>
-                    <div class="spec-item"><span>Bandwidth</span><span>Unlimited</span></div>
-                </div>
-                <div class="card-price">Rp 15.000 <span class="price-period">/15 hari</span></div>
-                <a href="#" class="btn-beli">Pilih Paket</a>
+            <div class="extra-spec">
+                <span class="spec-label">Node</span>
+                <span class="spec-value" style="color:#fff;">High Performance</span>
             </div>
 
-            <!-- Card 20 Hari -->
-            <div class="product-card">
-                <div class="card-badge">20 Hari</div>
-                <h3 class="card-title">Panel Pterodactyl</h3>
-                <div class="card-specs">
-                    <div class="spec-item"><span>CPU</span><span>100%</span></div>
-                    <div class="spec-item"><span>RAM</span><span>3048 MB</span></div>
-                    <div class="spec-item"><span>SSD</span><span>10 GB</span></div>
-                    <div class="spec-item"><span>Bandwidth</span><span>Unlimited</span></div>
-                </div>
-                <div class="card-price">Rp 20.000 <span class="price-period">/20 hari</span></div>
-                <a href="#" class="btn-beli">Pilih Paket</a>
-            </div>
+            <div class="price" id="harga">Rp 4.500 <span class="price-period">/10 hari</span></div>
 
-            <!-- Card 30 Hari -->
-            <div class="product-card">
-                <div class="card-badge">30 Hari</div>
-                <h3 class="card-title">Panel Pterodactyl</h3>
-                <div class="card-specs">
-                    <div class="spec-item"><span>CPU</span><span>100%</span></div>
-                    <div class="spec-item"><span>RAM</span><span>3048 MB</span></div>
-                    <div class="spec-item"><span>SSD</span><span>10 GB</span></div>
-                    <div class="spec-item"><span>Bandwidth</span><span>Unlimited</span></div>
-                </div>
-                <div class="card-price">Rp 30.000 <span class="price-period">/30 hari</span></div>
-                <a href="#" class="btn-beli">Pilih Paket</a>
-            </div>
+            <button class="btn-pesan">PESAN SEKARANG</button>
         </div>
     </main>
 
@@ -268,5 +308,56 @@
     </footer>
 
     <script src="../script.js"></script>
+    <script>
+        // Data harga per durasi (bisa disesuaikan)
+        const hargaPerDurasi = {
+            10: 4500,
+            15: 6000,
+            20: 7500,
+            30: 10000
+        };
+
+        // Ambil elemen
+        const buttons = document.querySelectorAll('.duration-btn');
+        const durasiBadge = document.getElementById('durasiBadge');
+        const hargaElement = document.getElementById('harga');
+        const cpu = document.getElementById('cpu');
+        const ram = document.getElementById('ram');
+        const ssd = document.getElementById('ssd');
+        const core = document.getElementById('core');
+
+        // Fungsi untuk update card
+        function updateCard(durasi) {
+            // Update badge
+            durasiBadge.textContent = durasi + ' Hari';
+            
+            // Update harga
+            const harga = hargaPerDurasi[durasi] || 4500;
+            hargaElement.innerHTML = `Rp ${harga.toLocaleString('id-ID')} <span class="price-period">/${durasi} hari</span>`;
+
+            // Spesifikasi tetap sama untuk semua durasi (bisa diubah nanti)
+            cpu.textContent = '100%';
+            ram.textContent = '3027 MB';
+            ssd.textContent = '3027 MB';
+            core.textContent = 'R17C4';
+        }
+
+        // Tambah event listener ke setiap button
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Hapus class active dari semua button
+                buttons.forEach(b => b.classList.remove('active'));
+                // Tambah class active ke button yang diklik
+                this.classList.add('active');
+                // Ambil durasi dari atribut data-durasi
+                const durasi = this.getAttribute('data-durasi');
+                updateCard(durasi);
+            });
+        });
+
+        // Set default active (10 hari)
+        buttons[0].classList.add('active');
+        updateCard(10);
+    </script>
 </body>
 </html>
