@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Gaya khas DzzXNzz */
         body {
             background-color: #020202;
             background-image: linear-gradient(rgba(0,229,255,0.08) 1px, transparent 1px),
@@ -85,12 +84,8 @@
             font-size: 14px;
             min-height: 20px;
         }
-        .error {
-            color: #ff5555;
-        }
-        .success {
-            color: #00ff88;
-        }
+        .error { color: #ff5555; }
+        .success { color: #00ff88; }
     </style>
 </head>
 <body>
@@ -106,9 +101,7 @@
         <button class="btn-register" onclick="handleRegister()">Register</button>
     </div>
 
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
     <script>
         const messageEl = document.getElementById('message')
 
@@ -133,9 +126,7 @@
 
                 if (!res.ok) throw new Error(data.error)
 
-                // Simpan session di localStorage (opsional)
                 localStorage.setItem('sb-session', JSON.stringify(data.session))
-                
                 showMessage('Login berhasil! Mengalihkan...', 'success')
                 setTimeout(() => {
                     window.location.href = 'dashboard.html'
@@ -149,6 +140,7 @@
         async function handleRegister() {
             const email = document.getElementById('email').value
             const password = document.getElementById('password').value
+            const name = prompt('Masukkan nama Anda (opsional):') || ''
 
             if (!email || !password) {
                 showMessage('Email dan password harus diisi', 'error')
@@ -166,14 +158,13 @@
                 const res = await fetch('/api/auth/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
+                    body: JSON.stringify({ email, password, name })
                 })
                 const data = await res.json()
 
                 if (!res.ok) throw new Error(data.error)
 
-                showMessage(data.message || 'Registrasi berhasil!', 'success')
-                // Kosongkan password
+                showMessage(data.message || 'Registrasi berhasil! Silakan login.', 'success')
                 document.getElementById('password').value = ''
 
             } catch (err) {

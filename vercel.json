@@ -7,6 +7,8 @@
     { "source": "/contact", "destination": "/contact.html" },
     { "source": "/contact/wa", "destination": "/contact/wa.html" },
     { "source": "/contact/telegram", "destination": "/contact/telegram.html" },
+    { "source": "/login", "destination": "/login.html" },
+    { "source": "/dashboard", "destination": "/dashboard.html" },
     { "source": "/(.*)", "destination": "/$1.html" }
   ]
 }

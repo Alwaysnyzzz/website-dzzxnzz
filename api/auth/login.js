@@ -2,7 +2,7 @@ import { createClient } from '@supabase/supabase-js'
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY // atau anon key juga boleh, tapi lebih aman pake service role untuk server
+  process.env.SUPABASE_ANON_KEY
 )
 
 export default async function handler(req, res) {
@@ -20,7 +20,6 @@ export default async function handler(req, res) {
 
     if (error) throw error
 
-    // Kirim session token ke client (bisa disimpan di cookie atau localStorage)
     res.status(200).json({
       user: data.user,
       session: data.session
