@@ -317,7 +317,7 @@
         <div class="loader" id="loader"></div>
       </button>
       <div class="footer">
-        <a href="register.html">
+        <a href="register">
           <i class="fas fa-user-plus"></i> Belum punya akun? Register
         </a>
       </div>
@@ -417,7 +417,7 @@
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Login gagal');
         localStorage.setItem('sb-session', JSON.stringify(data.session));
-        window.location.href = 'index.html';
+        window.location.href = 'index';
       } catch (err) {
         showError(err.message);
       } finally {
