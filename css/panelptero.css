@@ -1,115 +1,83 @@
 /* ===== PANEL PTERODACTYL PAGE STYLES ===== */
 
-/* Background Layers */
-.bg-blob {
-    position: fixed;
-    width: 120vw;
-    height: 120vw;
-    background: radial-gradient(circle, 
-        rgba(0, 229, 255, 0.15) 0%, 
-        rgba(0, 255, 136, 0.1) 40%, 
-        transparent 70%);
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    animation: pulseBlob 10s ease-in-out infinite alternate;
-    z-index: 0;
-    pointer-events: none;
-}
-.bg-grid {
-    position: fixed;
-    width: 200%;
-    height: 200%;
-    top: -50%; left: -50%;
-    background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 50px 50px;
-    transform: perspective(500px) rotateX(60deg);
-    animation: gridMove 20s linear infinite;
-    z-index: 0;
-    pointer-events: none;
-}
-@keyframes pulseBlob {
-    0% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-    100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
-}
-@keyframes gridMove {
-    0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
-    100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
-}
-
-canvas#particleCanvas {
+/* Background gradient */
+.bg-gradient {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
-    pointer-events: none;
+    background: radial-gradient(circle at 20% 30%, rgba(0, 229, 255, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(0, 255, 136, 0.1) 0%, transparent 30%),
+                #020202;
+    z-index: -2;
 }
 
 /* Konten Utama */
 .panel-container {
-    position: relative;
-    z-index: 10;
-    max-width: 600px;
+    max-width: 700px;
     margin: 100px auto 40px;
     padding: 0 20px;
+    position: relative;
 }
+
 .page-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
+
 .page-header h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 32px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 42px;
     font-weight: 700;
-    background: linear-gradient(135deg, #00e5ff, #00ff88);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 20px rgba(0,229,255,0.5));
-    margin-bottom: 10px;
-    letter-spacing: 2px;
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    text-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
 }
+
 .page-header p {
-    color: rgba(255,255,255,0.6);
-    font-size: 14px;
-    letter-spacing: 1px;
+    color: #888;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
 }
 
 /* Duration Buttons */
 .duration-buttons {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
     margin: 30px 0;
+    flex-wrap: wrap;
 }
+
 .duration-btn {
-    background: rgba(0,0,0,0.3);
-    border: 2px solid #00e5ff;
-    color: #00e5ff;
-    font-family: 'Orbitron', sans-serif;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    color: #ccc;
+    font-family: 'Inter', sans-serif;
     font-size: 14px;
-    font-weight: 600;
-    padding: 10px 20px;
-    border-radius: 40px;
+    font-weight: 500;
+    padding: 10px 24px;
+    border-radius: 30px;
     cursor: pointer;
-    transition: 0.2s;
+    transition: all 0.2s;
     backdrop-filter: blur(5px);
-    box-shadow: 0 0 15px rgba(0,229,255,0.2);
-    letter-spacing: 1px;
 }
+
 .duration-btn:hover {
-    background: #00e5ff;
-    color: black;
-    box-shadow: 0 0 25px #00e5ff;
+    background: rgba(0, 229, 255, 0.1);
+    border-color: #00e5ff;
+    color: #00e5ff;
     transform: translateY(-2px);
 }
+
 .duration-btn.active {
     background: #00e5ff;
-    color: black;
-    box-shadow: 0 0 25px #00e5ff;
+    border-color: #00e5ff;
+    color: #020202;
+    font-weight: 600;
+    box-shadow: 0 0 20px #00e5ff;
 }
 
 /* Panel Card */
@@ -117,147 +85,188 @@ canvas#particleCanvas {
     background: rgba(20, 25, 35, 0.7);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-radius: 60px;
-    padding: 25px 20px;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.7);
-    animation: fadeIn 0.5s ease;
+    border-radius: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     position: relative;
-    overflow: hidden; /* memastikan semua konten terpotong mengikuti lengkungan */
-    border: none; /* hapus border biasa, kita pakai pseudo-element untuk gradien */
-}
-.panel-card::before {
-    content: '';
-    position: absolute;
-    top: -2px; left: -2px; right: -2px; bottom: -2px;
-    background: linear-gradient(135deg, #00e5ff, #00ff88);
-    border-radius: 62px; /* sedikit lebih besar agar menutupi tepi */
-    z-index: -1;
-}
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-.card-badge {
-    display: inline-block;
-    background: #00e5ff;
-    color: black;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 6px 20px;
-    border-radius: 30px;
-    margin-bottom: 15px;
-    box-shadow: 0 0 20px #00e5ff;
-    letter-spacing: 1px;
-}
-.card-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 5px;
-    text-shadow: 0 0 10px rgba(0,229,255,0.5);
-}
-.card-title span {
-    color: #00ff88;
-    font-size: 14px;
-    margin-left: 10px;
+    overflow: hidden;
 }
 
-/* Spek di samping (grid 2 kolom) */
-.spec-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin: 20px 0;
-    background: rgba(0,0,0,0.3);
-    border-radius: 40px; /* lengkung */
-    padding: 15px;
-    border: 1px solid rgba(255,255,255,0.1);
+.card-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 30%, rgba(0, 229, 255, 0.1), transparent 70%);
+    pointer-events: none;
 }
-.spec-item {
-    text-align: center;
+
+.card-content {
+    position: relative;
+    padding: 32px;
+    z-index: 1;
 }
-.spec-item i {
-    font-size: 22px;
+
+.card-header {
+    margin-bottom: 28px;
+}
+
+.card-badge {
+    display: inline-block;
+    background: rgba(0, 229, 255, 0.15);
     color: #00e5ff;
-    margin-bottom: 3px;
-    filter: drop-shadow(0 0 8px #00e5ff);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px 18px;
+    border-radius: 30px;
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    margin-bottom: 15px;
 }
-.spec-label {
-    color: #aaa;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-family: 'Rajdhani', sans-serif;
-}
-.spec-value {
-    color: white;
-    font-size: 16px;
+
+.card-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 32px;
     font-weight: 700;
-    font-family: 'Orbitron', sans-serif;
-    text-shadow: 0 0 5px rgba(0,229,255,0.5);
+    color: #fff;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.card-title span {
+    color: #888;
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: 10px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Spec Items */
+.spec-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.spec-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: 0.2s;
+}
+
+.spec-item:hover {
+    background: rgba(0, 229, 255, 0.05);
+    border-color: rgba(0, 229, 255, 0.2);
+}
+
+.spec-icon {
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 229, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00e5ff;
+    font-size: 18px;
+}
+
+.spec-info {
+    flex: 1;
+}
+
+.spec-label {
+    color: #888;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 2px;
+}
+
+.spec-value {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 /* Extra Spec */
 .extra-spec {
-    background: rgba(0,229,255,0.1);
-    border: 1px solid #00e5ff;
-    border-radius: 40px;
-    padding: 8px;
+    background: rgba(0, 229, 255, 0.05);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    border-radius: 20px;
+    padding: 16px;
+    margin: 20px 0;
     text-align: center;
-    margin: 15px 0;
-    backdrop-filter: blur(5px);
-}
-.extra-spec .spec-label {
-    color: #00e5ff;
 }
 
-/* Harga */
-.price {
-    font-size: 30px;
-    font-weight: 800;
+.extra-label {
     color: #00e5ff;
-    margin: 15px 0;
-    text-align: center;
-    font-family: 'Orbitron', sans-serif;
-    text-shadow: 0 0 20px #00e5ff;
-}
-.price-period {
     font-size: 12px;
-    color: #aaa;
-    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-right: 12px;
+}
+
+.extra-value {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Price */
+.price {
+    text-align: center;
+    margin: 25px 0 20px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: #00e5ff;
+    text-shadow: 0 0 30px rgba(0, 229, 255, 0.5);
+}
+
+.price span {
+    font-size: 16px;
+    color: #888;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
 }
 
 /* Tombol Pesan */
 .btn-pesan {
     width: 100%;
-    padding: 14px;
-    background: linear-gradient(135deg, #00e5ff, #00ff88);
+    padding: 16px;
+    background: #00e5ff;
     border: none;
-    border-radius: 50px;
-    color: black;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 14px;
+    border-radius: 16px;
+    color: #020202;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
     font-weight: 700;
     cursor: pointer;
     transition: 0.2s;
-    box-shadow: 0 10px 30px rgba(0,229,255,0.4);
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
 }
+
 .btn-pesan:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(0,229,255,0.7);
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px #00e5ff;
 }
+
 .btn-pesan:active {
     transform: scale(0.98);
 }
 
 /* Responsif */
 @media (max-width: 500px) {
-    .page-header h1 { font-size: 24px; }
-    .duration-btn { padding: 8px 15px; font-size: 12px; }
-    .spec-grid { grid-template-columns: 1fr; }
-    .price { font-size: 24px; }
+    .page-header h1 { font-size: 32px; }
+    .spec-wrapper { grid-template-columns: 1fr; }
+    .price { font-size: 36px; }
+    .card-content { padding: 24px; }
 }
