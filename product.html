@@ -2,204 +2,19 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product - DzzXNzz</title>
-    <!-- CSS Global -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="css/modern.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* Gaya khusus card produk (tanpa glow di badge) */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-        .product-card {
-            background: rgba(18,20,26,0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-            cursor: default;
-            border: 1px solid transparent;
-        }
-        .product-card:hover {
-            transform: translateY(-8px);
-        }
-        .product-card:active {
-            transform: none !important;
-        }
-        /* Warna border per kategori */
-        .product-card.popular {
-            border-color: var(--neon-purple);
-            box-shadow: 0 0 15px var(--neon-purple);
-        }
-        .product-card.popular:hover {
-            box-shadow: 0 15px 30px var(--neon-purple);
-        }
-        .product-card.bot {
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 15px var(--neon-cyan);
-        }
-        .product-card.bot:hover {
-            box-shadow: 0 15px 30px var(--neon-cyan);
-        }
-        .product-card.new {
-            border-color: var(--neon-green);
-            box-shadow: 0 0 15px var(--neon-green);
-        }
-        .product-card.new:hover {
-            box-shadow: 0 15px 30px var(--neon-green);
-        }
-        .product-card.donasi {
-            border-color: var(--neon-red);
-            box-shadow: 0 0 15px var(--neon-red);
-        }
-        .product-card.donasi:hover {
-            box-shadow: 0 15px 30px var(--neon-red);
-        }
-
-        .card-badge {
-            display: inline-block;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            /* GLOW DIHAPUS */
-            box-shadow: none !important;
-        }
-        .popular .card-badge {
-            background: var(--neon-purple);
-            color: white;
-        }
-        .bot .card-badge {
-            background: var(--neon-cyan);
-            color: black;
-        }
-        .new .card-badge {
-            background: var(--neon-green);
-            color: black;
-        }
-        .donasi .card-badge {
-            background: var(--neon-red);
-            color: white;
-        }
-
-        .card-title {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-        .card-desc {
-            color: #aaa;
-            font-size: 14px;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-        .feature-list {
-            margin: 15px 0;
-            padding: 15px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 12px;
-        }
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-            color: #ccc;
-            font-size: 14px;
-        }
-        .feature-item i {
-            width: 20px;
-        }
-        .popular .feature-item i { color: var(--neon-purple); }
-        .bot .feature-item i { color: var(--neon-cyan); }
-        .new .feature-item i { color: var(--neon-green); }
-        .donasi .feature-item i { color: var(--neon-red); }
-
-        .card-price {
-            font-size: 24px;
-            font-weight: 700;
-            margin: 15px 0;
-        }
-        .popular .card-price { color: var(--neon-purple); }
-        .bot .card-price { color: var(--neon-cyan); }
-        .new .card-price { color: var(--neon-green); }
-        .donasi .card-price { color: var(--neon-red); }
-
-        .price-period {
-            font-size: 14px;
-            color: #aaa;
-        }
-        .btn-detail {
-            display: block;
-            width: 100%;
-            text-align: center;
-            background: transparent;
-            border: 2px solid;
-            padding: 12px 0;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.2s;
-            cursor: pointer;
-        }
-        .popular .btn-detail {
-            border-color: var(--neon-purple);
-            color: var(--neon-purple);
-        }
-        .popular .btn-detail:hover {
-            background: var(--neon-purple);
-            color: black;
-            box-shadow: 0 0 20px var(--neon-purple);
-        }
-        .bot .btn-detail {
-            border-color: var(--neon-cyan);
-            color: var(--neon-cyan);
-        }
-        .bot .btn-detail:hover {
-            background: var(--neon-cyan);
-            color: black;
-            box-shadow: 0 0 20px var(--neon-cyan);
-        }
-        .new .btn-detail {
-            border-color: var(--neon-green);
-            color: var(--neon-green);
-        }
-        .new .btn-detail:hover {
-            background: var(--neon-green);
-            color: black;
-            box-shadow: 0 0 20px var(--neon-green);
-        }
-        .donasi .btn-detail {
-            border-color: var(--neon-red);
-            color: var(--neon-red);
-        }
-        .donasi .btn-detail:hover {
-            background: var(--neon-red);
-            color: black;
-            box-shadow: 0 0 20px var(--neon-red);
-        }
-
-        /* Global fix outline */
-        * {
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Panel Pterodactyl - DzzXNzz</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="../style.css">
+    <!-- CSS Khusus Halaman -->
+    <link rel="stylesheet" href="../css/panelptero.css">
 </head>
 <body>
+    <!-- Background gradient -->
+    <div class="bg-gradient"></div>
     <canvas id="canvas"></canvas>
 
     <!-- Navbar -->
@@ -211,7 +26,7 @@
         <div class="nav-right">
             <div class="coins-wrapper">COINS: 0</div>
             <div class="user-avatar">
-                <img src="./image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
+                <img src="../image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
             </div>
         </div>
     </nav>
@@ -221,78 +36,147 @@
         <div class="sidebar-header">
             <span class="user-name-text">DzzXNzz</span>
             <div class="sidebar-pfp">
-                <img src="./image/image.jpg" alt="PFP" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
+                <img src="../image/image.jpg" alt="PFP" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
             </div>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="home">🏠 Home</a></li>
-            <li class="active"><a href="product">📦 Product</a></li>
-            <li><a href="donasi">❤️ Donasi</a></li>
-            <li><a href="contact">📞 Contact</a></li>
+            <li><a href="../home">🏠 Home</a></li>
+            <li><a href="../product">📦 Product</a></li>
+            <li><a href="../donasi">❤️ Donasi</a></li>
+            <li><a href="../contact">📞 Contact</a></li>
         </ul>
     </div>
     <div class="overlay" id="overlay"></div>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="page-title">
-            <h1>Layanan Kami</h1>
-            <p>Pilih paket yang sesuai dengan kebutuhan Anda</p>
+    <!-- Konten Utama -->
+    <main class="panel-container">
+        <div class="page-header">
+            <h1>PTERODACTYL PANEL</h1>
+            <p>Pilih spesifikasi yang sesuai kebutuhan</p>
         </div>
 
-        <div class="product-grid">
-            <!-- Card Panel Pterodactyl (Popular / Ungu) -->
-            <div class="product-card popular">
-                <div class="card-badge">POPULAR</div>
-                <h3 class="card-title">Panel Pterodactyl</h3>
-                <p class="card-desc">Panel fast respon, siap untuk hosting dengan performa optimal.</p>
-                <div class="feature-list">
-                    <div class="feature-item"><i class="fas fa-bolt"></i><span>Fast respon</span></div>
-                    <div class="feature-item"><i class="fas fa-check-circle"></i><span>Siap pakai</span></div>
-                    <div class="feature-item"><i class="fas fa-shield-alt"></i><span>Keamanan terjamin</span></div>
+        <!-- Grid 2 kolom untuk card -->
+        <div class="panel-grid">
+            <!-- Card Panel 3GB -->
+            <div class="panel-card" id="panel3gb">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="card-badge" id="durasiBadge3">10 Hari</div>
+                        <h2 class="card-title">PANEL 3GB <span>LOW</span></h2>
+                    </div>
+                    
+                    <div class="spec-wrapper">
+                        <div class="spec-item">
+                            <div class="spec-icon"><i class="fas fa-microchip"></i></div>
+                            <div class="spec-info">
+                                <div class="spec-label">CPU</div>
+                                <div class="spec-value" id="cpu3">100%</div>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-icon"><i class="fas fa-memory"></i></div>
+                            <div class="spec-info">
+                                <div class="spec-label">MEMORI</div>
+                                <div class="spec-value" id="ram3">3027 MB</div>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-icon"><i class="fas fa-hdd"></i></div>
+                            <div class="spec-info">
+                                <div class="spec-label">DISK</div>
+                                <div class="spec-value" id="disk3">3027 MB</div>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            <div class="spec-info">
+                                <div class="spec-label">SPEK</div>
+                                <div class="spec-value" id="core3">R17C4</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="extra-spec">
+                        <span class="extra-label">NODE</span>
+                        <span class="extra-value">HIGH PERFORMANCE</span>
+                    </div>
+
+                    <div class="price" id="harga3">
+                        Rp 3.000 <span>/10 hari</span>
+                    </div>
+
+                    <!-- Pilihan durasi untuk panel 3GB -->
+                    <div class="duration-group">
+                        <button class="duration-btn-small" data-panel="3" data-durasi="10">10</button>
+                        <button class="duration-btn-small" data-panel="3" data-durasi="15">15</button>
+                        <button class="duration-btn-small" data-panel="3" data-durasi="20">20</button>
+                        <button class="duration-btn-small" data-panel="3" data-durasi="30">30</button>
+                    </div>
+
+                    <button class="btn-pesan">PESAN SEKARANG</button>
                 </div>
-                <!-- Harga dihapus sesuai permintaan -->
-                <a href="/product/panelptero" class="btn-detail">Lihat Detail</a>
             </div>
 
-            <!-- Card Sewa Bot Jaga (Bot / Cyan) -->
-            <div class="product-card bot">
-                <div class="card-badge">BOT</div>
-                <h3 class="card-title">Sewa Bot Jaga</h3>
-                <p class="card-desc">Sistem keamanan grup 24 jam dengan fitur lengkap.</p>
-                <div class="feature-list">
-                    <div class="feature-item"><i class="fas fa-robot"></i><span>Anti spam & anti link</span></div>
-                    <div class="feature-item"><i class="fas fa-infinity"></i><span>Unlimited grup</span></div>
-                    <div class="feature-item"><i class="fas fa-headset"></i><span>Support 24/7</span></div>
-                </div>
-                <div class="card-price">Rp 15.000 <span class="price-period">/bulan</span></div>
-                <a href="#" class="btn-detail">Lihat Detail</a>
-            </div>
+            <!-- Card Panel 5GB -->
+            <div class="panel-card" id="panel5gb">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="card-badge" id="durasiBadge5">10 Hari</div>
+                        <h2 class="card-title">PANEL 5GB <span>MEDIUM</span></h2>
+                    </div>
+                    
+                    <div class="spec-wrapper">
+                        <div class="spec-item">
+                            <div class="spec-icon"><i class="fas fa-microchip"></i></div>
+                            <div class="spec-info">
+                                <div class="spec-label">CPU</div>
+                                <div class="spec-value" id="cpu5">300%</div>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-icon"><i class="fas fa-memory"></i></div>
+                            <div class="spec-info">
+                                <div class="spec-label">MEMORI</div>
+                                <div class="spec-value" id="ram5">5027 MB</div>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-icon"><i class="fas fa-hdd"></i></div>
+                            <div class="spec-info">
+                                <div class="spec-label">DISK</div>
+                                <div class="spec-value" id="disk5">5027 MB</div>
+                            </div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            <div class="spec-info">
+                                <div class="spec-label">SPEK</div>
+                                <div class="spec-value" id="core5">R17C4</div>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- Card Script & Tools (New / Hijau) -->
-            <div class="product-card new">
-                <div class="card-badge">NEW</div>
-                <h3 class="card-title">Script & Tools</h3>
-                <p class="card-desc">Koleksi script terbaru untuk kebutuhan Anda.</p>
-                <div class="feature-list">
-                    <div class="feature-item"><i class="fas fa-calendar-alt"></i><span>Update mingguan</span></div>
-                    <div class="feature-item"><i class="fas fa-unlock"></i><span>Akses full</span></div>
-                    <div class="feature-item"><i class="fas fa-file-code"></i><span>100+ script</span></div>
-                </div>
-                <div class="card-price">Rp 25.000 <span class="price-period">/bulan</span></div>
-                <a href="#" class="btn-detail">Lihat Detail</a>
-            </div>
+                    <div class="extra-spec">
+                        <span class="extra-label">NODE</span>
+                        <span class="extra-value">HIGH PERFORMANCE</span>
+                    </div>
 
-            <!-- Card Donasi (Red) – Opsional, bisa dihapus jika tidak ingin -->
-            <div class="product-card donasi">
-                <div class="card-badge">SUPPORT</div>
-                <h3 class="card-title">Donasi</h3>
-                <p class="card-desc">Dukung perkembangan website ini.</p>
-                <div class="feature-list">
-                    <div class="feature-item"><i class="fas fa-heart"></i><span>Bantuan Anda berarti</span></div>
-                    <div class="feature-item"><i class="fas fa-qrcode"></i><span>QRIS tersedia</span></div>
+                    <div class="price" id="harga5">
+                        Rp 5.000 <span>/10 hari</span>
+                    </div>
+
+                    <!-- Pilihan durasi untuk panel 5GB -->
+                    <div class="duration-group">
+                        <button class="duration-btn-small" data-panel="5" data-durasi="10">10</button>
+                        <button class="duration-btn-small" data-panel="5" data-durasi="15">15</button>
+                        <button class="duration-btn-small" data-panel="5" data-durasi="20">20</button>
+                        <button class="duration-btn-small" data-panel="5" data-durasi="30">30</button>
+                    </div>
+
+                    <button class="btn-pesan">PESAN SEKARANG</button>
                 </div>
-                <a href="/donasi" class="btn-detail">Donasi Sekarang</a>
             </div>
         </div>
     </main>
@@ -302,7 +186,7 @@
         <div class="footer-container">
             <div>
                 <div class="footer-logo">DzzXNzz</div>
-                <p class="footer-desc">Provider hosting generasi baru yang fokus pada performa, keamanan, dan kemudahan penggunaan untuk developer dan kreator.</p>
+                <p class="footer-desc">Provider hosting generasi baru yang fokus pada performa, keamanan, dan kemudahan penggunaan.</p>
                 <div class="social-icons">
                     <a href="https://wa.me/6287713472756" target="_blank" class="social-icon wa"><i class="fab fa-whatsapp"></i></a>
                     <a href="https://t.me/DzzXNzz" target="_blank" class="social-icon tg"><i class="fab fa-telegram-plane"></i></a>
@@ -329,9 +213,9 @@
             <div>
                 <h4 class="footer-title">Kontak</h4>
                 <ul class="footer-links">
-                    <li><a href="contact">WhatsApp</a></li>
-                    <li><a href="contact">Telegram</a></li>
-                    <li><a href="contact">Email</a></li>
+                    <li><a href="../contact">WhatsApp</a></li>
+                    <li><a href="../contact">Telegram</a></li>
+                    <li><a href="../contact">Email</a></li>
                 </ul>
             </div>
         </div>
@@ -341,6 +225,9 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Script Global -->
+    <script src="../script.js"></script>
+    <!-- Script Khusus Halaman -->
+    <script src="../js/panelptero.js"></script>
 </body>
 </html>

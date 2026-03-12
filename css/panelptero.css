@@ -15,7 +15,7 @@
 
 /* Konten Utama */
 .panel-container {
-    max-width: 700px;
+    max-width: 1200px;
     margin: 100px auto 40px;
     padding: 0 20px;
     position: relative;
@@ -42,42 +42,12 @@
     font-family: 'Inter', sans-serif;
 }
 
-/* Duration Buttons */
-.duration-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin: 30px 0;
-    flex-wrap: wrap;
-}
-
-.duration-btn {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(0, 229, 255, 0.2);
-    color: #ccc;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 10px 24px;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: all 0.2s;
-    backdrop-filter: blur(5px);
-}
-
-.duration-btn:hover {
-    background: rgba(0, 229, 255, 0.1);
-    border-color: #00e5ff;
-    color: #00e5ff;
-    transform: translateY(-2px);
-}
-
-.duration-btn.active {
-    background: #00e5ff;
-    border-color: #00e5ff;
-    color: #020202;
-    font-weight: 600;
-    box-shadow: 0 0 20px #00e5ff;
+/* Grid untuk dua card */
+.panel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
 }
 
 /* Panel Card */
@@ -104,12 +74,12 @@
 
 .card-content {
     position: relative;
-    padding: 32px;
+    padding: 28px;
     z-index: 1;
 }
 
 .card-header {
-    margin-bottom: 28px;
+    margin-bottom: 24px;
 }
 
 .card-badge {
@@ -122,12 +92,12 @@
     padding: 6px 18px;
     border-radius: 30px;
     border: 1px solid rgba(0, 229, 255, 0.3);
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .card-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 700;
     color: #fff;
     margin: 0;
@@ -136,9 +106,9 @@
 
 .card-title span {
     color: #888;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
-    margin-left: 10px;
+    margin-left: 8px;
     font-family: 'Inter', sans-serif;
 }
 
@@ -146,17 +116,17 @@
 .spec-wrapper {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin: 24px 0;
+    gap: 12px;
+    margin: 20px 0;
 }
 
 .spec-item {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     background: rgba(0, 0, 0, 0.2);
-    padding: 12px;
-    border-radius: 16px;
+    padding: 10px;
+    border-radius: 14px;
     border: 1px solid rgba(255, 255, 255, 0.05);
     transition: 0.2s;
 }
@@ -167,15 +137,15 @@
 }
 
 .spec-icon {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     background: rgba(0, 229, 255, 0.1);
-    border-radius: 12px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #00e5ff;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .spec-info {
@@ -184,14 +154,15 @@
 
 .spec-label {
     color: #888;
-    font-size: 12px;
+    font-size: 11px;
     font-family: 'Inter', sans-serif;
     margin-bottom: 2px;
+    text-transform: uppercase;
 }
 
 .spec-value {
     color: #fff;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     font-family: 'Space Grotesk', sans-serif;
 }
@@ -200,58 +171,94 @@
 .extra-spec {
     background: rgba(0, 229, 255, 0.05);
     border: 1px solid rgba(0, 229, 255, 0.2);
-    border-radius: 20px;
-    padding: 16px;
-    margin: 20px 0;
+    border-radius: 18px;
+    padding: 12px;
+    margin: 15px 0;
     text-align: center;
 }
 
 .extra-label {
     color: #00e5ff;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: 1px;
-    margin-right: 12px;
+    margin-right: 8px;
 }
 
 .extra-value {
     color: #fff;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
 }
 
 /* Price */
 .price {
     text-align: center;
-    margin: 25px 0 20px;
+    margin: 20px 0 15px;
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 42px;
+    font-size: 36px;
     font-weight: 700;
     color: #00e5ff;
     text-shadow: 0 0 30px rgba(0, 229, 255, 0.5);
 }
 
 .price span {
-    font-size: 16px;
+    font-size: 14px;
     color: #888;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
 }
 
+/* Duration group (tombol kecil) */
+.duration-group {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+.duration-btn-small {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    color: #ccc;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 40px;
+}
+
+.duration-btn-small:hover {
+    background: rgba(0, 229, 255, 0.1);
+    border-color: #00e5ff;
+    color: #00e5ff;
+}
+
+.duration-btn-small.active {
+    background: #00e5ff;
+    border-color: #00e5ff;
+    color: #020202;
+    font-weight: 600;
+}
+
 /* Tombol Pesan */
 .btn-pesan {
     width: 100%;
-    padding: 16px;
+    padding: 14px;
     background: #00e5ff;
     border: none;
-    border-radius: 16px;
+    border-radius: 14px;
     color: #020202;
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     cursor: pointer;
     transition: 0.2s;
     box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+    margin-top: 10px;
 }
 
 .btn-pesan:hover {
@@ -264,9 +271,12 @@
 }
 
 /* Responsif */
-@media (max-width: 500px) {
+@media (max-width: 700px) {
+    .panel-grid {
+        grid-template-columns: 1fr;
+    }
     .page-header h1 { font-size: 32px; }
     .spec-wrapper { grid-template-columns: 1fr; }
-    .price { font-size: 36px; }
-    .card-content { padding: 24px; }
+    .price { font-size: 32px; }
+    .card-content { padding: 20px; }
 }
