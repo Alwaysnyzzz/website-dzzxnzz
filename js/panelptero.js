@@ -1,17 +1,6 @@
 // js/panelptero.js
 
 (function() {
-    // Sidebar toggle (sudah ada di script.js, tapi kita pastikan)
-    document.addEventListener('DOMContentLoaded', function() {
-        const menuBtn = document.getElementById('menu-toggle');
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
-        if (menuBtn && sidebar && overlay) {
-            menuBtn.onclick = () => { sidebar.classList.add('active'); overlay.classList.add('active'); };
-            overlay.onclick = () => { sidebar.classList.remove('active'); overlay.classList.remove('active'); };
-        }
-    });
-
     // Fungsi update harga berdasarkan durasi
     const durasiButtons = document.querySelectorAll('.duration-btn');
     const harga3 = document.getElementById('harga3');
@@ -37,10 +26,10 @@
     function updateHarga(durasi) {
         const hargaData = durasi === '20' ? harga20 : harga30;
 
-        harga3.innerHTML = `Rp ${hargaData[3].toLocaleString('id-ID')} <span>/${durasi} hari</span>`;
-        harga5.innerHTML = `Rp ${hargaData[5].toLocaleString('id-ID')} <span>/${durasi} hari</span>`;
-        harga6.innerHTML = `Rp ${hargaData[6].toLocaleString('id-ID')} <span>/${durasi} hari</span>`;
-        harga7.innerHTML = `Rp ${hargaData[7].toLocaleString('id-ID')} <span>/${durasi} hari</span>`;
+        if (harga3) harga3.innerHTML = `Rp ${hargaData[3].toLocaleString('id-ID')} <span>/${durasi} hari</span>`;
+        if (harga5) harga5.innerHTML = `Rp ${hargaData[5].toLocaleString('id-ID')} <span>/${durasi} hari</span>`;
+        if (harga6) harga6.innerHTML = `Rp ${hargaData[6].toLocaleString('id-ID')} <span>/${durasi} hari</span>`;
+        if (harga7) harga7.innerHTML = `Rp ${hargaData[7].toLocaleString('id-ID')} <span>/${durasi} hari</span>`;
 
         // Update active class
         durasiButtons.forEach(btn => {
@@ -66,7 +55,10 @@
     document.querySelectorAll('.btn-pesan').forEach(btn => {
         btn.addEventListener('click', function() {
             const panel = this.getAttribute('data-panel');
-            const durasi = document.querySelector('.duration-btn.active').getAttribute('data-durasi');
+            const activeBtn = document.querySelector('.duration-btn.active');
+            if (!activeBtn) return;
+            
+            const durasi = activeBtn.getAttribute('data-durasi');
             
             let harga;
             if (durasi === '20') {
