@@ -340,9 +340,131 @@
             transform: scale(0.98);
         }
 
+        /* ===== FOOTER (LENGKAP) ===== */
+        .footer {
+            background: rgba(8,8,12,0.95);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(0,229,255,0.1);
+            padding: 50px 20px 20px;
+            margin-top: 60px;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+        .footer-logo {
+            color: var(--neon-cyan);
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px var(--neon-cyan);
+        }
+        .footer-desc {
+            color: #aaa;
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            border: 2px solid;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+        .social-icon.wa {
+            border-color: #25D366;
+            color: #25D366;
+            box-shadow: 0 0 10px #25D366;
+        }
+        .social-icon.tg {
+            border-color: #0088cc;
+            color: #0088cc;
+            box-shadow: 0 0 10px #0088cc;
+        }
+        .social-icon.email {
+            border-color: #ff4444;
+            color: #ff4444;
+            box-shadow: 0 0 10px #ff4444;
+        }
+        .social-icon:hover {
+            background: currentColor;
+            color: black;
+            transform: scale(1.1);
+        }
+        .footer-title {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px var(--neon-cyan);
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: 0.2s;
+            font-size: 14px;
+        }
+        .footer-links a:hover {
+            color: var(--neon-cyan);
+            padding-left: 5px;
+            text-shadow: 0 0 5px var(--neon-cyan);
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 40px;
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            color: #777;
+            font-size: 13px;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(0,255,0,0.1);
+            border: 1px solid #0f0;
+            color: #0f0;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 12px;
+            box-shadow: 0 0 8px #0f0;
+        }
+        .status-badge i {
+            font-size: 8px;
+            color: #0f0;
+        }
+
         /* Responsif */
         @media (max-width: 500px) {
             .duration-btn { padding: 8px 16px; font-size: 14px; }
+            .footer-container { grid-template-columns: 1fr; text-align: center; }
+            .social-icons { justify-content: center; }
+            .footer-bottom { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
@@ -513,12 +635,12 @@
         </div>
     </main>
 
-    <!-- Footer -->
+    <!-- Footer Lengkap -->
     <footer class="footer">
         <div class="footer-container">
             <div>
                 <div class="footer-logo">DzzXNzz</div>
-                <p class="footer-desc">Provider hosting generasi baru yang fokus pada performa, keamanan, dan kemudahan penggunaan.</p>
+                <p class="footer-desc">Provider hosting generasi baru yang fokus pada performa, keamanan, dan kemudahan penggunaan untuk developer dan kreator.</p>
                 <div class="social-icons">
                     <a href="https://wa.me/6287713472756" target="_blank" class="social-icon wa"><i class="fab fa-whatsapp"></i></a>
                     <a href="https://t.me/DzzXNzz" target="_blank" class="social-icon tg"><i class="fab fa-telegram-plane"></i></a>
