@@ -191,7 +191,7 @@
     transform: scale(0.98);
 }
 
-/* ===== GAYA VIP UNTUK 30 HARI (CYBERPUNK NEON) ===== */
+/* ===== GAYA VIP UNTUK 30 HARI (DENGAN BADGE PELANGI) ===== */
 .vip-container {
     display: none; /* default hidden, akan ditampilkan via JS */
 }
@@ -238,10 +238,12 @@
     100% { background-position: 0% 50%; }
 }
 
-.vip-badge {
+/* Badge pelangi */
+.badge-rainbow {
     display: inline-block;
-    background: linear-gradient(135deg, #ffd700, #ffaa00);
-    color: #0a0c10;
+    background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb, #1dd1a1, #f368e0);
+    background-size: 300% 300%;
+    color: white;
     font-family: 'Space Grotesk', sans-serif;
     font-size: 13px;
     font-weight: 800;
@@ -249,10 +251,16 @@
     border-radius: 40px;
     margin-bottom: 20px;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    box-shadow: 0 0 30px #ffd700, 0 4px 10px rgba(0,0,0,0.5);
-    border: 1px solid rgba(255,255,255,0.3);
-    transform: skew(-5deg);
+    letter-spacing: 1.5px;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: rainbowMove 6s ease infinite;
+}
+
+@keyframes rainbowMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .vip-card .card-header {
@@ -299,6 +307,7 @@
     color: #00ff88;
 }
 
+/* Grid spesifikasi */
 .spec-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -309,7 +318,7 @@
     border-bottom: 1px solid rgba(255, 215, 0, 0.3);
 }
 
-.vip-card .spec-item {
+.grid-item {
     text-align: center;
     position: relative;
     padding: 10px;
@@ -318,8 +327,7 @@
     border: 1px solid rgba(255, 215, 0, 0.2);
 }
 
-.vip-card .spec-label {
-    display: block;
+.grid-label {
     font-family: 'Inter', sans-serif;
     font-size: 11px;
     color: #aaa;
@@ -328,7 +336,7 @@
     letter-spacing: 0.5px;
 }
 
-.vip-card .spec-value {
+.grid-value {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 20px;
     font-weight: 700;
@@ -336,6 +344,7 @@
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
+/* Harga */
 .price-section {
     text-align: center;
     margin: 25px 0;
@@ -382,6 +391,7 @@
     line-height: 1;
 }
 
+/* Tombol Order Premium */
 .btn-order {
     width: 100%;
     padding: 16px;
@@ -423,5 +433,5 @@
     .vip-card .card-header { flex-direction: column; align-items: flex-start; }
     .amount { font-size: 32px; }
     .spec-grid { gap: 10px; }
-    .vip-card .spec-item { padding: 8px; }
+    .grid-item { padding: 8px; }
 }
