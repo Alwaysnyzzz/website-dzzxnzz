@@ -9,14 +9,12 @@
         30: 9000
     };
 
-    const durasiBadge = document.getElementById('durasiBadge');
     const hargaEl = document.getElementById('harga');
     const durasiButtons = document.querySelectorAll('.duration-btn');
     const btnPesan = document.getElementById('btnPesan');
 
     function updateHarga(durasi) {
         const harga = hargaData[durasi];
-        durasiBadge.textContent = durasi + ' Hari';
         hargaEl.innerHTML = `Rp ${harga.toLocaleString('id-ID')} <span>/${durasi} hari</span>`;
         
         // Update active class

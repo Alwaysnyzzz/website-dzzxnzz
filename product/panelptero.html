@@ -51,19 +51,25 @@
     <!-- Konten Utama -->
     <main class="panel-container">
         <div class="page-header">
-            <h1>PTERODACTYL PANEL 3GB</h1>
-            <p>High performance server node</p>
+            <h1 class="rainbow-text">PANEL 3GB</h1>
+            <p class="subtitle">Panel Pterodactyl node high performance</p>
         </div>
 
         <!-- Card Panel 3GB -->
         <div class="panel-card" id="panel3gb">
             <div class="card-glow"></div>
             <div class="card-content">
-                <div class="card-header">
-                    <div class="card-badge" id="durasiBadge">10 Hari</div>
-                    <h2 class="card-title">PANEL 3GB <span>LOW</span></h2>
+                <!-- Tombol durasi dipindah ke atas (di dalam card) -->
+                <div class="duration-group">
+                    <button class="duration-btn active" data-durasi="10">10 Hari</button>
+                    <button class="duration-btn" data-durasi="15">15 Hari</button>
+                    <button class="duration-btn" data-durasi="20">20 Hari</button>
+                    <button class="duration-btn" data-durasi="30">30 Hari</button>
                 </div>
-                
+
+                <!-- Type label -->
+                <div class="type-label">Type</div>
+
                 <div class="spec-wrapper">
                     <div class="spec-item">
                         <div class="spec-icon"><i class="fas fa-microchip"></i></div>
@@ -102,14 +108,6 @@
 
                 <div class="price" id="harga">
                     Rp 3.000 <span>/10 hari</span>
-                </div>
-
-                <!-- Pilihan durasi -->
-                <div class="duration-group">
-                    <button class="duration-btn" data-durasi="10">10 Hari</button>
-                    <button class="duration-btn" data-durasi="15">15 Hari</button>
-                    <button class="duration-btn" data-durasi="20">20 Hari</button>
-                    <button class="duration-btn" data-durasi="30">30 Hari</button>
                 </div>
 
                 <button class="btn-pesan" id="btnPesan">PESAN SEKARANG</button>

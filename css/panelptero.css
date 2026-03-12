@@ -23,20 +23,22 @@
 
 .page-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
-.page-header h1 {
+.rainbow-text {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 42px;
     font-weight: 700;
-    color: #fff;
-    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #00e5ff, #00ff88, #bf00ff, #ff0055);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 20px rgba(0,229,255,0.5));
     margin-bottom: 8px;
-    text-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+    letter-spacing: -0.5px;
 }
 
-.page-header p {
+.subtitle {
     color: #888;
     font-size: 16px;
     font-family: 'Inter', sans-serif;
@@ -66,42 +68,60 @@
 
 .card-content {
     position: relative;
-    padding: 32px;
+    padding: 28px;
     z-index: 1;
 }
 
-.card-header {
-    margin-bottom: 24px;
+/* Tombol durasi (kotak) */
+.duration-group {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
-.card-badge {
-    display: inline-block;
-    background: rgba(0, 229, 255, 0.15);
-    color: #00e5ff;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 6px 18px;
-    border-radius: 30px;
+.duration-btn {
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(0, 229, 255, 0.3);
-    margin-bottom: 12px;
-}
-
-.card-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 32px;
-    font-weight: 700;
-    color: #fff;
-    margin: 0;
-    line-height: 1.2;
-}
-
-.card-title span {
-    color: #888;
-    font-size: 16px;
-    font-weight: 500;
-    margin-left: 8px;
+    color: #ccc;
     font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px; /* bentuk kotak */
+    cursor: pointer;
+    transition: all 0.2s;
+    backdrop-filter: blur(5px);
+    min-width: 60px;
+}
+
+.duration-btn:hover {
+    background: rgba(0, 229, 255, 0.1);
+    border-color: #00e5ff;
+    color: #00e5ff;
+    transform: translateY(-2px);
+}
+
+.duration-btn.active {
+    background: #00e5ff;
+    border-color: #00e5ff;
+    color: #020202;
+    font-weight: 600;
+    box-shadow: 0 0 15px #00e5ff;
+}
+
+/* Type label */
+.type-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #00e5ff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(0,229,255,0.2);
+    padding-bottom: 5px;
 }
 
 /* Spec Items */
@@ -109,7 +129,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
-    margin: 20px 0;
+    margin: 15px 0;
 }
 
 .spec-item {
@@ -201,51 +221,13 @@
     font-weight: 400;
 }
 
-/* Duration Buttons */
-.duration-group {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 20px 0;
-    flex-wrap: wrap;
-}
-
-.duration-btn {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(0, 229, 255, 0.2);
-    color: #ccc;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 10px 20px;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: all 0.2s;
-    backdrop-filter: blur(5px);
-}
-
-.duration-btn:hover {
-    background: rgba(0, 229, 255, 0.1);
-    border-color: #00e5ff;
-    color: #00e5ff;
-    transform: translateY(-2px);
-}
-
-.duration-btn.active {
-    background: #00e5ff;
-    border-color: #00e5ff;
-    color: #020202;
-    font-weight: 600;
-    box-shadow: 0 0 20px #00e5ff;
-}
-
 /* Tombol Pesan */
 .btn-pesan {
     width: 100%;
     padding: 14px;
     background: #00e5ff;
     border: none;
-    border-radius: 14px;
+    border-radius: 12px; /* sedikit kotak */
     color: #020202;
     font-family: 'Space Grotesk', sans-serif;
     font-size: 15px;
@@ -267,9 +249,9 @@
 
 /* Responsif */
 @media (max-width: 500px) {
-    .page-header h1 { font-size: 32px; }
+    .rainbow-text { font-size: 32px; }
     .spec-wrapper { grid-template-columns: 1fr; }
     .price { font-size: 32px; }
     .card-content { padding: 20px; }
-    .duration-btn { padding: 8px 16px; font-size: 13px; }
+    .duration-btn { padding: 6px 12px; font-size: 13px; }
 }
