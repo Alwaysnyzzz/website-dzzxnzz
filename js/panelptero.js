@@ -1,25 +1,50 @@
 // js/panelptero.js
 
 (function() {
-    // Data harga untuk panel 3GB
-    const hargaData = {
-        10: 3000,
-        15: 4500,
-        20: 6000,
-        30: 9000
+    // Sidebar toggle (sudah ada di script.js, tapi kita pastikan)
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuBtn = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        if (menuBtn && sidebar && overlay) {
+            menuBtn.onclick = () => { sidebar.classList.add('active'); overlay.classList.add('active'); };
+            overlay.onclick = () => { sidebar.classList.remove('active'); overlay.classList.remove('active'); };
+        }
+    });
+
+    // Fungsi update harga berdasarkan durasi
+    const durasiButtons = document.querySelectorAll('.duration-btn');
+    const harga3 = document.getElementById('harga3');
+    const harga5 = document.getElementById('harga5');
+    const harga6 = document.getElementById('harga6');
+    const harga7 = document.getElementById('harga7');
+    
+    // Harga untuk 20 hari dan 30 hari
+    const harga20 = {
+        3: 4000,
+        5: 6000,
+        6: 8000,
+        7: 11000
+    };
+    
+    const harga30 = {
+        3: 5000,
+        5: 7000,
+        6: 9000,
+        7: 12000
     };
 
-    const hargaEl = document.getElementById('harga');
-    const durasiButtons = document.querySelectorAll('.duration-btn');
-    const btnPesan = document.getElementById('btnPesan');
-
     function updateHarga(durasi) {
-        const harga = hargaData[durasi];
-        hargaEl.innerHTML = `Rp ${harga.toLocaleString('id-ID')} <span>/${durasi} hari</span>`;
-        
+        const hargaData = durasi === '20' ? harga20 : harga30;
+
+        harga3.innerHTML = `Rp ${hargaData[3].toLocaleString('id-ID')} <span>/${durasi} hari</span>`;
+        harga5.innerHTML = `Rp ${hargaData[5].toLocaleString('id-ID')} <span>/${durasi} hari</span>`;
+        harga6.innerHTML = `Rp ${hargaData[6].toLocaleString('id-ID')} <span>/${durasi} hari</span>`;
+        harga7.innerHTML = `Rp ${hargaData[7].toLocaleString('id-ID')} <span>/${durasi} hari</span>`;
+
+        // Update active class
         durasiButtons.forEach(btn => {
-            const btnDurasi = btn.getAttribute('data-durasi');
-            if (btnDurasi == durasi) {
+            if (btn.getAttribute('data-durasi') === durasi) {
                 btn.classList.add('active');
             } else {
                 btn.classList.remove('active');
@@ -34,14 +59,23 @@
         });
     });
 
-    updateHarga('10');
+    // Set default 20 hari
+    updateHarga('20');
 
-    if (btnPesan) {
-        btnPesan.addEventListener('click', function() {
-            const activeBtn = document.querySelector('.duration-btn.active');
-            const durasi = activeBtn ? activeBtn.getAttribute('data-durasi') : '10';
-            const harga = hargaData[durasi];
-            alert(`Anda memesan Panel 3GB selama ${durasi} hari dengan harga Rp ${harga.toLocaleString('id-ID')}`);
+    // Tombol pesan
+    document.querySelectorAll('.btn-pesan').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const panel = this.getAttribute('data-panel');
+            const durasi = document.querySelector('.duration-btn.active').getAttribute('data-durasi');
+            
+            let harga;
+            if (durasi === '20') {
+                harga = harga20[panel];
+            } else {
+                harga = harga30[panel];
+            }
+            
+            alert(`Anda memesan Panel ${panel}GB selama ${durasi} hari dengan harga Rp ${harga.toLocaleString('id-ID')}`);
         });
-    }
+    });
 })();

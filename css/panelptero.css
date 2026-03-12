@@ -1,219 +1,44 @@
 /* ===== PANEL PTERODACTYL PAGE STYLES ===== */
 
-/* Background gradient */
-.bg-gradient {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 20% 30%, rgba(0, 229, 255, 0.1) 0%, transparent 30%),
-                radial-gradient(circle at 80% 70%, rgba(0, 255, 136, 0.1) 0%, transparent 30%),
-                #020202;
-    z-index: -2;
-}
-
 /* Konten Utama */
-.panel-container {
-    max-width: 700px;
-    margin: 100px auto 40px;
-    padding: 0 20px;
-    position: relative;
+.main-content {
+    padding: 100px 20px 40px;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-/* Header seperti contoh */
-.panel-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(0, 229, 255, 0.2);
-}
-
-.header-title h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 32px;
-    font-weight: 700;
-    color: #fff;
-    margin: 0;
-    line-height: 1.2;
-}
-
-.header-sub {
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    color: #00e5ff;
-    letter-spacing: 1px;
-    display: block;
-    margin-top: 2px;
-}
-
-.deploy-node {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    color: #888;
-    padding: 6px 12px;
-    border: 1px solid rgba(0, 229, 255, 0.2);
-    border-radius: 20px;
-}
-
-/* Pilihan Paket Hosting */
-.package-selector {
-    margin-bottom: 30px;
-}
-
-.package-selector h3 {
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: #ccc;
-    margin-bottom: 15px;
-}
-
-.package-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.package-tag {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    color: #00e5ff;
-    padding: 6px 14px;
-    background: rgba(0, 229, 255, 0.05);
-    border: 1px solid rgba(0, 229, 255, 0.3);
-    border-radius: 20px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.package-tag:hover {
-    background: rgba(0, 229, 255, 0.1);
-    border-color: #00e5ff;
-}
-
-/* Panel Card */
-.panel-card {
-    background: rgba(20, 25, 35, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-    position: relative;
-    overflow: hidden;
-}
-
-.card-glow {
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at 30% 30%, rgba(0, 229, 255, 0.1), transparent 70%);
-    pointer-events: none;
-}
-
-.card-content {
-    position: relative;
-    padding: 28px;
-    z-index: 1;
-}
-
-.card-header {
-    margin-bottom: 20px;
-}
-
-.popular-badge {
-    display: inline-block;
-    background: #bf00ff;
-    color: white;
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 4px 12px;
-    border-radius: 20px;
-    margin-bottom: 10px;
-    box-shadow: 0 0 10px #bf00ff;
-}
-
-.card-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: #fff;
-    margin: 0 0 5px 0;
-}
-
-.card-subtitle {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    color: #aaa;
-    margin: 0;
-}
-
-/* Spesifikasi sederhana */
-.spec-simple {
-    display: flex;
-    gap: 30px;
-    margin: 20px 0;
-    padding: 15px 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.spec-simple-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.spec-simple-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    color: #888;
-}
-
-.spec-simple-value {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 18px;
-    font-weight: 600;
-    color: #00e5ff;
-}
-
-/* Tombol durasi (kotak) */
-.duration-group {
+/* Tombol durasi (hanya 20 & 30) */
+.duration-wrapper {
     display: flex;
     justify-content: center;
-    gap: 8px;
-    margin: 20px 0;
-    flex-wrap: wrap;
+    margin-bottom: 30px;
 }
-
+.duration-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 .duration-btn {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(0, 229, 255, 0.3);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(0,229,255,0.3);
     color: #ccc;
     font-family: 'Inter', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
-    padding: 8px 16px;
-    border-radius: 6px;
+    padding: 10px 24px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: 0.2s;
     backdrop-filter: blur(5px);
-    min-width: 60px;
+    min-width: 70px;
 }
-
 .duration-btn:hover {
-    background: rgba(0, 229, 255, 0.1);
+    background: rgba(0,229,255,0.1);
     border-color: #00e5ff;
     color: #00e5ff;
     transform: translateY(-2px);
 }
-
 .duration-btn.active {
     background: #00e5ff;
     border-color: #00e5ff;
@@ -222,54 +47,118 @@
     box-shadow: 0 0 15px #00e5ff;
 }
 
-/* Price */
-.price {
-    text-align: center;
-    margin: 15px 0 15px;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 36px;
-    font-weight: 700;
-    color: #00e5ff;
-    text-shadow: 0 0 30px rgba(0, 229, 255, 0.5);
+/* Garis pemisah */
+.divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    margin: 20px 0 30px;
 }
 
+/* Card container */
+.cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Card panel */
+.panel-card {
+    background: rgba(20,25,35,0.7);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
+}
+.card-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 30%, rgba(0,229,255,0.1), transparent 70%);
+    pointer-events: none;
+}
+.card-content {
+    position: relative;
+    padding: 25px;
+    z-index: 1;
+}
+.card-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 5px;
+}
+.card-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #aaa;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+.spec-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 15px 0;
+    padding: 10px 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.spec-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+}
+.spec-label {
+    color: #aaa;
+}
+.spec-value {
+    color: #00e5ff;
+    font-weight: 600;
+}
+.price {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #00e5ff;
+    text-align: center;
+    margin: 15px 0;
+}
 .price span {
     font-size: 14px;
     color: #888;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
 }
-
-/* Tombol Pesan */
 .btn-pesan {
     width: 100%;
-    padding: 14px;
+    padding: 12px;
     background: #00e5ff;
     border: none;
     border-radius: 8px;
     color: #020202;
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
     cursor: pointer;
     transition: 0.2s;
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
-    margin-top: 10px;
+    box-shadow: 0 0 15px rgba(0,229,255,0.3);
 }
-
 .btn-pesan:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 30px #00e5ff;
+    box-shadow: 0 0 25px #00e5ff;
 }
-
 .btn-pesan:active {
     transform: scale(0.98);
 }
 
 /* Responsif */
 @media (max-width: 500px) {
-    .panel-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-    .spec-simple { flex-direction: column; gap: 15px; }
-    .price { font-size: 32px; }
-    .duration-btn { padding: 6px 12px; font-size: 13px; }
+    .duration-btn { padding: 8px 16px; font-size: 14px; }
 }

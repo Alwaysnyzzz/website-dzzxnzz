@@ -7,466 +7,10 @@
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        /* ===== RESET & GLOBAL ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        :root {
-            --neon-cyan: #00e5ff;
-            --neon-purple: #bf00ff;
-            --neon-green: #00ff88;
-            --neon-red: #ff0055;
-            --bg-dark: #020202;
-        }
-        body {
-            background-color: var(--bg-dark);
-            background-image: 
-                linear-gradient(rgba(0,229,255,0.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,229,255,0.08) 1px, transparent 1px);
-            background-size: 50px 50px;
-            color: white;
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-        }
-        #canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-        /* ===== NAVBAR ===== */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            height: 70px;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(12px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 25px;
-            border-bottom: 1px solid rgba(0,229,255,0.2);
-            z-index: 1000;
-        }
-        .nav-left, .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        #menu-toggle {
-            background: none;
-            border: none;
-            color: var(--neon-cyan);
-            font-size: 24px;
-            cursor: pointer;
-            text-shadow: 0 0 8px var(--neon-cyan);
-        }
-        .nav-brand {
-            color: var(--neon-cyan);
-            font-weight: 700;
-            font-size: 18px;
-            background: rgba(0,229,255,0.1);
-            padding: 5px 15px;
-            border-radius: 30px;
-            border: 1px solid rgba(0,229,255,0.3);
-            text-shadow: 0 0 8px var(--neon-cyan);
-        }
-        .coins-wrapper {
-            border: 1.5px solid var(--neon-cyan);
-            padding: 5px 15px;
-            border-radius: 25px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--neon-cyan);
-            background: rgba(0,229,255,0.05);
-            box-shadow: 0 0 10px var(--neon-cyan);
-            text-shadow: 0 0 5px var(--neon-cyan);
-        }
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--neon-cyan);
-            border-radius: 50%;
-            overflow: hidden;
-            background: #111;
-            box-shadow: 0 0 10px var(--neon-cyan);
-        }
-        .user-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        /* ===== SIDEBAR ===== */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -280px;
-            width: 260px;
-            height: 100%;
-            background: rgba(12,12,18,0.98);
-            backdrop-filter: blur(15px);
-            z-index: 2000;
-            transition: 0.3s;
-            border-right: 1px solid rgba(0,229,255,0.2);
-            padding: 30px 20px;
-            box-shadow: 5px 0 30px rgba(0,0,0,0.7);
-        }
-        .sidebar.active { left: 0; }
-        .sidebar-header { margin-bottom: 30px; }
-        .user-name-text {
-            color: var(--neon-cyan);
-            font-weight: bold;
-            font-size: 20px;
-            display: block;
-            text-align: center;
-            margin-bottom: 15px;
-            text-shadow: 0 0 8px var(--neon-cyan);
-        }
-        .sidebar-pfp {
-            width: 100%;
-            height: 110px;
-            border-radius: 18px;
-            border: 2px solid var(--neon-cyan);
-            overflow: hidden;
-            margin-bottom: 25px;
-            box-shadow: 0 0 15px var(--neon-cyan);
-        }
-        .sidebar-pfp img { width: 100%; height: 100%; object-fit: cover; }
-        .sidebar-menu { list-style: none; }
-        .sidebar-menu li { margin-bottom: 5px; }
-        .sidebar-menu a {
-            display: block;
-            padding: 12px 15px;
-            color: #ccc;
-            text-decoration: none;
-            font-size: 15px;
-            border-radius: 12px;
-        }
-        .sidebar-menu li.active a {
-            background: rgba(0,229,255,0.15);
-            color: var(--neon-cyan);
-            font-weight: 600;
-            border-left: 3px solid var(--neon-cyan);
-        }
-        .sidebar-menu a:hover {
-            background: rgba(0,229,255,0.1);
-            color: var(--neon-cyan);
-            padding-left: 20px;
-        }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            display: none;
-            z-index: 1500;
-        }
-        .overlay.active { display: block; }
-
-        /* ===== KONTEN UTAMA ===== */
-        .main-content {
-            padding: 100px 20px 40px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* Tombol durasi (hanya 20 & 30) */
-        .duration-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
-        .duration-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .duration-btn {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(0,229,255,0.3);
-            color: #ccc;
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            font-weight: 500;
-            padding: 10px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-            backdrop-filter: blur(5px);
-            min-width: 70px;
-        }
-        .duration-btn:hover {
-            background: rgba(0,229,255,0.1);
-            border-color: #00e5ff;
-            color: #00e5ff;
-            transform: translateY(-2px);
-        }
-        .duration-btn.active {
-            background: #00e5ff;
-            border-color: #00e5ff;
-            color: #020202;
-            font-weight: 600;
-            box-shadow: 0 0 15px #00e5ff;
-        }
-
-        /* Garis pemisah */
-        .divider {
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
-            margin: 20px 0 30px;
-        }
-
-        /* Card container */
-        .cards-container {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        /* Card panel */
-        .panel-card {
-            background: rgba(20,25,35,0.7);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            position: relative;
-            overflow: hidden;
-        }
-        .card-glow {
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 30%, rgba(0,229,255,0.1), transparent 70%);
-            pointer-events: none;
-        }
-        .card-content {
-            position: relative;
-            padding: 25px;
-            z-index: 1;
-        }
-        .card-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 10px;
-        }
-        .card-title span {
-            color: #888;
-            font-size: 14px;
-            font-weight: 500;
-            margin-left: 8px;
-            font-family: 'Inter', sans-serif;
-        }
-        .spec-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin: 15px 0;
-            padding: 10px 0;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .spec-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-        }
-        .spec-label {
-            color: #aaa;
-        }
-        .spec-value {
-            color: #00e5ff;
-            font-weight: 600;
-        }
-        .type-legal {
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            color: #888;
-            margin: 10px 0;
-        }
-        .type-legal strong {
-            color: #00ff88;
-            margin-left: 5px;
-        }
-        .price {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 28px;
-            font-weight: 700;
-            color: #00e5ff;
-            text-align: center;
-            margin: 15px 0;
-        }
-        .price span {
-            font-size: 14px;
-            color: #888;
-            font-family: 'Inter', sans-serif;
-            font-weight: 400;
-        }
-        .btn-pesan {
-            width: 100%;
-            padding: 12px;
-            background: #00e5ff;
-            border: none;
-            border-radius: 8px;
-            color: #020202;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 0 15px rgba(0,229,255,0.3);
-        }
-        .btn-pesan:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 25px #00e5ff;
-        }
-        .btn-pesan:active {
-            transform: scale(0.98);
-        }
-
-        /* ===== FOOTER (LENGKAP) ===== */
-        .footer {
-            background: rgba(8,8,12,0.95);
-            backdrop-filter: blur(8px);
-            border-top: 1px solid rgba(0,229,255,0.1);
-            padding: 50px 20px 20px;
-            margin-top: 60px;
-        }
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-        }
-        .footer-logo {
-            color: var(--neon-cyan);
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 15px;
-            text-shadow: 0 0 8px var(--neon-cyan);
-        }
-        .footer-desc {
-            color: #aaa;
-            font-size: 14px;
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-        .social-icons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-        .social-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            border: 2px solid;
-            transition: 0.2s;
-            text-decoration: none;
-        }
-        .social-icon.wa {
-            border-color: #25D366;
-            color: #25D366;
-            box-shadow: 0 0 10px #25D366;
-        }
-        .social-icon.tg {
-            border-color: #0088cc;
-            color: #0088cc;
-            box-shadow: 0 0 10px #0088cc;
-        }
-        .social-icon.email {
-            border-color: #ff4444;
-            color: #ff4444;
-            box-shadow: 0 0 10px #ff4444;
-        }
-        .social-icon:hover {
-            background: currentColor;
-            color: black;
-            transform: scale(1.1);
-        }
-        .footer-title {
-            color: #fff;
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            text-shadow: 0 0 5px var(--neon-cyan);
-        }
-        .footer-links {
-            list-style: none;
-        }
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        .footer-links a {
-            color: #aaa;
-            text-decoration: none;
-            transition: 0.2s;
-            font-size: 14px;
-        }
-        .footer-links a:hover {
-            color: var(--neon-cyan);
-            padding-left: 5px;
-            text-shadow: 0 0 5px var(--neon-cyan);
-        }
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.05);
-            margin-top: 40px;
-            padding-top: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            color: #777;
-            font-size: 13px;
-        }
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: rgba(0,255,0,0.1);
-            border: 1px solid #0f0;
-            color: #0f0;
-            padding: 5px 15px;
-            border-radius: 30px;
-            font-size: 12px;
-            box-shadow: 0 0 8px #0f0;
-        }
-        .status-badge i {
-            font-size: 8px;
-            color: #0f0;
-        }
-
-        /* Responsif */
-        @media (max-width: 500px) {
-            .duration-btn { padding: 8px 16px; font-size: 14px; }
-            .footer-container { grid-template-columns: 1fr; text-align: center; }
-            .social-icons { justify-content: center; }
-            .footer-bottom { flex-direction: column; text-align: center; }
-        }
-    </style>
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="../style.css">
+    <!-- CSS Khusus Halaman -->
+    <link rel="stylesheet" href="../css/panelptero.css">
 </head>
 <body>
     <canvas id="canvas"></canvas>
@@ -502,7 +46,7 @@
     </div>
     <div class="overlay" id="overlay"></div>
 
-    <!-- Main Content -->
+    <!-- Konten Utama -->
     <main class="main-content">
         <!-- Tombol kategori waktu (hanya 20 & 30) -->
         <div class="duration-wrapper">
@@ -521,7 +65,8 @@
             <div class="panel-card" id="panel3gb">
                 <div class="card-glow"></div>
                 <div class="card-content">
-                    <div class="card-title">PANEL 3GB <span>LOW</span></div>
+                    <h2 class="card-title">Panel Pterodactyl</h2>
+                    <p class="card-subtitle">Panel Pterodactyl dengan VPS legal yang siap untuk dipakai</p>
                     <div class="spec-list">
                         <div class="spec-item">
                             <span class="spec-label">CPU</span>
@@ -540,7 +85,6 @@
                             <span class="spec-value">R18C6</span>
                         </div>
                     </div>
-                    <div class="type-legal">type : <strong>legal</strong></div>
                     <div class="price" id="harga3">Rp 4.000 <span>/20 hari</span></div>
                     <button class="btn-pesan" data-panel="3">PESAN SEKARANG</button>
                 </div>
@@ -550,7 +94,8 @@
             <div class="panel-card" id="panel5gb">
                 <div class="card-glow"></div>
                 <div class="card-content">
-                    <div class="card-title">PANEL 5GB <span>LOW</span></div>
+                    <h2 class="card-title">Panel Pterodactyl</h2>
+                    <p class="card-subtitle">Panel Pterodactyl dengan VPS legal yang siap untuk dipakai</p>
                     <div class="spec-list">
                         <div class="spec-item">
                             <span class="spec-label">CPU</span>
@@ -569,7 +114,6 @@
                             <span class="spec-value">R18C6</span>
                         </div>
                     </div>
-                    <div class="type-legal">type : <strong>legal</strong></div>
                     <div class="price" id="harga5">Rp 6.000 <span>/20 hari</span></div>
                     <button class="btn-pesan" data-panel="5">PESAN SEKARANG</button>
                 </div>
@@ -579,7 +123,8 @@
             <div class="panel-card" id="panel6gb">
                 <div class="card-glow"></div>
                 <div class="card-content">
-                    <div class="card-title">PANEL 6GB <span>LOW</span></div>
+                    <h2 class="card-title">Panel Pterodactyl</h2>
+                    <p class="card-subtitle">Panel Pterodactyl dengan VPS legal yang siap untuk dipakai</p>
                     <div class="spec-list">
                         <div class="spec-item">
                             <span class="spec-label">CPU</span>
@@ -598,7 +143,6 @@
                             <span class="spec-value">R18C6</span>
                         </div>
                     </div>
-                    <div class="type-legal">type : <strong>legal</strong></div>
                     <div class="price" id="harga6">Rp 8.000 <span>/20 hari</span></div>
                     <button class="btn-pesan" data-panel="6">PESAN SEKARANG</button>
                 </div>
@@ -608,7 +152,8 @@
             <div class="panel-card" id="panel7gb">
                 <div class="card-glow"></div>
                 <div class="card-content">
-                    <div class="card-title">PANEL 7GB <span>LOW</span></div>
+                    <h2 class="card-title">Panel Pterodactyl</h2>
+                    <p class="card-subtitle">Panel Pterodactyl dengan VPS legal yang siap untuk dipakai</p>
                     <div class="spec-list">
                         <div class="spec-item">
                             <span class="spec-label">CPU</span>
@@ -627,7 +172,6 @@
                             <span class="spec-value">R18C6</span>
                         </div>
                     </div>
-                    <div class="type-legal">type : <strong>legal</strong></div>
                     <div class="price" id="harga7">Rp 11.000 <span>/20 hari</span></div>
                     <button class="btn-pesan" data-panel="7">PESAN SEKARANG</button>
                 </div>
@@ -635,7 +179,7 @@
         </div>
     </main>
 
-    <!-- Footer Lengkap -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
             <div>
@@ -679,86 +223,9 @@
         </div>
     </footer>
 
-    <script>
-        // Sidebar toggle
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuBtn = document.getElementById('menu-toggle');
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-            if (menuBtn && sidebar && overlay) {
-                menuBtn.onclick = () => { sidebar.classList.add('active'); overlay.classList.add('active'); };
-                overlay.onclick = () => { sidebar.classList.remove('active'); overlay.classList.remove('active'); };
-            }
-        });
-
-        // Fungsi update harga berdasarkan durasi (20 atau 30 hari)
-        (function() {
-            const durasiButtons = document.querySelectorAll('.duration-btn');
-            const harga3 = document.getElementById('harga3');
-            const harga5 = document.getElementById('harga5');
-            const harga6 = document.getElementById('harga6');
-            const harga7 = document.getElementById('harga7');
-            
-            // Harga untuk 20 hari dan 30 hari sesuai permintaan
-            const harga20 = {
-                3: 4000,
-                5: 6000,
-                6: 8000,
-                7: 11000
-            };
-            
-            const harga30 = {
-                3: 5000,
-                5: 7000,
-                6: 9000,
-                7: 12000
-            };
-
-            function updateHarga(durasi) {
-                const hargaData = durasi == '20' ? harga20 : harga30;
-
-                harga3.innerHTML = `Rp ${hargaData[3].toLocaleString('id-ID')} <span>/${durasi} hari</span>`;
-                harga5.innerHTML = `Rp ${hargaData[5].toLocaleString('id-ID')} <span>/${durasi} hari</span>`;
-                harga6.innerHTML = `Rp ${hargaData[6].toLocaleString('id-ID')} <span>/${durasi} hari</span>`;
-                harga7.innerHTML = `Rp ${hargaData[7].toLocaleString('id-ID')} <span>/${durasi} hari</span>`;
-
-                // Update active class
-                durasiButtons.forEach(btn => {
-                    if (btn.getAttribute('data-durasi') == durasi) {
-                        btn.classList.add('active');
-                    } else {
-                        btn.classList.remove('active');
-                    }
-                });
-            }
-
-            durasiButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const durasi = this.getAttribute('data-durasi');
-                    updateHarga(durasi);
-                });
-            });
-
-            // Set default 20 hari
-            updateHarga('20');
-
-            // Tombol pesan
-            document.querySelectorAll('.btn-pesan').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const panel = this.getAttribute('data-panel');
-                    const durasi = document.querySelector('.duration-btn.active').getAttribute('data-durasi');
-                    
-                    let harga;
-                    if (durasi == '20') {
-                        harga = harga20[panel];
-                    } else {
-                        harga = harga30[panel];
-                    }
-                    
-                    alert(`Anda memesan Panel ${panel}GB selama ${durasi} hari dengan harga Rp ${harga.toLocaleString('id-ID')}`);
-                });
-            });
-        })();
-    </script>
+    <!-- Script Global -->
+    <script src="../script.js"></script>
+    <!-- Script Khusus Halaman -->
+    <script src="../js/panelptero.js"></script>
 </body>
 </html>
