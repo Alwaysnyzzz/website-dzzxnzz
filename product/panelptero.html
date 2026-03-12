@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Panel Pterodactyl - DzzXNzz</title>
+    <title>Panel Pterodactyl 3GB - DzzXNzz</title>
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -51,20 +51,12 @@
     <!-- Konten Utama -->
     <main class="panel-container">
         <div class="page-header">
-            <h1>PTERODACTYL PANEL</h1>
+            <h1>PTERODACTYL PANEL 3GB</h1>
             <p>High performance server node</p>
         </div>
 
-        <!-- Button durasi -->
-        <div class="duration-buttons">
-            <button class="duration-btn" data-durasi="10">10 Hari</button>
-            <button class="duration-btn" data-durasi="15">15 Hari</button>
-            <button class="duration-btn" data-durasi="20">20 Hari</button>
-            <button class="duration-btn" data-durasi="30">30 Hari</button>
-        </div>
-
-        <!-- Card panel -->
-        <div class="panel-card" id="panelCard">
+        <!-- Card Panel 3GB -->
+        <div class="panel-card" id="panel3gb">
             <div class="card-glow"></div>
             <div class="card-content">
                 <div class="card-header">
@@ -83,7 +75,7 @@
                     <div class="spec-item">
                         <div class="spec-icon"><i class="fas fa-memory"></i></div>
                         <div class="spec-info">
-                            <div class="spec-label">RAM</div>
+                            <div class="spec-label">MEMORI</div>
                             <div class="spec-value" id="ram">3027 MB</div>
                         </div>
                     </div>
@@ -91,7 +83,7 @@
                         <div class="spec-icon"><i class="fas fa-hdd"></i></div>
                         <div class="spec-info">
                             <div class="spec-label">DISK</div>
-                            <div class="spec-value" id="ssd">3027 MB</div>
+                            <div class="spec-value" id="disk">3027 MB</div>
                         </div>
                     </div>
                     <div class="spec-item">
@@ -104,15 +96,23 @@
                 </div>
 
                 <div class="extra-spec">
-                    <span class="extra-label">NODE PERFORMANCE</span>
-                    <span class="extra-value">HIGH SPEED</span>
+                    <span class="extra-label">NODE</span>
+                    <span class="extra-value">HIGH PERFORMANCE</span>
                 </div>
 
                 <div class="price" id="harga">
-                    Rp 4.500 <span>/10 hari</span>
+                    Rp 3.000 <span>/10 hari</span>
                 </div>
 
-                <button class="btn-pesan">PESAN SEKARANG</button>
+                <!-- Pilihan durasi -->
+                <div class="duration-group">
+                    <button class="duration-btn" data-durasi="10">10 Hari</button>
+                    <button class="duration-btn" data-durasi="15">15 Hari</button>
+                    <button class="duration-btn" data-durasi="20">20 Hari</button>
+                    <button class="duration-btn" data-durasi="30">30 Hari</button>
+                </div>
+
+                <button class="btn-pesan" id="btnPesan">PESAN SEKARANG</button>
             </div>
         </div>
     </main>

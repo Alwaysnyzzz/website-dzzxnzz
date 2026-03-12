@@ -15,7 +15,7 @@
 
 /* Konten Utama */
 .panel-container {
-    max-width: 1200px;
+    max-width: 600px;
     margin: 100px auto 40px;
     padding: 0 20px;
     position: relative;
@@ -42,14 +42,6 @@
     font-family: 'Inter', sans-serif;
 }
 
-/* Grid untuk dua card */
-.panel-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 30px;
-    margin-top: 30px;
-}
-
 /* Panel Card */
 .panel-card {
     background: rgba(20, 25, 35, 0.7);
@@ -74,7 +66,7 @@
 
 .card-content {
     position: relative;
-    padding: 28px;
+    padding: 32px;
     z-index: 1;
 }
 
@@ -97,7 +89,7 @@
 
 .card-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 700;
     color: #fff;
     margin: 0;
@@ -106,7 +98,7 @@
 
 .card-title span {
     color: #888;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     margin-left: 8px;
     font-family: 'Inter', sans-serif;
@@ -209,39 +201,42 @@
     font-weight: 400;
 }
 
-/* Duration group (tombol kecil) */
+/* Duration Buttons */
 .duration-group {
     display: flex;
     justify-content: center;
-    gap: 8px;
-    margin: 15px 0;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
 }
 
-.duration-btn-small {
+.duration-btn {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(0, 229, 255, 0.2);
     color: #ccc;
     font-family: 'Inter', sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
-    padding: 6px 12px;
-    border-radius: 20px;
+    padding: 10px 20px;
+    border-radius: 30px;
     cursor: pointer;
     transition: all 0.2s;
-    min-width: 40px;
+    backdrop-filter: blur(5px);
 }
 
-.duration-btn-small:hover {
+.duration-btn:hover {
     background: rgba(0, 229, 255, 0.1);
     border-color: #00e5ff;
     color: #00e5ff;
+    transform: translateY(-2px);
 }
 
-.duration-btn-small.active {
+.duration-btn.active {
     background: #00e5ff;
     border-color: #00e5ff;
     color: #020202;
     font-weight: 600;
+    box-shadow: 0 0 20px #00e5ff;
 }
 
 /* Tombol Pesan */
@@ -271,12 +266,10 @@
 }
 
 /* Responsif */
-@media (max-width: 700px) {
-    .panel-grid {
-        grid-template-columns: 1fr;
-    }
+@media (max-width: 500px) {
     .page-header h1 { font-size: 32px; }
     .spec-wrapper { grid-template-columns: 1fr; }
     .price { font-size: 32px; }
     .card-content { padding: 20px; }
+    .duration-btn { padding: 8px 16px; font-size: 13px; }
 }
