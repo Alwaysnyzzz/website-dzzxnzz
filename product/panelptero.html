@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Panel Pterodactyl 3GB - DzzXNzz</title>
+    <title>Panel Pterodactyl - DzzXNzz</title>
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -50,16 +50,51 @@
 
     <!-- Konten Utama -->
     <main class="panel-container">
-        <div class="page-header">
-            <h1 class="rainbow-text">PANEL 3GB</h1>
-            <p class="subtitle">Panel Pterodactyl node high performance</p>
+        <!-- Header seperti contoh -->
+        <div class="panel-header">
+            <div class="header-title">
+                <h1>ZansPiw</h1>
+                <span class="header-sub">ENTERPRISE CLOUD</span>
+            </div>
+            <div class="header-action">
+                <span class="deploy-node">Deploy Node</span>
+            </div>
+        </div>
+
+        <!-- Pilihan Paket Hosting -->
+        <div class="package-selector">
+            <h3>Pilih Paket Hosting</h3>
+            <div class="package-tags">
+                <span class="package-tag">Publik</span>
+                <span class="package-tag">Private</span>
+                <span class="package-tag">Public Gen 2</span>
+                <span class="package-tag">eggvps</span>
+            </div>
         </div>
 
         <!-- Card Panel 3GB -->
         <div class="panel-card" id="panel3gb">
             <div class="card-glow"></div>
             <div class="card-content">
-                <!-- Tombol durasi dipindah ke atas (di dalam card) -->
+                <div class="card-header">
+                    <span class="popular-badge">POPULAR</span>
+                    <h2 class="card-title">PUBLIC3GB</h2>
+                    <p class="card-subtitle">High performance server node.</p>
+                </div>
+                
+                <!-- Spesifikasi sederhana -->
+                <div class="spec-simple">
+                    <div class="spec-simple-item">
+                        <span class="spec-simple-label">CPU</span>
+                        <span class="spec-simple-value">100%</span>
+                    </div>
+                    <div class="spec-simple-item">
+                        <span class="spec-simple-label">RAM</span>
+                        <span class="spec-simple-value">3048 MB</span>
+                    </div>
+                </div>
+
+                <!-- Tombol durasi (kotak) -->
                 <div class="duration-group">
                     <button class="duration-btn active" data-durasi="10">10 Hari</button>
                     <button class="duration-btn" data-durasi="15">15 Hari</button>
@@ -67,45 +102,7 @@
                     <button class="duration-btn" data-durasi="30">30 Hari</button>
                 </div>
 
-                <!-- Type label -->
-                <div class="type-label">Type</div>
-
-                <div class="spec-wrapper">
-                    <div class="spec-item">
-                        <div class="spec-icon"><i class="fas fa-microchip"></i></div>
-                        <div class="spec-info">
-                            <div class="spec-label">CPU</div>
-                            <div class="spec-value" id="cpu">100%</div>
-                        </div>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-icon"><i class="fas fa-memory"></i></div>
-                        <div class="spec-info">
-                            <div class="spec-label">MEMORI</div>
-                            <div class="spec-value" id="ram">3027 MB</div>
-                        </div>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-icon"><i class="fas fa-hdd"></i></div>
-                        <div class="spec-info">
-                            <div class="spec-label">DISK</div>
-                            <div class="spec-value" id="disk">3027 MB</div>
-                        </div>
-                    </div>
-                    <div class="spec-item">
-                        <div class="spec-icon"><i class="fas fa-tachometer-alt"></i></div>
-                        <div class="spec-info">
-                            <div class="spec-label">SPEK</div>
-                            <div class="spec-value" id="core">R17C4</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="extra-spec">
-                    <span class="extra-label">NODE</span>
-                    <span class="extra-value">HIGH PERFORMANCE</span>
-                </div>
-
+                <!-- Harga -->
                 <div class="price" id="harga">
                     Rp 3.000 <span>/10 hari</span>
                 </div>
