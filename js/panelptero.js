@@ -2,7 +2,7 @@
 
 (function() {
     document.addEventListener('DOMContentLoaded', function() {
-        // Sidebar toggle
+        // Sidebar toggle (sudah ada di script.js, tapi kita pastikan untuk halaman ini)
         const menuBtn = document.getElementById('menu-toggle');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
@@ -51,6 +51,7 @@
                 const panel = card.getAttribute('data-panel');
                 const price = card.querySelector('.price').getAttribute('data-harga');
                 alert(`Anda memesan Panel ${panel}GB selama 20 hari dengan harga Rp ${price}`);
+                // Nanti redirect ke halaman pembayaran
             });
         });
 
@@ -61,6 +62,7 @@
                 const title = card.querySelector('.card-title').textContent;
                 const amount = card.querySelector('.amount').textContent;
                 alert(`Anda memilih ${title} dengan harga Rp ${amount} untuk 30 hari`);
+                // Nanti redirect ke halaman pembayaran
             });
         });
     });

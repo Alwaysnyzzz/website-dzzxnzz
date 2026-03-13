@@ -4,13 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - DzzXNzz</title>
-    <!-- CSS Global (navbar, sidebar, footer) -->
     <link rel="stylesheet" href="style.css">
-    <!-- CSS Khusus Contact -->
-    <link rel="stylesheet" href="css/contact.css">
-    <!-- Font Awesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .contact-card {
+            background: rgba(18,20,26,0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .contact-card i {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        .contact-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .contact-card p {
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+        .btn-contact {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid;
+            background: transparent;
+        }
+        .card-wa i, .card-wa .btn-contact {
+            color: #25D366;
+            border-color: #25D366;
+        }
+        .card-wa .btn-contact:hover {
+            background: #25D366;
+            color: black;
+        }
+        .card-tg i, .card-tg .btn-contact {
+            color: #0088cc;
+            border-color: #0088cc;
+        }
+        .card-tg .btn-contact:hover {
+            background: #0088cc;
+            color: black;
+        }
+        .card-bot i, .card-bot .btn-contact {
+            color: #ff4444;
+            border-color: #ff4444;
+        }
+        .card-bot .btn-contact:hover {
+            background: #ff4444;
+            color: black;
+        }
+    </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
@@ -22,21 +80,20 @@
             <span class="nav-brand">DzzXNzz</span>
         </div>
         <div class="nav-right">
-            <div class="nav-right">
-    <div class="coins-wrapper">COINS: 0</div>
-    <div class="user-menu">
-        <div class="menu-trigger" id="menuTrigger">
-            <i class="fas fa-ellipsis-v"></i> <!-- ikon tiga titik -->
+            <div class="coins-wrapper">COINS: 0</div>
+            <div class="user-menu">
+                <div class="menu-trigger" id="menuTrigger">
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+                <div class="user-avatar">
+                    <img src="./image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
+                </div>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="/profile" class="dropdown-item"><i class="fas fa-user"></i> Akun</a>
+                    <a href="#" id="logoutBtn" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
         </div>
-        <div class="user-avatar">
-            <img src="./image/profile.jpg" alt="User">
-        </div>
-        <div class="dropdown-menu" id="dropdownMenu">
-            <a href="/profile" class="dropdown-item"><i class="fas fa-user"></i> Akun</a>
-            <a href="#" id="logoutBtn" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
-    </div>
-</div>
     </nav>
 
     <!-- Sidebar -->
@@ -44,7 +101,7 @@
         <div class="sidebar-header">
             <span class="user-name-text">DzzXNzz</span>
             <div class="sidebar-pfp">
-                <img src="./image/image.jpg" alt="PFP" onerror="this.src='https://ui-avatars.com/api/?name=Always+Nyzzz&background=020202&color=00e5ff&bold=true'">
+                <img src="./image/image.jpg" alt="PFP" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
             </div>
         </div>
         <ul class="sidebar-menu">
@@ -56,136 +113,34 @@
     </div>
     <div class="overlay" id="overlay"></div>
 
-    <!-- Konten Utama -->
+    <!-- Main Content -->
     <main class="main-content">
         <div class="page-title">
             <h1>Kontak Kami</h1>
             <p>Hubungi kami melalui platform berikut</p>
         </div>
 
-        <div class="grid-3">
-            <!-- WhatsApp -->
-            <div class="modern-card" data-modal="waModal">
-                <div class="card-icon" style="color:#25D366;"><i class="fab fa-whatsapp"></i></div>
-                <h3 class="card-title">WhatsApp</h3>
-                <p class="card-desc">Chat langsung dengan admin via WhatsApp.</p>
-                <button class="btn-detail" style="border-color:#25D366; color:#25D366;"><i class="fab fa-whatsapp"></i> Lihat Detail</button>
+        <div class="contact-grid">
+            <div class="contact-card card-wa">
+                <i class="fab fa-whatsapp"></i>
+                <h3>WhatsApp</h3>
+                <p>Chat langsung dengan admin</p>
+                <a href="/contact/wa" class="btn-contact">Lihat Detail</a>
             </div>
-            <!-- Telegram -->
-            <div class="modern-card" data-modal="tgModal">
-                <div class="card-icon" style="color:#0088cc;"><i class="fab fa-telegram-plane"></i></div>
-                <h3 class="card-title">Telegram</h3>
-                <p class="card-desc">Hubungi admin via Telegram.</p>
-                <button class="btn-detail" style="border-color:#0088cc; color:#0088cc;"><i class="fab fa-telegram-plane"></i> Lihat Detail</button>
+            <div class="contact-card card-tg">
+                <i class="fab fa-telegram-plane"></i>
+                <h3>Telegram</h3>
+                <p>Hubungi admin via Telegram</p>
+                <a href="/contact/telegram" class="btn-contact">Lihat Detail</a>
             </div>
-            <!-- Bot -->
-            <div class="modern-card" data-modal="botModal">
-                <div class="card-icon" style="color:#ff4444;"><i class="fas fa-robot"></i></div>
-                <h3 class="card-title">Bot</h3>
-                <p class="card-desc">Bot interaktif 24/7.</p>
-                <button class="btn-detail" style="border-color:#ff4444; color:#ff4444;"><i class="fas fa-robot"></i> Lihat Detail</button>
+            <div class="contact-card card-bot">
+                <i class="fas fa-robot"></i>
+                <h3>Bot</h3>
+                <p>Bot interaktif 24/7</p>
+                <a href="#" class="btn-contact">Lihat Detail</a>
             </div>
         </div>
     </main>
-
-    <!-- Modal WhatsApp -->
-    <div id="waModal" class="modal">
-        <div class="modal-content" style="border-color: #25D366;">
-            <div class="modal-header">
-                <h2><i class="fab fa-whatsapp" style="color:#25D366;"></i> WhatsApp</h2>
-                <span class="close">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="info-item">
-                    <div class="info-label">No Utama</div>
-                    <div class="info-content">
-                        <span>wa.me/6287713472756</span>
-                        <a href="https://wa.me/6287713472756" target="_blank" class="btn-action" style="border-color:#25D366; color:#25D366;">Hubungi</a>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">No Cadangan</div>
-                    <div class="info-content">
-                        <span>wa.me/6288989695549</span>
-                        <a href="https://wa.me/6288989695549" target="_blank" class="btn-action" style="border-color:#25D366; color:#25D366;">Hubungi</a>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Channel Testi</div>
-                    <div class="info-content">
-                        <span>WhatsApp Channel</span>
-                        <a href="https://whatsapp.com/channel/0029Vb6YWHPJ3juqr8vzSc1d" target="_blank" class="btn-action" style="background:#25D366; color:black; border-color:#25D366;">Kunjungi</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Telegram -->
-    <div id="tgModal" class="modal">
-        <div class="modal-content" style="border-color: #0088cc;">
-            <div class="modal-header">
-                <h2><i class="fab fa-telegram-plane" style="color:#0088cc;"></i> Telegram</h2>
-                <span class="close">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="info-item">
-                    <div class="info-label">Akun Utama</div>
-                    <div class="info-content">
-                        <span>t.me/DzzXNzz</span>
-                        <a href="https://t.me/DzzXNzz" target="_blank" class="btn-action" style="border-color:#0088cc; color:#0088cc;">Hubungi</a>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Akun Cadangan</div>
-                    <div class="info-content">
-                        <span>t.me/dzznyzz</span>
-                        <a href="https://t.me/dzznyzz" target="_blank" class="btn-action" style="border-color:#0088cc; color:#0088cc;">Hubungi</a>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Channel Testi</div>
-                    <div class="info-content">
-                        <span>t.me/aboutbotnyzz</span>
-                        <a href="https://t.me/aboutbotnyzz" target="_blank" class="btn-action" style="background:#0088cc; color:black; border-color:#0088cc;">Kunjungi</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Bot -->
-    <div id="botModal" class="modal">
-        <div class="modal-content" style="border-color: #ff4444;">
-            <div class="modal-header">
-                <h2><i class="fas fa-robot" style="color:#ff4444;"></i> Bot</h2>
-                <span class="close">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="info-item">
-                    <div class="info-label">Bot Utama</div>
-                    <div class="info-content">
-                        <span>@DzzXNzzBot</span>
-                        <a href="https://t.me/DzzXNzzBot" target="_blank" class="btn-action" style="border-color:#ff4444; color:#ff4444;">Hubungi</a>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Bot Cadangan</div>
-                    <div class="info-content">
-                        <span>@dzznyzzBot</span>
-                        <a href="https://t.me/dzznyzzBot" target="_blank" class="btn-action" style="border-color:#ff4444; color:#ff4444;">Hubungi</a>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Channel Bot</div>
-                    <div class="info-content">
-                        <span>t.me/dzzbotchannel</span>
-                        <a href="https://t.me/dzzbotchannel" target="_blank" class="btn-action" style="background:#ff4444; color:black; border-color:#ff4444;">Kunjungi</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -231,8 +186,6 @@
         </div>
     </footer>
 
-    <!-- Script -->
     <script src="script.js"></script>
-    <script src="js/contact.js"></script>
 </body>
 </html>

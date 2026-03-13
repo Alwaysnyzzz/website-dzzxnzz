@@ -22,20 +22,20 @@
             <span class="nav-brand">DzzXNzz</span>
         </div>
         <div class="nav-right">
-    <div class="coins-wrapper">COINS: 0</div>
-    <div class="user-menu">
-        <div class="menu-trigger" id="menuTrigger">
-            <i class="fas fa-ellipsis-v"></i> <!-- ikon tiga titik -->
+            <div class="coins-wrapper">COINS: 0</div>
+            <div class="user-menu">
+                <div class="menu-trigger" id="menuTrigger">
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+                <div class="user-avatar">
+                    <img src="../image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
+                </div>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="/profile" class="dropdown-item"><i class="fas fa-user"></i> Akun</a>
+                    <a href="#" id="logoutBtn" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
         </div>
-        <div class="user-avatar">
-            <img src="./image/profile.jpg" alt="User">
-        </div>
-        <div class="dropdown-menu" id="dropdownMenu">
-            <a href="/profile" class="dropdown-item"><i class="fas fa-user"></i> Akun</a>
-            <a href="#" id="logoutBtn" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
-    </div>
-</div>
     </nav>
 
     <!-- Sidebar -->
@@ -57,13 +57,11 @@
 
     <!-- Konten Utama -->
     <main class="main-content">
-        <!-- Header dengan judul pelangi -->
         <div class="page-header">
             <h1 class="rainbow-text">PANEL PTERODACTYL</h1>
             <p class="header-subtitle">Panel Pterodactyl dengan VPS legal yang siap untuk dipakai</p>
         </div>
 
-        <!-- Tombol durasi -->
         <div class="duration-wrapper">
             <div class="duration-group">
                 <button class="duration-btn active" data-durasi="20">20 Hari</button>
@@ -71,10 +69,9 @@
             </div>
         </div>
 
-        <!-- Garis pemisah -->
         <div class="divider"></div>
 
-        <!-- Cards - Versi 20 Hari -->
+        <!-- Cards 20 Hari -->
         <div id="cards20" class="cards-container">
             <!-- Card 3GB -->
             <div class="panel-card" data-panel="3">
@@ -138,7 +135,7 @@
             </div>
         </div>
 
-        <!-- Cards - Versi 30 Hari (VIP) -->
+        <!-- Cards 30 Hari (VIP) -->
         <div id="cards30" class="cards-container vip-container">
             <!-- Card 3GB VIP -->
             <div class="vip-card" data-panel="3">

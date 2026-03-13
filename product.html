@@ -4,15 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product - DzzXNzz</title>
-    <!-- CSS Global -->
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="css/modern.css">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Gaya khusus card produk */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -25,18 +20,11 @@
             border-radius: 20px;
             padding: 25px;
             transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-            cursor: default;
             border: 1px solid transparent;
         }
         .product-card:hover {
             transform: translateY(-8px);
         }
-        .product-card:active {
-            transform: none !important;
-        }
-        /* Warna border per kategori */
         .product-card.popular {
             border-color: var(--neon-purple);
             box-shadow: 0 0 15px var(--neon-purple);
@@ -51,7 +39,6 @@
         .product-card.ppob:hover {
             box-shadow: 0 15px 30px var(--neon-green);
         }
-
         .card-badge {
             display: inline-block;
             font-size: 12px;
@@ -59,8 +46,6 @@
             padding: 4px 12px;
             border-radius: 20px;
             margin-bottom: 15px;
-            text-transform: uppercase;
-            box-shadow: none !important;
         }
         .popular .card-badge {
             background: var(--neon-purple);
@@ -70,7 +55,6 @@
             background: var(--neon-green);
             color: black;
         }
-
         .card-title {
             font-size: 22px;
             font-weight: 700;
@@ -81,7 +65,6 @@
             color: #aaa;
             font-size: 14px;
             margin-bottom: 20px;
-            line-height: 1.6;
         }
         .feature-list {
             margin: 15px 0;
@@ -95,26 +78,9 @@
             gap: 10px;
             margin-bottom: 10px;
             color: #ccc;
-            font-size: 14px;
-        }
-        .feature-item i {
-            width: 20px;
         }
         .popular .feature-item i { color: var(--neon-purple); }
         .ppob .feature-item i { color: var(--neon-green); }
-
-        .card-price {
-            font-size: 24px;
-            font-weight: 700;
-            margin: 15px 0;
-        }
-        .popular .card-price { color: var(--neon-purple); }
-        .ppob .card-price { color: var(--neon-green); }
-
-        .price-period {
-            font-size: 14px;
-            color: #aaa;
-        }
         .btn-detail {
             display: block;
             width: 100%;
@@ -126,7 +92,6 @@
             text-decoration: none;
             font-weight: 600;
             transition: 0.2s;
-            cursor: pointer;
         }
         .popular .btn-detail {
             border-color: var(--neon-purple);
@@ -135,7 +100,6 @@
         .popular .btn-detail:hover {
             background: var(--neon-purple);
             color: black;
-            box-shadow: 0 0 20px var(--neon-purple);
         }
         .ppob .btn-detail {
             border-color: var(--neon-green);
@@ -144,13 +108,6 @@
         .ppob .btn-detail:hover {
             background: var(--neon-green);
             color: black;
-            box-shadow: 0 0 20px var(--neon-green);
-        }
-
-        /* Global fix outline */
-        * {
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
         }
     </style>
 </head>
@@ -164,20 +121,20 @@
             <span class="nav-brand">DzzXNzz</span>
         </div>
         <div class="nav-right">
-    <div class="coins-wrapper">COINS: 0</div>
-    <div class="user-menu">
-        <div class="menu-trigger" id="menuTrigger">
-            <i class="fas fa-ellipsis-v"></i> <!-- ikon tiga titik -->
+            <div class="coins-wrapper">COINS: 0</div>
+            <div class="user-menu">
+                <div class="menu-trigger" id="menuTrigger">
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+                <div class="user-avatar">
+                    <img src="./image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
+                </div>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="/profile" class="dropdown-item"><i class="fas fa-user"></i> Akun</a>
+                    <a href="#" id="logoutBtn" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
         </div>
-        <div class="user-avatar">
-            <img src="./image/profile.jpg" alt="User">
-        </div>
-        <div class="dropdown-menu" id="dropdownMenu">
-            <a href="/profile" class="dropdown-item"><i class="fas fa-user"></i> Akun</a>
-            <a href="#" id="logoutBtn" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
-    </div>
-</div>
     </nav>
 
     <!-- Sidebar -->
@@ -205,29 +162,28 @@
         </div>
 
         <div class="product-grid">
-            <!-- Card Panel Pterodactyl (Popular / Ungu) -->
+            <!-- Panel Pterodactyl -->
             <div class="product-card popular">
                 <div class="card-badge">POPULAR</div>
                 <h3 class="card-title">Panel Pterodactyl</h3>
                 <p class="card-desc">Panel 3GB – 7GB, fast respon, siap untuk hosting dengan performa optimal.</p>
                 <div class="feature-list">
-                    <div class="feature-item"><i class="fas fa-bolt"></i><span>Fast respon</span></div>
-                    <div class="feature-item"><i class="fas fa-check-circle"></i><span>Siap pakai</span></div>
-                    <div class="feature-item"><i class="fas fa-shield-alt"></i><span>Keamanan terjamin</span></div>
+                    <div class="feature-item"><i class="fas fa-bolt"></i> Fast respon</div>
+                    <div class="feature-item"><i class="fas fa-check-circle"></i> Siap pakai</div>
+                    <div class="feature-item"><i class="fas fa-shield-alt"></i> Keamanan terjamin</div>
                 </div>
-                <!-- Harga tidak ditampilkan, hanya tombol lihat detail -->
                 <a href="/product/panelptero" class="btn-detail">Lihat Detail</a>
             </div>
 
-            <!-- Card Layanan PPOB (Hijau) -->
+            <!-- Layanan PPOB -->
             <div class="product-card ppob">
                 <div class="card-badge">PPOB</div>
                 <h3 class="card-title">Layanan PPOB</h3>
                 <p class="card-desc">Murah meriah, respon cepat, tersedia banyak layanan.</p>
                 <div class="feature-list">
-                    <div class="feature-item"><i class="fas fa-coins"></i><span>Murah meriah</span></div>
-                    <div class="feature-item"><i class="fas fa-bolt"></i><span>Respon cepat</span></div>
-                    <div class="feature-item"><i class="fas fa-list"></i><span>Tersedia banyak layanan</span></div>
+                    <div class="feature-item"><i class="fas fa-coins"></i> Murah meriah</div>
+                    <div class="feature-item"><i class="fas fa-bolt"></i> Respon cepat</div>
+                    <div class="feature-item"><i class="fas fa-list"></i> Tersedia banyak layanan</div>
                 </div>
                 <a href="#" class="btn-detail">Lihat Detail</a>
             </div>
