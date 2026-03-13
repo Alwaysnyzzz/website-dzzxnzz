@@ -4,12 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DzzXNzz - Home</title>
-    <!-- Global CSS (pastikan style.css sudah ada) -->
+    <!-- Global CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Gaya card home seperti awal */
+        /* Gaya judul pelangi */
+        .rainbow-title {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00e5ff, #00ff88, #bf00ff, #ff0055);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(0,229,255,0.5));
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .subtitle {
+            color: #aaa;
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
         .home-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -27,7 +43,6 @@
         .home-card:hover {
             transform: translateY(-5px);
         }
-        /* Warna border sesuai kategori */
         .home-card.cyan {
             border-color: var(--neon-cyan);
             box-shadow: 0 0 15px var(--neon-cyan);
@@ -88,23 +103,6 @@
             background: var(--neon-red);
             color: white;
         }
-        /* Teks welcome */
-        .welcome-title {
-            text-align: center;
-            font-size: 42px;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--neon-cyan), #00ff88, var(--neon-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-        .welcome-desc {
-            text-align: center;
-            color: #aaa;
-            font-size: 16px;
-            margin-bottom: 40px;
-        }
-        /* Navbar dan footer tetap seperti di style.css */
     </style>
 </head>
 <body>
@@ -114,6 +112,7 @@
     <nav class="navbar">
         <div class="nav-left">
             <button id="menu-toggle">☰</button>
+            <span class="nav-brand">DzzXNzz</span>
         </div>
         <div class="nav-right">
             <div class="coins-wrapper">COINS: 0</div>
@@ -125,8 +124,7 @@
                     <i class="fas fa-ellipsis-v"></i>
                 </div>
                 <div class="dropdown-menu" id="dropdownMenu">
-                    <a href="/profile" class="dropdown-item"><i class="fas fa-user"></i> Akun</a>
-                    <a href="#" id="logoutBtn" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    <!-- Diisi oleh JavaScript -->
                 </div>
             </div>
         </div>
@@ -141,18 +139,26 @@
             </div>
         </div>
         <ul class="sidebar-menu">
-            <li class="active"><a href="home">🏠 Home</a></li>
-            <li><a href="product">📦 Product</a></li>
-            <li><a href="donasi">❤️ Donasi</a></li>
-            <li><a href="contact">📞 Contact</a></li>
+            <li class="active"><a href="home"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="product"><i class="fas fa-box"></i> Product</a></li>
+            <li><a href="donasi"><i class="fas fa-heart"></i> Donasi</a></li>
+            <li><a href="contact"><i class="fas fa-phone-alt"></i> Contact</a></li>
+        </ul>
+
+        <!-- Divider -->
+        <div class="sidebar-divider"></div>
+
+        <!-- Menu Sistem (diisi JavaScript) -->
+        <ul class="sidebar-menu sidebar-system" id="system-menu">
+            <li class="system-item"><a href="#"><i class="fas fa-spinner fa-pulse"></i> Loading...</a></li>
         </ul>
     </div>
     <div class="overlay" id="overlay"></div>
 
     <!-- Main Content -->
     <main class="main-content">
-        <div class="welcome-title">Selamat Datang</div>
-        <div class="welcome-desc">Solusi hosting dan bot terbaik untuk Anda</div>
+        <h1 class="rainbow-title">DzzXNzz</h1>
+        <p class="subtitle">Solusi hosting dan bot terbaik untuk Anda</p>
 
         <div class="home-grid">
             <!-- Card Panel Pterodactyl (Cyan) -->
@@ -191,7 +197,7 @@
         <div class="footer-container">
             <div>
                 <div class="footer-logo">DzzXNzz</div>
-                <p class="footer-desc">Provider hosting generasi baru yang fokus pada performa, keamanan, dan kemudahan penggunaan.</p>
+                <p class="footer-desc">Provider hosting generasi baru yang fokus pada performa, keamanan, dan kemudahan penggunaan untuk developer dan kreator.</p>
                 <div class="social-icons">
                     <a href="https://wa.me/6287713472756" target="_blank" class="social-icon wa"><i class="fab fa-whatsapp"></i></a>
                     <a href="https://t.me/DzzXNzz" target="_blank" class="social-icon tg"><i class="fab fa-telegram-plane"></i></a>

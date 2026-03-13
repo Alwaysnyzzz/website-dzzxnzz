@@ -104,28 +104,37 @@ body {
     object-fit: cover;
 }
 
-/* ===== DROPDOWN MENU FIX ===== */
+/* ===== DROPDOWN MENU (NAVBAR) ===== */
 .user-menu {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 8px; /* jarak antara avatar dan titik tiga */
+    gap: 8px;
 }
 
 .menu-trigger {
-    background: transparent !important;
+    cursor: pointer;
+    font-size: 20px;
+    color: var(--neon-cyan);
+    transition: 0.2s;
+    background: none !important;
     width: auto !important;
     height: auto !important;
     border-radius: 0 !important;
+    padding: 0 !important;
+    display: inline-flex;
+    align-items: center;
 }
+
 .menu-trigger:hover {
-    background: transparent !important;
+    color: white;
+    background: none !important;
 }
 
 .dropdown-menu {
     position: absolute;
-    top: 50px;          /* jarak dari atas trigger */
-    right: 0;            /* mepet ke kanan */
+    top: 50px;
+    right: 0;
     background: rgba(12, 12, 18, 0.95);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(0, 229, 255, 0.2);
@@ -212,8 +221,10 @@ body {
     object-fit: cover;
 }
 
+/* Menu utama sidebar */
 .sidebar-menu {
     list-style: none;
+    margin-bottom: 20px;
 }
 
 .sidebar-menu li {
@@ -221,13 +232,21 @@ body {
 }
 
 .sidebar-menu a {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     padding: 12px 15px;
     color: #ccc;
     text-decoration: none;
     font-size: 15px;
     border-radius: 12px;
     transition: 0.2s;
+}
+
+.sidebar-menu a i {
+    width: 20px;
+    font-size: 16px;
+    text-align: center;
 }
 
 .sidebar-menu li.active a {
@@ -242,6 +261,35 @@ body {
     background: rgba(0,229,255,0.1);
     color: var(--neon-cyan);
     padding-left: 20px;
+}
+
+/* Divider */
+.sidebar-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    margin: 20px 0;
+}
+
+/* Sidebar System Menu (Login/Register atau Akun/Logout) */
+.sidebar-system {
+    margin-top: 20px;
+    border-left: 3px solid var(--neon-red);
+    background: rgba(255,0,85,0.05);
+    border-radius: 0 12px 12px 0;
+    padding: 5px 0;
+}
+
+.sidebar-system .system-item a {
+    color: #ffaaaa;
+}
+
+.sidebar-system .system-item a:hover {
+    color: #fff;
+    background: rgba(255,0,85,0.2);
+}
+
+.sidebar-system i {
+    color: var(--neon-red);
 }
 
 .overlay {
@@ -266,41 +314,17 @@ body {
     margin: 0 auto;
 }
 
-.page-title {
-    text-align: center;
-    margin-bottom: 50px;
-}
-
-.page-title h1 {
+/* Rainbow Title (untuk semua halaman) */
+.rainbow-title {
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 42px;
     font-weight: 800;
-    background: linear-gradient(135deg, var(--neon-cyan), #00ff88, var(--neon-purple));
+    background: linear-gradient(135deg, #00e5ff, #00ff88, #bf00ff, #ff0055);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 15px rgba(0,229,255,0.5));
+    filter: drop-shadow(0 0 20px rgba(0,229,255,0.5));
     margin-bottom: 10px;
-    position: relative;
-    display: inline-block;
-    padding-bottom: 10px;
-}
-
-.page-title h1::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 3px;
-    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
-    border-radius: 3px;
-    box-shadow: 0 0 10px var(--neon-cyan);
-}
-
-.page-title p {
-    color: rgba(255,255,255,0.6);
-    font-size: 16px;
-    text-shadow: 0 0 5px rgba(0,229,255,0.3);
+    text-align: center;
 }
 
 /* ===== FOOTER ===== */
@@ -452,98 +476,4 @@ body {
         flex-direction: column;
         text-align: center;
     }
-}
-/* Gaya card dengan tepi warna */
-.contact-card {
-    background: rgba(18,20,26,0.7);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 25px;
-    text-align: center;
-    transition: 0.3s;
-    border: 2px solid transparent; /* default, akan diubah per card */
-}
-
-/* Warna tepi sesuai platform */
-.card-wa {
-    border-color: #25D366;
-    box-shadow: 0 0 15px rgba(37, 211, 102, 0.3);
-}
-
-.card-wa:hover {
-    box-shadow: 0 0 25px #25D366;
-}
-
-.card-tg {
-    border-color: #0088cc;
-    box-shadow: 0 0 15px rgba(0, 136, 204, 0.3);
-}
-
-.card-tg:hover {
-    box-shadow: 0 0 25px #0088cc;
-}
-
-.card-bot {
-    border-color: #ff4444;
-    box-shadow: 0 0 15px rgba(255, 68, 68, 0.3);
-}
-
-.card-bot:hover {
-    box-shadow: 0 0 25px #ff4444;
-}
-
-/* Ikon dan tombol */
-.contact-card i {
-    font-size: 48px;
-    margin-bottom: 15px;
-}
-
-.card-wa i { color: #25D366; }
-.card-tg i { color: #0088cc; }
-.card-bot i { color: #ff4444; }
-
-.btn-contact {
-    display: inline-block;
-    padding: 10px 25px;
-    border-radius: 40px;
-    text-decoration: none;
-    font-weight: 600;
-    border: 2px solid;
-    background: transparent;
-    transition: 0.2s;
-}
-
-.card-wa .btn-contact {
-    border-color: #25D366;
-    color: #25D366;
-}
-.card-wa .btn-contact:hover {
-    background: #25D366;
-    color: black;
-}
-
-.card-tg .btn-contact {
-    border-color: #0088cc;
-    color: #0088cc;
-}
-.card-tg .btn-contact:hover {
-    background: #0088cc;
-    color: black;
-}
-
-.card-bot .btn-contact {
-    border-color: #ff4444;
-    color: #ff4444;
-}
-.card-bot .btn-contact:hover {
-    background: #ff4444;
-    color: black;
-}
-/* Paksa judul donasi */
-h1[style*="❤️ DONASI"],
-.page-title h1 {
-    color: #ff0055 !important;
-    text-shadow: 0 0 10px #ff0055 !important;
-    -webkit-text-fill-color: #ff0055 !important;
-    background: none !important;
 }
