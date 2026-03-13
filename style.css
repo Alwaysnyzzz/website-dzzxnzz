@@ -128,7 +128,6 @@ body {
 
 .menu-trigger:hover {
     color: white;
-    background: none !important;
 }
 
 .dropdown-menu {
@@ -221,7 +220,6 @@ body {
     object-fit: cover;
 }
 
-/* Menu utama sidebar */
 .sidebar-menu {
     list-style: none;
     margin-bottom: 20px;
@@ -325,6 +323,13 @@ body {
     filter: drop-shadow(0 0 20px rgba(0,229,255,0.5));
     margin-bottom: 10px;
     text-align: center;
+}
+
+.subtitle {
+    color: #aaa;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 40px;
 }
 
 /* ===== FOOTER ===== */

@@ -4,40 +4,307 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Panel Pterodactyl - DzzXNzz</title>
-    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <!-- Global CSS -->
     <link rel="stylesheet" href="../style.css">
-    <!-- CSS Khusus Halaman -->
-    <link rel="stylesheet" href="../css/panelptero.css">
+    <style>
+        .main-content {
+            padding: 100px 20px 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .rainbow-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00e5ff, #00ff88, #bf00ff, #ff0055);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(0,229,255,0.5));
+            margin-bottom: 10px;
+        }
+        .header-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: #aaa;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .duration-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .duration-group {
+            display: flex;
+            gap: 10px;
+        }
+        .duration-btn {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(0,229,255,0.3);
+            color: #ccc;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 10px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .duration-btn:hover {
+            background: rgba(0,229,255,0.1);
+            border-color: #00e5ff;
+            color: #00e5ff;
+        }
+        .duration-btn.active {
+            background: #00e5ff;
+            color: #020202;
+            font-weight: 600;
+        }
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00e5ff, transparent);
+            margin: 20px 0 30px;
+        }
+        .cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .panel-card {
+            position: relative;
+            background: rgba(10,12,18,0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
+        }
+        .panel-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #1dd1a1, #f368e0, #ff6b6b);
+            background-size: 200% 100%;
+            animation: topRainbow 4s linear infinite;
+            border-radius: 20px 20px 0 0;
+        }
+        @keyframes topRainbow {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 0%; }
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .card-badge {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .card-tier {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: #aaa;
+            background: rgba(255,255,255,0.05);
+            padding: 4px 12px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .spec-list {
+            margin: 16px 0;
+            padding: 12px 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            padding: 6px 0;
+        }
+        .spec-label {
+            color: #aaa;
+        }
+        .spec-value {
+            color: #fff;
+            font-weight: 600;
+        }
+        .price {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            text-align: center;
+            margin: 16px 0 12px;
+        }
+        .price span {
+            font-size: 14px;
+            color: #888;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+        }
+        .btn-pesan {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50px;
+            color: #fff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            backdrop-filter: blur(5px);
+            letter-spacing: 1px;
+        }
+        .btn-pesan:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.3);
+        }
+        .vip-container { display: none; }
+        .vip-card {
+            background: #0c0e12;
+            border-radius: 20px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+        .vip-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, #ff6b6b, #feca57, #48dbfb, #1dd1a1, #f368e0, #ff6b6b);
+            background-size: 100% 300%;
+            animation: sideRainbow 6s linear infinite;
+            border-radius: 20px 0 0 20px;
+        }
+        @keyframes sideRainbow {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 0% 100%; }
+        }
+        .badge-vip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(145deg, #ffd700, #ffaa00);
+            color: #000;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 8px 18px;
+            border-radius: 40px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(255,255,255,0.3);
+            transform: rotate(-1deg);
+        }
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .grid-item {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(0,229,255,0.3);
+            border-radius: 12px;
+            padding: 14px 8px;
+            text-align: center;
+        }
+        .grid-item.disk-full { grid-column: span 2; }
+        .grid-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            color: #aaa;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+        .grid-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+        }
+        .price-section { text-align: center; margin: 16px 0; }
+        .price-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            color: #aaa;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .price {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .currency { font-size: 16px; color: #999; margin-right: 4px; }
+        .btn-order {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50px;
+            color: #fff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-order:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.2);
+        }
+        @media (max-width: 500px) {
+            .rainbow-text { font-size: 32px; }
+            .price { font-size: 28px; }
+        }
+    </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
 
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-left">
             <button id="menu-toggle">☰</button>
+            <span class="nav-brand">DzzXNzz</span>
         </div>
         <div class="nav-right">
             <div class="coins-wrapper">COINS: 0</div>
-           <div class="user-menu">
-    <div class="user-avatar">
-        <img src="./image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
-    </div>
-    <div class="menu-trigger" id="menuTrigger">
-        <i class="fas fa-ellipsis-v"></i>
-    </div>
-    <div class="dropdown-menu" id="dropdownMenu">
-        <a href="/profile" class="dropdown-item"><i class="fas fa-user"></i> Akun</a>
-        <a href="#" id="logoutBtn" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </div>
-</div>
+            <div class="user-menu">
+                <div class="user-avatar">
+                    <img src="../image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
+                </div>
+                <div class="menu-trigger" id="menuTrigger">
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+                <div class="dropdown-menu" id="dropdownMenu"></div>
+            </div>
         </div>
     </nav>
 
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <span class="user-name-text">DzzXNzz</span>
@@ -46,15 +313,16 @@
             </div>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="../home">🏠 Home</a></li>
-            <li><a href="../product">📦 Product</a></li>
-            <li><a href="../donasi">❤️ Donasi</a></li>
-            <li><a href="../contact">📞 Contact</a></li>
+            <li><a href="../home"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="../product"><i class="fas fa-box"></i> Product</a></li>
+            <li><a href="../donasi"><i class="fas fa-heart"></i> Donasi</a></li>
+            <li><a href="../contact"><i class="fas fa-phone-alt"></i> Contact</a></li>
         </ul>
+        <div class="sidebar-divider"></div>
+        <ul class="sidebar-menu sidebar-system" id="system-menu"></ul>
     </div>
     <div class="overlay" id="overlay"></div>
 
-    <!-- Konten Utama -->
     <main class="main-content">
         <div class="page-header">
             <h1 class="rainbow-text">PANEL PTERODACTYL</h1>
@@ -70,14 +338,9 @@
 
         <div class="divider"></div>
 
-        <!-- Cards 20 Hari -->
         <div id="cards20" class="cards-container">
-            <!-- Card 3GB -->
             <div class="panel-card" data-panel="3">
-                <div class="card-header">
-                    <span class="card-badge">3GB</span>
-                    <span class="card-tier">LOW</span>
-                </div>
+                <div class="card-header"><span class="card-badge">3GB</span><span class="card-tier">LOW</span></div>
                 <div class="spec-list">
                     <div class="spec-item"><span class="spec-label">CPU</span><span class="spec-value">100%</span></div>
                     <div class="spec-item"><span class="spec-label">MEMORI</span><span class="spec-value">3027 MB</span></div>
@@ -87,12 +350,8 @@
                 <div class="price" data-harga="4000">Rp 4.000 <span>/20 hari</span></div>
                 <button class="btn-pesan">PESAN SEKARANG</button>
             </div>
-            <!-- Card 5GB -->
             <div class="panel-card" data-panel="5">
-                <div class="card-header">
-                    <span class="card-badge">5GB</span>
-                    <span class="card-tier">LOW</span>
-                </div>
+                <div class="card-header"><span class="card-badge">5GB</span><span class="card-tier">LOW</span></div>
                 <div class="spec-list">
                     <div class="spec-item"><span class="spec-label">CPU</span><span class="spec-value">250%</span></div>
                     <div class="spec-item"><span class="spec-label">MEMORI</span><span class="spec-value">5021 MB</span></div>
@@ -102,12 +361,8 @@
                 <div class="price" data-harga="6000">Rp 6.000 <span>/20 hari</span></div>
                 <button class="btn-pesan">PESAN SEKARANG</button>
             </div>
-            <!-- Card 6GB -->
             <div class="panel-card" data-panel="6">
-                <div class="card-header">
-                    <span class="card-badge">6GB</span>
-                    <span class="card-tier">LOW</span>
-                </div>
+                <div class="card-header"><span class="card-badge">6GB</span><span class="card-tier">LOW</span></div>
                 <div class="spec-list">
                     <div class="spec-item"><span class="spec-label">CPU</span><span class="spec-value">300%</span></div>
                     <div class="spec-item"><span class="spec-label">MEMORI</span><span class="spec-value">6065 MB</span></div>
@@ -117,12 +372,8 @@
                 <div class="price" data-harga="8000">Rp 8.000 <span>/20 hari</span></div>
                 <button class="btn-pesan">PESAN SEKARANG</button>
             </div>
-            <!-- Card 7GB -->
             <div class="panel-card" data-panel="7">
-                <div class="card-header">
-                    <span class="card-badge">7GB</span>
-                    <span class="card-tier">LOW</span>
-                </div>
+                <div class="card-header"><span class="card-badge">7GB</span><span class="card-tier">LOW</span></div>
                 <div class="spec-list">
                     <div class="spec-item"><span class="spec-label">CPU</span><span class="spec-value">350%</span></div>
                     <div class="spec-item"><span class="spec-label">MEMORI</span><span class="spec-value">7065 MB</span></div>
@@ -134,144 +385,54 @@
             </div>
         </div>
 
-        <!-- Cards 30 Hari (VIP) -->
         <div id="cards30" class="cards-container vip-container">
-            <!-- Card 3GB VIP -->
             <div class="vip-card" data-panel="3">
-                <div class="badge-vip">
-                    <i class="fas fa-crown"></i>
-                    <span>VIP EXCLUSIVE</span>
-                </div>
-                <div class="card-header">
-                    <h2 class="card-title">Private 3GB</h2>
-                    <span class="dedicated-badge"><i class="fas fa-check-circle"></i> DEDICATED RESOURCES</span>
-                </div>
+                <div class="badge-vip"><i class="fas fa-crown"></i> VIP EXCLUSIVE</div>
+                <div class="card-header"><h2 class="card-title">Private 3GB</h2><span class="dedicated-badge"><i class="fas fa-check-circle"></i> DEDICATED RESOURCES</span></div>
                 <div class="spec-grid">
-                    <div class="grid-item">
-                        <span class="grid-label">CPU</span>
-                        <span class="grid-value">110%</span>
-                    </div>
-                    <div class="grid-item">
-                        <span class="grid-label">RAM</span>
-                        <span class="grid-value">3127 MB</span>
-                    </div>
-                    <div class="grid-item disk-full">
-                        <span class="grid-label">DISK</span>
-                        <span class="grid-value">3127 MB</span>
-                    </div>
+                    <div class="grid-item"><span class="grid-label">CPU</span><span class="grid-value">110%</span></div>
+                    <div class="grid-item"><span class="grid-label">RAM</span><span class="grid-value">3127 MB</span></div>
+                    <div class="grid-item disk-full"><span class="grid-label">DISK</span><span class="grid-value">3127 MB</span></div>
                 </div>
-                <div class="price-section">
-                    <span class="price-label">HARGA SPESIAL</span>
-                    <div class="price">
-                        <span class="currency">Rp</span>
-                        <span class="amount">5.000</span>
-                    </div>
-                </div>
+                <div class="price-section"><span class="price-label">HARGA SPESIAL</span><div class="price"><span class="currency">Rp</span><span class="amount">5.000</span></div></div>
                 <button class="btn-order"><i class="fas fa-shopping-cart"></i> ORDER PREMIUM</button>
             </div>
-            <!-- Card 5GB VIP -->
             <div class="vip-card" data-panel="5">
-                <div class="badge-vip">
-                    <i class="fas fa-crown"></i>
-                    <span>VIP EXCLUSIVE</span>
-                </div>
-                <div class="card-header">
-                    <h2 class="card-title">Private 5GB</h2>
-                    <span class="dedicated-badge"><i class="fas fa-check-circle"></i> DEDICATED RESOURCES</span>
-                </div>
+                <div class="badge-vip"><i class="fas fa-crown"></i> VIP EXCLUSIVE</div>
+                <div class="card-header"><h2 class="card-title">Private 5GB</h2><span class="dedicated-badge"><i class="fas fa-check-circle"></i> DEDICATED RESOURCES</span></div>
                 <div class="spec-grid">
-                    <div class="grid-item">
-                        <span class="grid-label">CPU</span>
-                        <span class="grid-value">260%</span>
-                    </div>
-                    <div class="grid-item">
-                        <span class="grid-label">RAM</span>
-                        <span class="grid-value">5121 MB</span>
-                    </div>
-                    <div class="grid-item disk-full">
-                        <span class="grid-label">DISK</span>
-                        <span class="grid-value">5121 MB</span>
-                    </div>
+                    <div class="grid-item"><span class="grid-label">CPU</span><span class="grid-value">260%</span></div>
+                    <div class="grid-item"><span class="grid-label">RAM</span><span class="grid-value">5121 MB</span></div>
+                    <div class="grid-item disk-full"><span class="grid-label">DISK</span><span class="grid-value">5121 MB</span></div>
                 </div>
-                <div class="price-section">
-                    <span class="price-label">HARGA SPESIAL</span>
-                    <div class="price">
-                        <span class="currency">Rp</span>
-                        <span class="amount">7.000</span>
-                    </div>
-                </div>
+                <div class="price-section"><span class="price-label">HARGA SPESIAL</span><div class="price"><span class="currency">Rp</span><span class="amount">7.000</span></div></div>
                 <button class="btn-order"><i class="fas fa-shopping-cart"></i> ORDER PREMIUM</button>
             </div>
-            <!-- Card 6GB VIP -->
             <div class="vip-card" data-panel="6">
-                <div class="badge-vip">
-                    <i class="fas fa-crown"></i>
-                    <span>VIP EXCLUSIVE</span>
-                </div>
-                <div class="card-header">
-                    <h2 class="card-title">Private 6GB</h2>
-                    <span class="dedicated-badge"><i class="fas fa-check-circle"></i> DEDICATED RESOURCES</span>
-                </div>
+                <div class="badge-vip"><i class="fas fa-crown"></i> VIP EXCLUSIVE</div>
+                <div class="card-header"><h2 class="card-title">Private 6GB</h2><span class="dedicated-badge"><i class="fas fa-check-circle"></i> DEDICATED RESOURCES</span></div>
                 <div class="spec-grid">
-                    <div class="grid-item">
-                        <span class="grid-label">CPU</span>
-                        <span class="grid-value">310%</span>
-                    </div>
-                    <div class="grid-item">
-                        <span class="grid-label">RAM</span>
-                        <span class="grid-value">6165 MB</span>
-                    </div>
-                    <div class="grid-item disk-full">
-                        <span class="grid-label">DISK</span>
-                        <span class="grid-value">6165 MB</span>
-                    </div>
+                    <div class="grid-item"><span class="grid-label">CPU</span><span class="grid-value">310%</span></div>
+                    <div class="grid-item"><span class="grid-label">RAM</span><span class="grid-value">6165 MB</span></div>
+                    <div class="grid-item disk-full"><span class="grid-label">DISK</span><span class="grid-value">6165 MB</span></div>
                 </div>
-                <div class="price-section">
-                    <span class="price-label">HARGA SPESIAL</span>
-                    <div class="price">
-                        <span class="currency">Rp</span>
-                        <span class="amount">9.000</span>
-                    </div>
-                </div>
+                <div class="price-section"><span class="price-label">HARGA SPESIAL</span><div class="price"><span class="currency">Rp</span><span class="amount">9.000</span></div></div>
                 <button class="btn-order"><i class="fas fa-shopping-cart"></i> ORDER PREMIUM</button>
             </div>
-            <!-- Card 7GB VIP -->
             <div class="vip-card" data-panel="7">
-                <div class="badge-vip">
-                    <i class="fas fa-crown"></i>
-                    <span>VIP EXCLUSIVE</span>
-                </div>
-                <div class="card-header">
-                    <h2 class="card-title">Private 7GB</h2>
-                    <span class="dedicated-badge"><i class="fas fa-check-circle"></i> DEDICATED RESOURCES</span>
-                </div>
+                <div class="badge-vip"><i class="fas fa-crown"></i> VIP EXCLUSIVE</div>
+                <div class="card-header"><h2 class="card-title">Private 7GB</h2><span class="dedicated-badge"><i class="fas fa-check-circle"></i> DEDICATED RESOURCES</span></div>
                 <div class="spec-grid">
-                    <div class="grid-item">
-                        <span class="grid-label">CPU</span>
-                        <span class="grid-value">360%</span>
-                    </div>
-                    <div class="grid-item">
-                        <span class="grid-label">RAM</span>
-                        <span class="grid-value">7165 MB</span>
-                    </div>
-                    <div class="grid-item disk-full">
-                        <span class="grid-label">DISK</span>
-                        <span class="grid-value">7165 MB</span>
-                    </div>
+                    <div class="grid-item"><span class="grid-label">CPU</span><span class="grid-value">360%</span></div>
+                    <div class="grid-item"><span class="grid-label">RAM</span><span class="grid-value">7165 MB</span></div>
+                    <div class="grid-item disk-full"><span class="grid-label">DISK</span><span class="grid-value">7165 MB</span></div>
                 </div>
-                <div class="price-section">
-                    <span class="price-label">HARGA SPESIAL</span>
-                    <div class="price">
-                        <span class="currency">Rp</span>
-                        <span class="amount">12.000</span>
-                    </div>
-                </div>
+                <div class="price-section"><span class="price-label">HARGA SPESIAL</span><div class="price"><span class="currency">Rp</span><span class="amount">12.000</span></div></div>
                 <button class="btn-order"><i class="fas fa-shopping-cart"></i> ORDER PREMIUM</button>
             </div>
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
             <div>
@@ -315,9 +476,38 @@
         </div>
     </footer>
 
-    <!-- Script Global -->
     <script src="../script.js"></script>
-    <!-- Script Khusus Halaman -->
-    <script src="../js/panelptero.js"></script>
+    <script>
+        (function() {
+            const durasiButtons = document.querySelectorAll('.duration-btn');
+            const cards20 = document.getElementById('cards20');
+            const cards30 = document.getElementById('cards30');
+            function setActiveDuration(durasi) {
+                durasiButtons.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-durasi') === durasi));
+                cards20.style.display = durasi === '20' ? 'flex' : 'none';
+                cards30.style.display = durasi === '30' ? 'flex' : 'none';
+            }
+            durasiButtons.forEach(btn => btn.addEventListener('click', function() {
+                setActiveDuration(this.getAttribute('data-durasi'));
+            }));
+            setActiveDuration('20');
+            document.querySelectorAll('#cards20 .btn-pesan').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.panel-card');
+                    const panel = card.getAttribute('data-panel');
+                    const price = card.querySelector('.price').getAttribute('data-harga');
+                    alert(`Anda memesan Panel ${panel}GB selama 20 hari dengan harga Rp ${price}`);
+                });
+            });
+            document.querySelectorAll('#cards30 .btn-order').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.vip-card');
+                    const title = card.querySelector('.card-title').textContent;
+                    const amount = card.querySelector('.amount').textContent;
+                    alert(`Anda memilih ${title} dengan harga Rp ${amount} untuk 30 hari`);
+                });
+            });
+        })();
+    </script>
 </body>
 </html>

@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ===== FUNGSI CEK LOGIN (sesuaikan dengan sistem autentikasi) =====
     function isLoggedIn() {
-        // Contoh: cek localStorage dari Supabase
         return localStorage.getItem('sb-session') !== null;
     }
 
@@ -35,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 sidebarLogout.addEventListener('click', function(e) {
                     e.preventDefault();
                     localStorage.removeItem('sb-session');
-                    window.location.reload(); // refresh untuk update
+                    window.location.reload();
                 });
             }
         } else {
@@ -51,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const dropdownMenu = document.getElementById('dropdownMenu');
 
     if (menuTrigger && dropdownMenu) {
-        // Fungsi untuk mengupdate isi dropdown sesuai status login
         function updateDropdown() {
             if (isLoggedIn()) {
                 dropdownMenu.innerHTML = `
@@ -74,21 +72,61 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Toggle dropdown saat ikon diklik
         menuTrigger.addEventListener('click', function(e) {
             e.stopPropagation();
             dropdownMenu.classList.toggle('show');
         });
 
-        // Tutup dropdown jika klik di luar
         document.addEventListener('click', function(e) {
             if (!menuTrigger.contains(e.target) && !dropdownMenu.contains(e.target)) {
                 dropdownMenu.classList.remove('show');
             }
         });
 
-        // Inisialisasi pertama
         updateDropdown();
+    }
+
+    // ===== LOADING SCREEN (hanya untuk halaman home) =====
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+        const bar = document.querySelector('.progress-bar');
+        const text = document.getElementById('progress-text');
+        if (sessionStorage.getItem('homeLoaded')) {
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => loadingScreen.style.display = 'none', 600);
+        } else {
+            let progress = 0;
+            const steps = [20,40,60,80,100];
+            let stepIndex = 0;
+
+            function goToNextStep() {
+                if (stepIndex >= steps.length) {
+                    sessionStorage.setItem('homeLoaded','true');
+                    setTimeout(() => {
+                        loadingScreen.style.opacity = '0';
+                        setTimeout(() => loadingScreen.style.display = 'none', 600);
+                    }, 300);
+                    return;
+                }
+                const target = steps[stepIndex];
+                const interval = setInterval(() => {
+                    if (progress < target) {
+                        progress++;
+                        bar.style.width = progress + '%';
+                        text.textContent = progress + '%';
+                    } else {
+                        clearInterval(interval);
+                        stepIndex++;
+                        if (stepIndex < steps.length) {
+                            setTimeout(goToNextStep, 500);
+                        } else {
+                            goToNextStep();
+                        }
+                    }
+                }, 20);
+            }
+            goToNextStep();
+        }
     }
 
     // ===== CANVAS STARS (background) =====
