@@ -44,7 +44,35 @@ document.addEventListener('DOMContentLoaded', function() {
             goToNextStep();
         }
     }
+    // Dropdown menu toggle
+const menuTrigger = document.getElementById('menuTrigger');
+const dropdownMenu = document.getElementById('dropdownMenu');
 
+if (menuTrigger && dropdownMenu) {
+    menuTrigger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('show');
+    });
+
+    // Tutup dropdown jika klik di luar
+    document.addEventListener('click', function(e) {
+        if (!menuTrigger.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.remove('show');
+        }
+    });
+}
+
+// Logout functionality
+const logoutBtn = document.getElementById('logoutBtn');
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Hapus session dari localStorage (sesuaikan dengan sistem login)
+        localStorage.removeItem('sb-session'); // jika pakai Supabase
+        // Redirect ke halaman login
+        window.location.href = '/login';
+    });
+}
     // ===== SIDEBAR TOGGLE =====
     const menuBtn = document.getElementById('menu-toggle');
     const sidebar = document.getElementById('sidebar');
