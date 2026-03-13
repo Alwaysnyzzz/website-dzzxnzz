@@ -1,8 +1,8 @@
 // js/panelptero.js
 
 (function() {
-    // Sidebar toggle (sudah ada di script.js, tapi kita pastikan)
     document.addEventListener('DOMContentLoaded', function() {
+        // Sidebar toggle
         const menuBtn = document.getElementById('menu-toggle');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
@@ -11,7 +11,7 @@
             overlay.onclick = () => { sidebar.classList.remove('active'); overlay.classList.remove('active'); };
         }
 
-        // Inisialisasi toggle durasi
+        // Toggle durasi
         const durasiButtons = document.querySelectorAll('.duration-btn');
         const cards20 = document.getElementById('cards20');
         const cards30 = document.getElementById('cards30');
@@ -41,10 +41,10 @@
             });
         });
 
-        // Set default 20 hari
+        // Default 20 hari
         setActiveDuration('20');
 
-        // Tombol pesan untuk card biasa (20 hari)
+        // Tombol pesan untuk 20 hari
         document.querySelectorAll('#cards20 .btn-pesan').forEach(btn => {
             btn.addEventListener('click', function() {
                 const card = this.closest('.panel-card');
@@ -54,7 +54,7 @@
             });
         });
 
-        // Tombol order untuk card VIP (30 hari)
+        // Tombol order untuk 30 hari
         document.querySelectorAll('#cards30 .btn-order').forEach(btn => {
             btn.addEventListener('click', function() {
                 const card = this.closest('.vip-card');
