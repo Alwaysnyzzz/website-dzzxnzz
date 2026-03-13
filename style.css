@@ -104,12 +104,12 @@ body {
     object-fit: cover;
 }
 
-/* ===== DROPDOWN MENU ===== */
+/* ===== DROPDOWN MENU FIX ===== */
 .user-menu {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px; /* jarak antara avatar dan titik tiga */
 }
 
 .menu-trigger {
@@ -117,16 +117,24 @@ body {
     font-size: 20px;
     color: var(--neon-cyan);
     transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(0, 229, 255, 0.1);
 }
 
 .menu-trigger:hover {
     color: white;
+    background: rgba(0, 229, 255, 0.3);
 }
 
 .dropdown-menu {
     position: absolute;
-    top: 50px;
-    right: 0;
+    top: 50px;          /* jarak dari atas trigger */
+    right: 0;            /* mepet ke kanan */
     background: rgba(12, 12, 18, 0.95);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(0, 229, 255, 0.2);
