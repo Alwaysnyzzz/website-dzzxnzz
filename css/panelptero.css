@@ -191,7 +191,7 @@
     transform: scale(0.98);
 }
 
-/* ===== GAYA VIP UNTUK 30 HARI (Efek Pelangi di Sisi Kiri) ===== */
+/* ===== GAYA VIP UNTUK 30 HARI (Kotak Spesifikasi Border Cyan) ===== */
 .vip-container {
     display: none;
 }
@@ -207,7 +207,7 @@
     transition: 0.3s ease;
 }
 
-/* Border pelangi hanya di sisi kiri */
+/* Border pelangi di sisi kiri */
 .vip-card::before {
     content: '';
     position: absolute;
@@ -285,27 +285,41 @@
     color: #aaffaa;
 }
 
-/* Grid spesifikasi */
+/* Grid spesifikasi dengan kotak border cyan */
 .spec-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     margin: 20px 0;
-    padding: 16px 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 8px 0;
 }
 
 .grid-item {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 12px;
+    padding: 14px 8px;
     text-align: center;
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.1);
+    transition: 0.2s;
+}
+
+.grid-item:hover {
+    border-color: #00e5ff;
+    box-shadow: 0 0 12px #00e5ff;
+}
+
+.grid-item.disk-full {
+    grid-column: span 2;
 }
 
 .grid-label {
     font-family: 'Inter', sans-serif;
     font-size: 11px;
-    color: #777;
+    color: #aaa;
     margin-bottom: 4px;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .grid-value {
@@ -324,7 +338,7 @@
 .price-label {
     font-family: 'Inter', sans-serif;
     font-size: 11px;
-    color: #777;
+    color: #aaa;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 4px;
@@ -380,4 +394,7 @@
     .rainbow-text { font-size: 32px; }
     .vip-card .card-header { flex-direction: column; align-items: flex-start; }
     .price { font-size: 28px; }
+    .spec-grid { gap: 8px; }
+    .grid-item { padding: 10px 4px; }
+    .grid-value { font-size: 16px; }
 }
