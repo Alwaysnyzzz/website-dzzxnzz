@@ -404,3 +404,33 @@
     .grid-item { padding: 10px 4px; }
     .grid-value { font-size: 16px; }
 }
+/* Mahkota di pojok kanan atas */
+.crown-corner {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(145deg, #ffd700, #ffaa00);
+    border-radius: 20px 5px 20px 5px; /* sudut lengkung kanan atas */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(15deg); /* miring */
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.6);
+    z-index: 3;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.crown-corner i {
+    color: #000;
+    font-size: 24px;
+    transform: rotate(-15deg); /* tegak lurus */
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+/* Pastikan card memiliki posisi relative agar mahkota absolute di dalamnya */
+.vip-card {
+    position: relative;
+    /* ... properti lain ... */
+}
