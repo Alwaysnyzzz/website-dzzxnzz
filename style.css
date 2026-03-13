@@ -454,3 +454,89 @@ body {
         text-align: center;
     }
 }
+/* Gaya card dengan tepi warna */
+.contact-card {
+    background: rgba(18,20,26,0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    transition: 0.3s;
+    border: 2px solid transparent; /* default, akan diubah per card */
+}
+
+/* Warna tepi sesuai platform */
+.card-wa {
+    border-color: #25D366;
+    box-shadow: 0 0 15px rgba(37, 211, 102, 0.3);
+}
+
+.card-wa:hover {
+    box-shadow: 0 0 25px #25D366;
+}
+
+.card-tg {
+    border-color: #0088cc;
+    box-shadow: 0 0 15px rgba(0, 136, 204, 0.3);
+}
+
+.card-tg:hover {
+    box-shadow: 0 0 25px #0088cc;
+}
+
+.card-bot {
+    border-color: #ff4444;
+    box-shadow: 0 0 15px rgba(255, 68, 68, 0.3);
+}
+
+.card-bot:hover {
+    box-shadow: 0 0 25px #ff4444;
+}
+
+/* Ikon dan tombol */
+.contact-card i {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.card-wa i { color: #25D366; }
+.card-tg i { color: #0088cc; }
+.card-bot i { color: #ff4444; }
+
+.btn-contact {
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 600;
+    border: 2px solid;
+    background: transparent;
+    transition: 0.2s;
+}
+
+.card-wa .btn-contact {
+    border-color: #25D366;
+    color: #25D366;
+}
+.card-wa .btn-contact:hover {
+    background: #25D366;
+    color: black;
+}
+
+.card-tg .btn-contact {
+    border-color: #0088cc;
+    color: #0088cc;
+}
+.card-tg .btn-contact:hover {
+    background: #0088cc;
+    color: black;
+}
+
+.card-bot .btn-contact {
+    border-color: #ff4444;
+    color: #ff4444;
+}
+.card-bot .btn-contact:hover {
+    background: #ff4444;
+    color: black;
+}
