@@ -247,6 +247,12 @@
     letter-spacing: 1px;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
+/* Di bagian .badge-exclusive, tambahkan aturan untuk ikon */
+.badge-exclusive i {
+    margin-right: 6px;
+    color: #ffd700; /* warna emas */
+    filter: drop-shadow(0 0 5px #ffd700);
+}
 
 /* Header card */
 .vip-card .card-header {
