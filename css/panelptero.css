@@ -191,7 +191,7 @@
     transform: scale(0.98);
 }
 
-/* ===== GAYA VIP UNTUK 30 HARI (Kotak Spesifikasi Border Cyan) ===== */
+/* ===== GAYA VIP UNTUK 30 HARI (Badge Premium dengan Mahkota) ===== */
 .vip-container {
     display: none;
 }
@@ -232,26 +232,30 @@
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9);
 }
 
-/* Badge exclusive */
-.badge-exclusive {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.05);
-    color: #fff;
+/* Badge VIP Premium dengan Mahkota */
+.badge-vip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(145deg, #ffd700, #ffaa00);
+    color: #000;
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 6px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 8px 18px;
     border-radius: 40px;
-    margin-bottom: 16px;
+    margin-bottom: 18px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transform: rotate(-1deg);
 }
-/* Di bagian .badge-exclusive, tambahkan aturan untuk ikon */
-.badge-exclusive i {
-    margin-right: 6px;
-    color: #ffd700; /* warna emas */
-    filter: drop-shadow(0 0 5px #ffd700);
+
+.badge-vip i {
+    color: #000;
+    font-size: 16px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
 }
 
 /* Header card */
@@ -291,7 +295,7 @@
     color: #aaffaa;
 }
 
-/* Grid spesifikasi dengan kotak border cyan */
+/* Grid spesifikasi */
 .spec-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -403,34 +407,4 @@
     .spec-grid { gap: 8px; }
     .grid-item { padding: 10px 4px; }
     .grid-value { font-size: 16px; }
-}
-/* Mahkota di pojok kanan atas */
-.crown-corner {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 45px;
-    height: 45px;
-    background: linear-gradient(145deg, #ffd700, #ffaa00);
-    border-radius: 20px 5px 20px 5px; /* sudut lengkung kanan atas */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: rotate(15deg); /* miring */
-    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.6);
-    z-index: 3;
-    border: 1px solid rgba(255,255,255,0.3);
-}
-
-.crown-corner i {
-    color: #000;
-    font-size: 24px;
-    transform: rotate(-15deg); /* tegak lurus */
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-}
-
-/* Pastikan card memiliki posisi relative agar mahkota absolute di dalamnya */
-.vip-card {
-    position: relative;
-    /* ... properti lain ... */
 }
