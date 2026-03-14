@@ -1,218 +1,239 @@
-// js/pay.js
+// js/pay.js — Auto-check status tiap 5 detik
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Ambil order_id dari URL
+document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
-    const orderId = urlParams.get('order_id');
-    if (!orderId) {
-        alert('Order ID tidak ditemukan!');
-        window.location.href = '/donasi';
+    const orderId = urlParams.get('order_id') || window.location.pathname.split('/').pop();
+
+    if (!orderId || orderId === 'isisaldo') {
+        window.location.href = '/isisaldo';
         return;
     }
 
     let transactionAmount = 0;
     let qrCanvas = null;
-    let timerInterval;
-    let loadingInterval;
+    let timerInterval = null;
+    let autoCheckInterval = null;
+    let loadingInterval = null;
+    let isChecking = false;
 
-    // Elemen DOM
+    // DOM Elements
     const timerEl = document.getElementById('timer');
-    const cekStatusBtn = document.getElementById('cek-status');
-    const batalkanBtn = document.getElementById('batalkan');
+    const timerText = document.getElementById('timerText');
+    const payAmountEl = document.getElementById('payAmount');
+    const payOrderEl = document.getElementById('payOrder');
+    const cekStatusBtn = document.getElementById('cekStatusBtn');
+    const batalkanBtn = document.getElementById('batalkanBtn');
     const downloadBtn = document.getElementById('downloadBtn');
     const qrContainer = document.getElementById('qrcode');
     const loadingOverlay = document.getElementById('loadingOverlay');
     const loadingText = document.getElementById('loadingText');
     const pendingModal = document.getElementById('pendingModal');
-    const pendingOk = document.getElementById('pendingOk');
     const confirmModal = document.getElementById('confirmModal');
-    const confirmYa = document.getElementById('confirmYa');
-    const confirmTidak = document.getElementById('confirmTidak');
 
-    // ===== Fungsi Loading =====
+    // ===== Loading helpers =====
     function showLoading(text) {
         if (!loadingOverlay) return;
         loadingOverlay.classList.add('active');
-        loadingText.textContent = text + ' ...';
+        if (loadingText) loadingText.textContent = text;
         let dots = 0;
         loadingInterval = setInterval(() => {
             dots = (dots + 1) % 4;
-            loadingText.textContent = text + ' ' + '.'.repeat(dots);
+            if (loadingText) loadingText.textContent = text + '.'.repeat(dots);
         }, 500);
     }
-
     function hideLoading() {
-        if (!loadingOverlay) return;
         clearInterval(loadingInterval);
-        loadingOverlay.classList.remove('active');
+        if (loadingOverlay) loadingOverlay.classList.remove('active');
     }
 
-    // ===== Load Transaksi dari API =====
+    // ===== Load transaksi =====
     async function loadTransaction() {
         try {
             const res = await fetch(`/api/get-transaction?order_id=${orderId}`);
             const data = await res.json();
+
             if (!data || data.error) {
                 alert('Transaksi tidak ditemukan');
-                window.location.href = '/donasi';
+                window.location.href = '/isisaldo';
                 return;
             }
 
             transactionAmount = data.amount;
 
-            // Mulai countdown jika ada expired_at
-            if (data.expired_at) {
-                startCountdown(data.expired_at);
-            } else {
-                // Fallback 30 menit dari sekarang
-                const fallbackExpired = new Date(Date.now() + 30 * 60000).toISOString();
-                startCountdown(fallbackExpired);
+            // Tampilkan amount & order id
+            if (payAmountEl) payAmountEl.textContent = 'Rp ' + Number(data.amount).toLocaleString('id-ID');
+            if (payOrderEl) payOrderEl.textContent = 'Order ID: ' + data.order_id;
+
+            // Cek jika sudah completed (refresh halaman)
+            if (data.status === 'completed') {
+                window.location.href = `/struk?order_id=${orderId}`;
+                return;
             }
 
-            // Generate QR Code
+            // Timer countdown
+            const expiredAt = data.expired_at || new Date(Date.now() + 30 * 60000).toISOString();
+            startCountdown(expiredAt);
+
+            // Generate QR
             if (data.qr_string) {
-                qrContainer.innerHTML = '';
-                const canvas = document.createElement('canvas');
-                QRCode.toCanvas(canvas, data.qr_string, {
-                    width: 180,
-                    margin: 1,
-                    errorCorrectionLevel: 'H',
-                    color: { dark: '#000000', light: '#ffffff' }
-                }, function(error) {
-                    if (error) {
-                        console.error('QR Error:', error);
-                        qrContainer.innerHTML = '<p style="color:red;">Gagal generate QR</p>';
-                    } else {
-                        qrContainer.appendChild(canvas);
-                        qrCanvas = canvas;
-                    }
-                });
+                generateQR(data.qr_string);
             } else {
-                qrContainer.innerHTML = '<p style="color:red;">QR tidak tersedia</p>';
+                if (qrContainer) qrContainer.innerHTML = '<p style="color:rgba(255,255,255,0.4);font-size:13px;">QR tidak tersedia</p>';
             }
+
+            // Mulai auto-check tiap 5 detik
+            startAutoCheck();
+
         } catch (err) {
             console.error(err);
-            alert('Gagal memuat transaksi');
+            alert('Gagal memuat transaksi: ' + err.message);
         }
     }
 
-    // ===== Countdown Timer =====
+    // ===== Generate QR =====
+    function generateQR(qrString) {
+        if (!qrContainer) return;
+        qrContainer.innerHTML = '';
+        const canvas = document.createElement('canvas');
+        QRCode.toCanvas(canvas, qrString, {
+            width: 190, margin: 1,
+            errorCorrectionLevel: 'H',
+            color: { dark: '#000000', light: '#ffffff' }
+        }, function (error) {
+            if (error) {
+                qrContainer.innerHTML = '<p style="color:#ff5555">Gagal generate QR</p>';
+            } else {
+                qrContainer.appendChild(canvas);
+                qrCanvas = canvas;
+            }
+        });
+    }
+
+    // ===== Countdown timer =====
     function startCountdown(expiredAt) {
         const expiredTime = new Date(expiredAt).getTime();
 
-        function updateTimer() {
-            const now = new Date().getTime();
+        function update() {
+            const now = Date.now();
             const distance = expiredTime - now;
 
             if (distance <= 0) {
                 clearInterval(timerInterval);
-                timerEl.innerHTML = '<i class="fas fa-hourglass-end"></i> EXPIRED';
-                timerEl.style.background = 'rgba(255,0,0,0.2)';
-                timerEl.style.borderColor = '#ff0000';
-                // Disable buttons
-                cekStatusBtn.disabled = true;
-                batalkanBtn.disabled = true;
-                downloadBtn.style.opacity = '0.5';
-                downloadBtn.disabled = true;
+                clearInterval(autoCheckInterval);
+                if (timerEl) { timerEl.className = 'timer-container expired'; }
+                if (timerText) timerText.textContent = 'EXPIRED';
+                if (cekStatusBtn) cekStatusBtn.disabled = true;
+                if (downloadBtn) { downloadBtn.disabled = true; downloadBtn.style.opacity = '0.4'; }
                 return;
             }
 
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            timerEl.innerHTML = `<i class="fas fa-hourglass-half"></i> ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            if (timerText) timerText.textContent = `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
         }
 
-        updateTimer();
-        timerInterval = setInterval(updateTimer, 1000);
+        update();
+        timerInterval = setInterval(update, 1000);
     }
 
-    // ===== Tombol Download QR =====
-    downloadBtn.addEventListener('click', function() {
-        if (qrCanvas) {
-            const link = document.createElement('a');
-            link.download = `qris-${orderId}.png`;
-            link.href = qrCanvas.toDataURL('image/png');
-            link.click();
-        } else {
-            alert('QR code belum tersedia');
-        }
-    });
+    // ===== Auto-check status tiap 5 detik =====
+    function startAutoCheck() {
+        autoCheckInterval = setInterval(async () => {
+            if (isChecking) return;
+            await checkStatus(false); // silent = tidak tampilkan modal pending
+        }, 5000);
+    }
 
-    // ===== Tombol Cek Status =====
-    cekStatusBtn.addEventListener('click', async function() {
-        showLoading('Mengecek');
+    // ===== Check status =====
+    async function checkStatus(showModal = true) {
+        if (isChecking) return;
+        isChecking = true;
+
         try {
             const res = await fetch(`/api/check-status?order_id=${orderId}&amount=${transactionAmount}`);
             const data = await res.json();
+
+            if (res.ok && data.status === 'completed') {
+                clearInterval(autoCheckInterval);
+                clearInterval(timerInterval);
+                // Redirect ke struk
+                window.location.href = `/struk?order_id=${orderId}`;
+                return;
+            }
+
+            if (showModal && data.status === 'pending') {
+                if (pendingModal) pendingModal.classList.add('show');
+            }
+        } catch (err) {
+            console.error('[AutoCheck] Error:', err);
+        } finally {
+            isChecking = false;
+        }
+    }
+
+    // ===== Tombol Cek Status (manual) =====
+    if (cekStatusBtn) {
+        cekStatusBtn.addEventListener('click', async function () {
+            showLoading('Mengecek');
+            await checkStatus(true);
+            hideLoading();
+        });
+    }
+
+    // ===== Download QR =====
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', function () {
+            if (qrCanvas) {
+                const link = document.createElement('a');
+                link.download = `qris-${orderId}.png`;
+                link.href = qrCanvas.toDataURL('image/png');
+                link.click();
+            } else {
+                alert('QR belum tersedia');
+            }
+        });
+    }
+
+    // ===== Batalkan =====
+    if (batalkanBtn) {
+        batalkanBtn.addEventListener('click', function () {
+            if (confirmModal) confirmModal.classList.add('show');
+        });
+    }
+
+    document.getElementById('confirmYa')?.addEventListener('click', async function () {
+        if (confirmModal) confirmModal.classList.remove('show');
+        clearInterval(autoCheckInterval);
+        showLoading('Membatalkan');
+        try {
+            const res = await fetch('/api/cancel-transaction', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ order_id: orderId, amount: transactionAmount })
+            });
             hideLoading();
             if (res.ok) {
-                if (data.status === 'completed') {
-                    // Redirect ke halaman sukses
-                    window.location.href = `/success?order_id=${orderId}`;
-                } else if (data.status === 'pending') {
-                    // Tampilkan modal pending
-                    if (pendingModal) pendingModal.classList.add('show');
-                } else {
-                    alert('Status: ' + data.status);
-                }
+                window.location.href = '/isisaldo';
             } else {
-                alert('Gagal cek status: ' + (data.error || ''));
+                const data = await res.json();
+                alert('Gagal batalkan: ' + (data.error || ''));
+                startAutoCheck();
             }
         } catch (err) {
             hideLoading();
             alert('Error: ' + err.message);
+            startAutoCheck();
         }
     });
 
-    // ===== Tombol Batalkan =====
-    batalkanBtn.addEventListener('click', function() {
-        showLoading('Membatalkan');
-        // Setelah 1 detik, tampilkan modal konfirmasi
-        setTimeout(() => {
-            hideLoading();
-            if (confirmModal) confirmModal.classList.add('show');
-        }, 1000);
+    document.getElementById('confirmTidak')?.addEventListener('click', function () {
+        if (confirmModal) confirmModal.classList.remove('show');
     });
 
-    // ===== Konfirmasi Batalkan =====
-    if (confirmYa) {
-        confirmYa.addEventListener('click', async function() {
-            confirmModal.classList.remove('show');
-            showLoading('Membatalkan');
-            try {
-                const res = await fetch('/api/cancel-transaction', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ order_id: orderId, amount: transactionAmount })
-                });
-                hideLoading();
-                if (res.ok) {
-                    alert('Transaksi dibatalkan');
-                    window.location.href = '/donasi';
-                } else {
-                    const data = await res.json();
-                    alert('Gagal: ' + (data.error || ''));
-                }
-            } catch (err) {
-                hideLoading();
-                alert('Error: ' + err.message);
-            }
-        });
-    }
+    document.getElementById('pendingOk')?.addEventListener('click', function () {
+        if (pendingModal) pendingModal.classList.remove('show');
+    });
 
-    if (confirmTidak) {
-        confirmTidak.addEventListener('click', function() {
-            confirmModal.classList.remove('show');
-        });
-    }
-
-    // ===== Tutup Modal Pending =====
-    if (pendingOk) {
-        pendingOk.addEventListener('click', function() {
-            if (pendingModal) pendingModal.classList.remove('show');
-        });
-    }
-
-    // Mulai
+    // Start
     loadTransaction();
 });
