@@ -1,229 +1,151 @@
-/* === COPY TOTAL & PASTE DI css/contact.css === */
+/* FILE: contact.css
+   AUTHOR: DzzXNzz (DENZ STORE)
+   DESCRIPTION: Full Modern Styling & Sidebar Fix
+*/
 
-/* =========================================
-   FIX TYPOGRAPHY & PADDING (Solusi Masalah "Mepet")
-   Menargetkan spesifik container contact agar tidak bentrok global.
-========================================= */
-.contact-container h1, 
-.contact-container h2, 
-.contact-container h3, 
-.contact-container p,
-.modal-overlay h2,
-.modal-overlay p {
-    letter-spacing: normal !important; /* MEMPERBAIKI TEKS RAPAT DARI IMAGE_1.PNG */
-    line-height: 1.6 !important;       /* Memberikan jarak antar baris yang lega */
-    margin-bottom: 15px;
+/* 1. FIX SIDEBAR & NAVBAR (Wajib agar bisa diklik) */
+.navbar { 
+    z-index: 9999 !important; 
+}
+#sidebar { 
+    z-index: 10000 !important; 
+}
+#overlay { 
+    z-index: 9998 !important; 
 }
 
-.contact-container h1 { font-size: 32px; font-weight: 800; text-transform: uppercase; }
-.contact-container h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
-.contact-container p { font-size: 15px; color: #ccc; }
-
-/* =========================================
-   MAIN LAYOUT (CYBER HUB)
-========================================= */
-.contact-container {
-    max-width: 1000px;
+/* 2. LAYOUT UTAMA (Mencegah teks mepet) */
+.main-content {
+    padding: 120px 20px 60px !important; /* Tambah ruang atas & samping */
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 100px 20px 60px; /* Padding atas luas untuk navbar */
+    min-height: 100vh;
 }
 
-.hub-header {
-    text-align: center;
-    margin-bottom: 60px;
-    background: rgba(10, 15, 25, 0.5);
-    padding: 40px;
-    border-radius: 20px;
-    border: 1px solid rgba(0, 229, 255, 0.1);
-}
-
-.hub-header h1 {
-    font-family: 'Orbitron', sans-serif;
-    background: linear-gradient(to right, #fff, var(--neon-cyan));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.5));
-}
-
-.hub-grid {
+.grid-3 {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 40px; /* Jarak antar kartu luas */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 35px; /* Jarak antar card lebih lega */
+    margin-top: 40px;
 }
 
-/* =========================================
-   MODERN CONTACT CARDS
-========================================= */
-.modern-contact-card {
-    background: rgba(20, 25, 35, 0.6);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 24px;
-    padding: 40px; /* PADDING DALAM KARTU LUAS - SOLUSI MEPET */
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+/* 3. MODERN CARD DESIGN (Clean, Glass, & Tech) */
+.modern-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 229, 255, 0.15);
+    border-radius: 28px;
+    padding: 35px; /* Padding dalam yang luas */
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
-.modern-contact-card:hover {
-    transform: translateY(-10px);
-    background: rgba(25, 30, 45, 0.8);
+.modern-card:hover {
+    transform: translateY(-12px);
+    border-color: var(--neon-cyan);
+    background: rgba(0, 229, 255, 0.05);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 
+                0 0 20px rgba(0, 229, 255, 0.2);
 }
 
-/* Platform Specific Accents */
-.card-wa { border-bottom: 3px solid #25D366; }
-.card-tg { border-bottom: 3px solid #0088cc; }
+/* Efek Cahaya di Pojok Card */
+.modern-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle at top right, rgba(0, 229, 255, 0.2), transparent 70%);
+    pointer-events: none;
+}
 
-.card-wa:hover { box-shadow: 0 10px 40px rgba(37, 211, 102, 0.2); border-color: #25D366; }
-.card-tg:hover { box-shadow: 0 10px 40px rgba(0, 136, 204, 0.2); border-color: #0088cc; }
-
-/* Card Contents */
-.card-meta {
+/* 4. ELEMENT DI DALAM CARD */
+.card-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(0, 229, 255, 0.1);
+    border-radius: 20px;
     display: flex;
     align-items: center;
-    gap: 20px;
+    justify-content: center;
+    font-size: 32px;
+    color: var(--neon-cyan);
     margin-bottom: 25px;
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.1);
 }
 
-.card-meta i {
-    font-size: 35px;
+.card-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
 }
-
-.card-wa .card-meta i, .card-wa .card-meta h3 { color: #25D366; }
-.card-tg .card-meta i, .card-tg .card-meta h3 { color: #0088cc; }
 
 .card-desc {
-    margin-bottom: 30px !important;
+    font-size: 14px;
+    color: #b0b0b0;
+    line-height: 1.7;
+    margin-bottom: 30px;
 }
 
-/* Action Button */
-.btn-connect {
+/* 5. BUTTON MODERN */
+.btn-detail {
     width: 100%;
-    padding: 15px 25px;
+    padding: 14px;
     background: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50px;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 700;
+    border: 1.5px solid var(--neon-cyan);
+    border-radius: 15px;
+    color: var(--neon-cyan);
+    font-weight: 600;
+    font-size: 15px;
     text-transform: uppercase;
     letter-spacing: 1px;
     cursor: pointer;
     transition: 0.3s;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    text-decoration: none;
+    display: inline-block;
 }
 
-.card-wa:hover .btn-connect { background: #25D366; border-color: #25D366; color: #000; box-shadow: 0 0 20px rgba(37, 211, 102, 0.5); }
-.card-tg:hover .btn-connect { background: #0088cc; border-color: #0088cc; color: #fff; box-shadow: 0 0 20px rgba(0, 136, 204, 0.5); }
+.btn-detail:hover {
+    background: var(--neon-cyan);
+    color: #000;
+    box-shadow: 0 0 20px var(--neon-cyan);
+}
 
-/* =========================================
-   MODAL OVERLAY & CONTENT
-========================================= */
-.modal-overlay {
+/* 6. MODAL & OVERLAY (Clean & Simple) */
+.modal {
+    display: none;
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(10px);
-    display: none; /* Controlled by JS */
-    justify-content: center;
+    backdrop-filter: blur(8px);
+    z-index: 20000;
     align-items: center;
-    z-index: 2000;
-    opacity: 0;
-    transition: all 0.3s ease;
+    justify-content: center;
     padding: 20px;
 }
 
-.modal-overlay.active {
+.modal.active {
     display: flex;
-    opacity: 1;
 }
 
 .modal-content {
-    background: #0d1117;
-    border-radius: 24px;
+    background: #0f1116;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     width: 100%;
     max-width: 450px;
-    padding: 40px; /* PADDING MODAL LUAS */
+    border-radius: 30px;
+    padding: 30px;
     position: relative;
-    transform: translateY(20px);
-    transition: 0.3s;
-    text-align: center;
-}
-
-.modal-wa .modal-content { border: 2px solid #25D366; box-shadow: 0 0 40px rgba(37, 211, 102, 0.3); }
-.modal-tg .modal-content { border: 2px solid #0088cc; box-shadow: 0 0 40px rgba(0, 136, 204, 0.3); }
-
-.modal-overlay.active .modal-content {
-    transform: translateY(0);
-}
-
-.close-modal {
-    position: absolute;
-    top: 15px; right: 20px;
-    background: none; border: none;
-    color: #aaa; font-size: 28px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.close-modal:hover { color: #fff; transform: rotate(90deg); }
-
-.modal-title { margin-bottom: 25px !important; font-weight: 800; color: #fff; }
-
-.modal-info-block {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 20px;
-    border-radius: 15px;
-    margin-bottom: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.info-label {
-    font-size: 12px;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    display: block;
-    margin-bottom: 10px;
-}
-
-.modal-info {
-    font-size: 20px;
-    font-family: 'Courier New', monospace; /* Gaya digital */
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: 1px !important;
-    margin: 0 !important;
-}
-
-.btn-final-action {
-    display: block;
-    width: 100%;
-    padding: 18px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: 0.3s;
-}
-
-.modal-wa .btn-final-action { background: #25D366; color: #000; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
-.modal-wa .btn-final-action:hover { box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5); transform: translateY(-2px); }
-
-.modal-tg .btn-final-action { background: #0088cc; color: #fff; box-shadow: 0 5px 15px rgba(0, 136, 204, 0.3); }
-.modal-tg .btn-final-action:hover { box-shadow: 0 8px 25px rgba(0, 136, 204, 0.5); transform: translateY(-2px); }
-
-/* Responsif Mobile (Infinix Hot 50 Pro) */
-@media (max-width: 600px) {
-    .contact-container { padding: 80px 15px 40px; }
-    .hub-header { padding: 25px; margin-bottom: 40px; }
-    .contact-container h1 { font-size: 24px; }
-    .modern-contact-card { padding: 30px; } /* Sedikit dikurangi di mobile tapi tetap lega */
-    .card-meta { gap: 15px; margin-bottom: 20px; }
-    .card-meta i { font-size: 28px; }
-    .modal-content { padding: 30px 20px; }
-    .modal-info { font-size: 16px; }
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8);
 }
