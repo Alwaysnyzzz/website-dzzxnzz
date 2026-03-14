@@ -88,7 +88,7 @@
         .modal-backdrop.show { opacity:1; visibility:visible; }
         .modal-box {
             background:rgba(10,12,22,.98); border-radius:26px;
-            padding:38px 32px; max-width:400px; width:90%;
+            padding:36px 28px; max-width:420px; width:92%;
             position:relative; overflow:hidden;
             border: 1px solid rgba(255,255,255,0.08);
             transform:scale(0.85) translateY(20px);
@@ -139,13 +139,14 @@
         .modal-info-label { font-size:11px; color:rgba(255,255,255,.4); font-weight:800; letter-spacing:.5px; text-transform:uppercase; }
         .modal-info-val { font-size:15px; color:#fff; font-weight:900; margin-top:2px; }
 
-        .modal-actions { display:flex; gap:12px; margin-top:22px; }
+        .modal-actions { display:flex; gap:10px; margin-top:22px; }
         .modal-btn {
-            flex:1; padding:13px 0; border-radius:40px;
-            font-weight:900; font-size:14px; border:2px solid;
+            flex:1; padding:14px 10px; border-radius:40px;
+            font-weight:900; font-size:13px; border:2px solid;
             background:transparent; cursor:pointer; transition:.25s;
             text-decoration:none; display:inline-flex;
-            align-items:center; justify-content:center; gap:8px; letter-spacing:.5px;
+            align-items:center; justify-content:center; gap:7px;
+            letter-spacing:.3px; white-space:nowrap;
         }
         .modal-wa .modal-btn-primary { border-color:#25D366; color:#25D366; }
         .modal-wa .modal-btn-primary:hover { background:#25D366; color:#06070f; box-shadow:0 0 20px rgba(37,211,102,.5); }
@@ -174,7 +175,7 @@
             <span class="nav-brand">DzzXNzz</span>
         </div>
         <div class="nav-right">
-            <div class="coins-wrapper">🪙 <span id="coinCount">0</span></div>
+            <div class="coins-wrapper">🪙 +<span id="coinCount">0</span></div>
             <div class="user-menu">
                 <div class="user-avatar"><img src="./image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=06070f&color=00e5ff&bold=true'"></div>
                 <div class="menu-trigger" id="menuTrigger"><i class="fas fa-ellipsis-v"></i></div>
