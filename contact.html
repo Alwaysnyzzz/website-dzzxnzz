@@ -2,14 +2,90 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - DzzXNzz</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
-    <link rel="stylesheet" href="../style.css"> <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* CSS KHUSUS BUAT BAGUSIN CARD & FIX SIDEBAR */
+        
+        /* Fix Sidebar biar gak ketutup & bisa diklik */
+        .navbar { z-index: 1000 !important; }
+        #sidebar { z-index: 1001 !important; }
+        #overlay { z-index: 999 !important; }
+
+        .main-content {
+            padding: 100px 20px 40px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        /* Card dibikin Modern & Gahar */
+        .contact-card {
+            background: rgba(18, 20, 26, 0.7) !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px !important;
+            padding: 35px 25px !important;
+            text-align: center;
+            border: 2px solid transparent !important;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-8px);
+            background: rgba(25, 28, 35, 0.9) !important;
+        }
+
+        /* Border Glow pas di hover */
+        .card-wa { border-bottom: 3px solid #25D366 !important; }
+        .card-wa:hover { border: 2px solid #25D366 !important; box-shadow: 0 0 20px rgba(37, 211, 102, 0.2); }
+        
+        .card-tg { border-bottom: 3px solid #0088cc !important; }
+        .card-tg:hover { border: 2px solid #0088cc !important; box-shadow: 0 0 20px rgba(0, 136, 204, 0.2); }
+
+        .card-icon {
+            font-size: 48px !important;
+            margin-bottom: 15px !important;
+            display: block;
+        }
+
+        .card-wa .card-icon { color: #25D366; }
+        .card-tg .card-icon { color: #0088cc; }
+
+        .card-title {
+            font-size: 24px !important;
+            font-weight: 700 !important;
+            color: #fff !important;
+            margin-bottom: 12px !important;
+        }
+
+        .card-desc {
+            color: #bbb !important;
+            font-size: 14px !important;
+            line-height: 1.6 !important;
+            margin-bottom: 25px !important;
+        }
+
+        .btn-action {
+            display: inline-block;
+            padding: 12px 0;
+            width: 100%;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .card-wa .btn-action { background: #25D366; color: #000; }
+        .card-tg .btn-action { background: #0088cc; color: #fff; }
+    </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
@@ -17,69 +93,53 @@
     <nav class="navbar">
         <div class="nav-left">
             <button id="menu-toggle"><i class="fas fa-bars"></i></button>
-            <span class="nav-brand">DENZ STORE</span>
+            <span class="nav-brand">DzzXNzz</span>
         </div>
         <div class="nav-right">
             <div class="user-avatar">
-                <img src="../image/profile.jpg" alt="Profile">
+                <img src="image/profile.jpg" alt="Profile">
             </div>
         </div>
     </nav>
 
+    <div id="sidebar">
+        <div class="sidebar-header">
+            <img src="image/profile.jpg" alt="Logo">
+            <h3>DzzXNzz</h3>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="panelptero"><i class="fas fa-server"></i> Panel Ptero</a></li>
+            <li><a href="donasi"><i class="fas fa-donate"></i> Donasi</a></li>
+            <li><a href="contact" class="active"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+    </div>
+
     <div id="overlay"></div>
 
-    <main class="main-content contact-container">
-        
-        <div class="hub-header">
-            <h1>Cyber Hub</h1>
-            <p>Saluran komunikasi terenkripsi DENZ STORE. Pilih platform di bawah untuk terhubung dengan operator kami. Kami menjamin respon cepat dan bantuan teknis profesional.</p>
+    <main class="main-content">
+        <div class="page-header" style="text-align: center;">
+            <h1 style="font-size: 32px; font-weight: 800; color: #fff;">HUBUNGI KAMI</h1>
+            <p style="color: #888;">Pilih layanan kontak kami di bawah ini</p>
         </div>
 
-        <div class="hub-grid">
-            <div class="modern-contact-card card-wa" data-modal="modal-wa">
-                <div class="card-meta">
-                    <i class="fab fa-whatsapp"></i>
-                    <h3>WhatsApp Direct</h3>
-                </div>
-                <p class="card-desc">Hubungi kami melalui WhatsApp untuk pemesanan script, penyewaan panel Pterodactyl, atau dukungan teknis instan.</p>
-                <button class="btn-connect">Hubungi Sekarang <i class="fas fa-arrow-right"></i></button>
+        <div class="contact-grid">
+            <div class="contact-card card-wa">
+                <i class="fab fa-whatsapp card-icon"></i>
+                <h3 class="card-title">WhatsApp</h3>
+                <p class="card-desc">Hubungi nomor utama kami untuk bantuan cepat dan sewa panel.</p>
+                <a href="contact/wa" class="btn-action">Pilih Kontak</a>
             </div>
 
-            <div class="modern-contact-card card-tg" data-modal="modal-tg">
-                <div class="card-meta">
-                    <i class="fab fa-telegram-plane"></i>
-                    <h3>Telegram Secure</h3>
-                </div>
-                <p class="card-desc">Gunakan Telegram untuk privasi ekstra, informasi pembaruan produk terbaru, atau bergabung dengan channel komunitas kami.</p>
-                <button class="btn-connect">Buka Profil <i class="fas fa-arrow-right"></i></button>
+            <div class="contact-card card-tg">
+                <i class="fab fa-telegram-plane card-icon"></i>
+                <h3 class="card-title">Telegram</h3>
+                <p class="card-desc">Update terbaru dan bot support bisa kamu akses lewat Telegram.</p>
+                <a href="contact/telegram" class="btn-action">Hubungi</a>
             </div>
         </div>
-
     </main>
 
-    <div class="modal-overlay" id="modal-wa">
-        <div class="modal-content">
-            <button class="close-modal">&times;</button>
-            <h2 class="modal-title">Hubungi via WhatsApp</h2>
-            <div class="modal-info-block">
-                <span class="info-label">Nomor Operator</span>
-                <p class="modal-info">+62 877-1347-2756</p>
-            </div>
-            <a href="https://wa.me/6287713472756?text=Halo%20Denz%20Store,%20saya%20ingin%20tanya%20tentang..." target="_blank" class="btn-final-action">Lanjut ke Chat</a>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="modal-tg">
-        <div class="modal-content">
-            <button class="close-modal">&times;</button>
-            <h2 class="modal-title">Hubungi via Telegram</h2>
-            <div class="modal-info-block">
-                <span class="info-label">Username Operator</span>
-                <p class="modal-info">@DzzXNzz</p>
-            </div>
-            <a href="https://t.me/DzzXNzz" target="_blank" class="btn-final-action">Lanjut ke Telegram</a>
-        </div>
-    </div>
-
-    <script src="../script.js"></script> <script src="js/contact.js"></script> </body>
+    <script src="script.js"></script>
+</body>
 </html>
