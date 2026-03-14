@@ -78,9 +78,9 @@ body {
 
 .coins-wrapper {
     border: 1.5px solid var(--neon-cyan);
-    padding: 5px 15px;
+    padding: 12px 100%;
     border-radius: 25px;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 600;
     color: var(--neon-cyan);
     background: rgba(0,229,255,0.05);
@@ -481,4 +481,38 @@ body {
         flex-direction: column;
         text-align: center;
     }
+}
+.coins-wrapper{
+display:flex;
+align-items:center;
+gap:8px;
+border:1.5px solid var(--neon-cyan);
+padding:6px 15px;
+border-radius:25px;
+font-size:14px;
+font-weight:600;
+color:var(--neon-cyan);
+background:rgba(0,229,255,0.05);
+box-shadow:0 0 10px var(--neon-cyan);
+text-shadow:0 0 5px var(--neon-cyan);
+}
+
+/* tombol beli coins */
+
+.buy-coins{
+width:22px;
+height:22px;
+border-radius:50%;
+border:none;
+cursor:pointer;
+background:var(--neon-green);
+color:black;
+font-weight:bold;
+box-shadow:0 0 8px var(--neon-green);
+transition:0.2s;
+}
+
+.buy-coins:hover{
+transform:scale(1.1);
+box-shadow:0 0 12px var(--neon-green);
 }
