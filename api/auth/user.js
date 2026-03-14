@@ -1,33 +1,43 @@
-import { createClient } from '@supabase/supabase-js'
+// api/user.js — ambil profil + coins, verifikasi JWT custom
+import { createClient } from '@supabase/supabase-js';
+import jwt from 'jsonwebtoken';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY
-)
+  process.env.SUPABASE_SERVICE_KEY
+);
 
 export default async function handler(req, res) {
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' })
-  }
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
 
-  const token = req.headers.authorization?.split(' ')[1]
-  if (!token) {
-    return res.status(401).json({ error: 'No token provided' })
-  }
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer '))
+    return res.status(401).json({ error: 'Token tidak ditemukan' });
+
+  const token = authHeader.split(' ')[1];
 
   try {
-    const { data: { user }, error } = await supabase.auth.getUser(token)
-    if (error) throw error
+    // Verifikasi JWT
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Ambil profil dari tabel profiles (opsional)
-    const { data: profile, error: profileError } = await supabase
+    // Ambil data terbaru dari DB (termasuk coins)
+    const { data: profile, error } = await supabase
       .from('profiles')
-      .select('*')
-      .eq('id', user.id)
-      .single()
+      .select('id, username, coins, created_at')
+      .eq('id', decoded.id)
+      .single();
 
-    res.status(200).json({ user, profile: profile || null })
-  } catch (error) {
-    res.status(401).json({ error: error.message })
+    if (error || !profile)
+      return res.status(404).json({ error: 'Profil tidak ditemukan' });
+
+    return res.status(200).json(profile);
+
+  } catch (err) {
+    if (err.name === 'JsonWebTokenError' || err.name === 'TokenExpiredError')
+      return res.status(401).json({ error: 'Token tidak valid atau expired' });
+
+    console.error('[User]', err);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 }

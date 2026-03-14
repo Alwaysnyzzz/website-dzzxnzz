@@ -1,16 +1,14 @@
 {
   "rewrites": [
-    { "source": "/home", "destination": "/index.html" },
-    { "source": "/product/panelptero", "destination": "/product/panelptero.html" },
-    { "source": "/isisaldo", "destination": "/isisaldo.html" },
-    { "source": "/pay", "destination": "/halaman/pay.html" },
-    { "source": "/success", "destination": "/halaman/success.html" },
-    { "source": "/product", "destination": "/product.html" },
-    { "source": "/contact", "destination": "/contact.html" },
-    { "source": "/contact/wa", "destination": "/contact/wa.html" },
-    { "source": "/contact/telegram", "destination": "/contact/telegram.html" },
-    { "source": "/login", "destination": "/login.html" },
-    { "source": "/register", "destination": "/register.html" },
-    { "source": "/(.*)", "destination": "/$1.html" }
+    { "source": "/home",          "destination": "/index.html" },
+    { "source": "/login",         "destination": "/login.html" },
+    { "source": "/register",      "destination": "/register.html" },
+    { "source": "/product",       "destination": "/product.html" },
+    { "source": "/contact",       "destination": "/contact.html" },
+    { "source": "/isisaldo",      "destination": "/isisaldo.html" },
+    { "source": "/isisaldo/:id",  "destination": "/pay.html" },
+    { "source": "/struk",         "destination": "/struk.html" },
+    { "source": "/profile",       "destination": "/profile.html" },
+    { "source": "/api/:path*",    "destination": "/api/:path*" }
   ]
 }
