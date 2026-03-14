@@ -2,7 +2,7 @@
   "rewrites": [
     { "source": "/home", "destination": "/index.html" },
     { "source": "/product/panelptero", "destination": "/product/panelptero.html" },
-    { "source": "/donasi", "destination": "/donasi.html" },
+    { "source": "/isisaldo", "destination": "/isisaldo.html" },
     { "source": "/pay", "destination": "/halaman/pay.html" },
     { "source": "/success", "destination": "/halaman/success.html" },
     { "source": "/product", "destination": "/product.html" },
