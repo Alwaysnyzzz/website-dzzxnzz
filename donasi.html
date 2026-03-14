@@ -6,99 +6,178 @@
     <title>Donasi - DzzXNzz</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Righteous&display=swap" rel="stylesheet">
     <style>
-        .donasi-container {
-            max-width: 500px;
+        @keyframes fadeInUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes heartBeat { 0%,100%{transform:scale(1)} 50%{transform:scale(1.2)} }
+
+        .donasi-wrapper {
+            max-width: 520px;
             margin: 0 auto;
+            animation: fadeInUp 0.7s ease;
         }
+
+        /* Top info cards */
+        .donasi-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px; margin-bottom: 24px;
+        }
+        .donasi-stat {
+            background: rgba(13,15,25,0.75);
+            border: 1px solid rgba(255,0,85,0.2);
+            border-radius: 16px; padding: 16px 10px;
+            text-align: center; transition: 0.3s;
+        }
+        .donasi-stat:hover { border-color: rgba(255,0,85,0.5); transform: translateY(-3px); }
+        .donasi-stat-num {
+            font-family: 'Righteous', cursive; font-size: 22px;
+            color: #ff0055; filter: drop-shadow(0 0 8px #ff0055);
+            display: block;
+        }
+        .donasi-stat-label { font-size: 11px; color: rgba(255,255,255,0.45); font-weight: 800; margin-top: 3px; }
+
+        /* Main card */
         .donasi-card {
-            background: rgba(18,20,26,0.8);
-            backdrop-filter: blur(8px);
-            border-radius: 24px;
-            padding: 30px;
-            border: 1px solid var(--neon-red);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px var(--neon-red);
+            background: rgba(13,15,25,0.85);
+            backdrop-filter: blur(16px);
+            border-radius: 24px; padding: 36px 32px;
+            border: 1px solid rgba(255,0,85,0.3);
+            box-shadow: 0 0 30px rgba(255,0,85,0.12), 0 20px 50px rgba(0,0,0,0.6);
+            position: relative; overflow: hidden;
         }
+        .donasi-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, #ff0055, #ff7b00, #ff4de4, #ff0055);
+            background-size: 200% 100%;
+            animation: shineBar 3s linear infinite;
+            border-radius: 24px 24px 0 0;
+        }
+        @keyframes shineBar { 0%{background-position:0%} 100%{background-position:200%} }
+
+        .donasi-heart {
+            width: 72px; height: 72px;
+            background: rgba(255,0,85,0.12);
+            border: 2px solid rgba(255,0,85,0.4);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px; color: #ff0055;
+            box-shadow: 0 0 25px rgba(255,0,85,0.3);
+            margin: 0 auto 20px;
+            animation: heartBeat 1.8s ease-in-out infinite;
+        }
+
         .donasi-card h3 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: var(--neon-red);
-            text-align: center;
-            text-shadow: 0 0 8px var(--neon-red);
+            font-size: 24px; font-weight: 900;
+            color: #fff; text-align: center; margin-bottom: 6px;
+        }
+        .donasi-desc {
+            text-align: center; color: rgba(255,255,255,0.5);
+            font-size: 14px; font-weight: 600; margin-bottom: 28px; line-height: 1.65;
+        }
+
+        /* Quick amount buttons */
+        .quick-amounts {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 10px; margin-bottom: 20px;
+        }
+        .quick-btn {
+            background: rgba(255,0,85,0.07);
+            border: 1px solid rgba(255,0,85,0.25);
+            color: rgba(255,255,255,0.7); border-radius: 12px;
+            padding: 10px; font-size: 13px; font-weight: 800;
+            cursor: pointer; transition: 0.25s;
+            font-family: 'Nunito', sans-serif;
+        }
+        .quick-btn:hover, .quick-btn.active {
+            background: rgba(255,0,85,0.2);
+            border-color: #ff0055; color: #ff6688;
+            box-shadow: 0 0 15px rgba(255,0,85,0.25);
+        }
+
+        /* Input */
+        .input-label {
+            font-size: 12px; font-weight: 800; color: #ff6688;
+            letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px;
+            display: block;
+        }
+        .donasi-input-wrap { position: relative; margin-bottom: 8px; }
+        .donasi-input-wrap span {
+            position: absolute; left: 18px; top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.4); font-size: 16px; font-weight: 800;
         }
         .donasi-input {
             width: 100%;
             background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 50px;
-            padding: 15px 20px;
-            color: #fff;
-            font-size: 16px;
-            margin-bottom: 15px;
-            outline: none;
+            border: 1.5px solid rgba(255,255,255,0.1);
+            border-radius: 14px; padding: 16px 20px 16px 40px;
+            color: #fff; font-size: 18px; font-weight: 800;
+            outline: none; transition: 0.25s;
+            font-family: 'Nunito', sans-serif;
         }
         .donasi-input:focus {
-            border-color: var(--neon-red);
-            box-shadow: 0 0 20px var(--neon-red);
+            border-color: #ff0055;
+            box-shadow: 0 0 20px rgba(255,0,85,0.2);
+            background: rgba(0,0,0,0.45);
         }
+        .donasi-input::placeholder { color: rgba(255,255,255,0.25); }
+
         .error-message {
-            color: #ff5555;
-            font-size: 13px;
-            margin-bottom: 10px;
-            text-align: center;
-            display: none;
+            color: #ff6666; font-size: 13px; font-weight: 700;
+            margin-bottom: 12px; text-align: center; display: none;
+            background: rgba(255,0,0,0.08); border: 1px solid rgba(255,0,0,0.2);
+            border-radius: 10px; padding: 8px;
         }
-        .error-message.show { display: block; }
+        .error-message.show { display: block; animation: fadeInUp 0.3s ease; }
+
         .donasi-btn {
-            width: 100%;
-            background: transparent;
-            border: 2px solid var(--neon-red);
-            color: var(--neon-red);
-            padding: 15px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.2s;
+            width: 100%; padding: 16px;
+            background: linear-gradient(135deg, #ff0055, #ff7b00);
+            border: none; border-radius: 14px;
+            color: #fff; font-weight: 900; font-size: 16px;
+            cursor: pointer; transition: 0.25s;
+            font-family: 'Nunito', sans-serif;
+            letter-spacing: 0.5px;
+            box-shadow: 0 6px 25px rgba(255,0,85,0.35);
+            display: flex; align-items: center; justify-content: center; gap: 10px;
         }
         .donasi-btn:hover {
-            background: var(--neon-red);
-            color: black;
-            box-shadow: 0 0 30px var(--neon-red);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 35px rgba(255,0,85,0.5);
         }
+        .donasi-btn:active { transform: scale(0.97); }
+
+        .donasi-note {
+            text-align: center; color: rgba(255,255,255,0.3);
+            font-size: 12px; font-weight: 600; margin-top: 16px;
+        }
+        .donasi-note i { color: #ff0055; margin-right: 4px; }
     </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
 
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-left">
             <button id="menu-toggle">☰</button>
             <span class="nav-brand">DzzXNzz</span>
         </div>
         <div class="nav-right">
-            <div class="coins-wrapper">COINS: 0</div>
+            <div class="coins-wrapper">🪙 <span id="coinCount">0</span></div>
             <div class="user-menu">
-                <div class="user-avatar">
-                    <img src="./image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
-                </div>
-                <div class="menu-trigger" id="menuTrigger">
-                    <i class="fas fa-ellipsis-v"></i>
-                </div>
+                <div class="user-avatar"><img src="./image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=06070f&color=00e5ff&bold=true'"></div>
+                <div class="menu-trigger" id="menuTrigger"><i class="fas fa-ellipsis-v"></i></div>
                 <div class="dropdown-menu" id="dropdownMenu"></div>
             </div>
         </div>
     </nav>
 
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <span class="user-name-text">DzzXNzz</span>
-            <div class="sidebar-pfp">
-                <img src="./image/image.jpg" alt="PFP" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
-            </div>
+            <div class="sidebar-pfp"><img src="./image/image.jpg" alt="PFP" onerror="this.src='https://ui-avatars.com/api/?name=DzzXNzz&background=06070f&color=00e5ff&bold=true'"></div>
         </div>
         <ul class="sidebar-menu">
             <li><a href="home"><i class="fas fa-home"></i> Home</a></li>
@@ -111,58 +190,71 @@
     </div>
     <div class="overlay" id="overlay"></div>
 
-    <!-- Main Content -->
     <main class="main-content">
-        <h1 class="rainbow-title">❤️ DONASI</h1>
-        <p class="subtitle">Dukung pengembangan website ini</p>
+        <h1 class="rainbow-title">❤️ Donasi</h1>
+        <p class="subtitle">Dukung pengembangan website ini agar terus berkembang</p>
 
-        <div class="donasi-container">
+        <div class="donasi-wrapper">
+            <!-- Stats -->
+            <div class="donasi-stats">
+                <div class="donasi-stat">
+                    <span class="donasi-stat-num">50+</span>
+                    <span class="donasi-stat-label">Donatur</span>
+                </div>
+                <div class="donasi-stat">
+                    <span class="donasi-stat-num">❤️</span>
+                    <span class="donasi-stat-label">Terima Kasih</span>
+                </div>
+                <div class="donasi-stat">
+                    <span class="donasi-stat-num">100%</span>
+                    <span class="donasi-stat-label">Transparan</span>
+                </div>
+            </div>
+
             <div class="donasi-card">
-                <h3>Input Donasi</h3>
-                <input type="number" class="donasi-input" id="amount" placeholder="Masukkan nominal (Rp)" min="500" step="100">
-                <div class="error-message" id="errorMessage">Minimal donasi Rp 500</div>
-                <button class="donasi-btn" id="donasi-btn">DONASI SEKARANG</button>
+                <div class="donasi-heart"><i class="fas fa-heart"></i></div>
+                <h3>Traktir Admin ☕</h3>
+                <p class="donasi-desc">Setiap donasi membantu kami menjaga server tetap menyala dan terus berinovasi untuk kamu.</p>
+
+                <!-- Quick amounts -->
+                <div class="quick-amounts">
+                    <button class="quick-btn" onclick="setAmount(2000)">Rp 2.000</button>
+                    <button class="quick-btn" onclick="setAmount(5000)">Rp 5.000</button>
+                    <button class="quick-btn" onclick="setAmount(10000)">Rp 10.000</button>
+                    <button class="quick-btn" onclick="setAmount(20000)">Rp 20.000</button>
+                    <button class="quick-btn" onclick="setAmount(50000)">Rp 50.000</button>
+                    <button class="quick-btn" onclick="setAmount(100000)">Rp 100.000</button>
+                </div>
+
+                <label class="input-label">Atau masukkan nominal sendiri</label>
+                <div class="donasi-input-wrap">
+                    <span>Rp</span>
+                    <input type="number" class="donasi-input" id="amount" placeholder="0" min="500" step="100">
+                </div>
+                <div class="error-message" id="errorMessage">⚠️ Minimal donasi Rp 500</div>
+
+                <button class="donasi-btn" id="donasi-btn">
+                    <i class="fas fa-heart"></i> DONASI SEKARANG
+                </button>
+                <p class="donasi-note"><i class="fas fa-lock"></i> Transaksi aman & terenkripsi</p>
             </div>
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
             <div>
                 <div class="footer-logo">DzzXNzz</div>
-                <p class="footer-desc">Provider hosting generasi baru yang fokus pada performa, keamanan, dan kemudahan penggunaan untuk developer dan kreator.</p>
+                <p class="footer-desc">Provider hosting generasi baru yang fokus pada performa, keamanan, dan kemudahan penggunaan.</p>
                 <div class="social-icons">
                     <a href="https://wa.me/6287713472756" target="_blank" class="social-icon wa"><i class="fab fa-whatsapp"></i></a>
                     <a href="https://t.me/DzzXNzz" target="_blank" class="social-icon tg"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="mailto:alwaysnnyzz@gmail.com" class="social-icon email"><i class="fas fa-envelope"></i></a>
+                    <a href="mailto:support@dzzxnzz.my.id" class="social-icon email"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
-            <div>
-                <h4 class="footer-title">Layanan</h4>
-                <ul class="footer-links">
-                    <li><a href="#">Cloud Hosting</a></li>
-                    <li><a href="#">VPS Servers</a></li>
-                    <li><a href="#">Dedicated IP</a></li>
-                    <li><a href="#">Bot Jaga</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="footer-title">Legal</h4>
-                <ul class="footer-links">
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">SLA</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="footer-title">Kontak</h4>
-                <ul class="footer-links">
-                    <li><a href="contact">WhatsApp</a></li>
-                    <li><a href="contact">Telegram</a></li>
-                    <li><a href="contact">Email</a></li>
-                </ul>
-            </div>
+            <div><h4 class="footer-title">Layanan</h4><ul class="footer-links"><li><a href="#">Cloud Hosting</a></li><li><a href="#">VPS Servers</a></li><li><a href="#">Bot Jaga</a></li></ul></div>
+            <div><h4 class="footer-title">Legal</h4><ul class="footer-links"><li><a href="#">Terms of Service</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+            <div><h4 class="footer-title">Kontak</h4><ul class="footer-links"><li><a href="contact">WhatsApp</a></li><li><a href="contact">Telegram</a></li></ul></div>
         </div>
         <div class="footer-bottom">
             <span>© 2026 DzzXNzz Host. All rights reserved.</span>
@@ -171,7 +263,13 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="donasi.js"></script>
     <script>
+        function setAmount(val) {
+            document.getElementById('amount').value = val;
+            document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
         document.getElementById('donasi-btn')?.addEventListener('click', function(e) {
             e.preventDefault();
             const amount = document.getElementById('amount').value;
@@ -181,8 +279,7 @@
                 setTimeout(() => errorMsg.classList.remove('show'), 3000);
                 return;
             }
-            errorMsg.classList.remove('show');
-            alert('Fitur donasi akan segera diintegrasikan');
+            window.location.href = `/pay?amount=${amount}&type=donasi`;
         });
     </script>
 </body>
