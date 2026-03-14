@@ -303,27 +303,29 @@
             event.target.classList.add('active');
         }
 
-        // Load balance dari session
-        function loadBalance() {
+        // Load balance pakai Auth helper dari script.js
+        async function loadBalance() {
+            if (!Auth.isLoggedIn()) {
+                window.location.href = '/login';
+                return;
+            }
             try {
-                const session = JSON.parse(localStorage.getItem('sb-session'));
-                if (session?.user?.id) {
-                    fetch('/api/user?user_id=' + session.user.id)
-                        .then(r => r.json())
-                        .then(d => {
-                            if (d && d.coins !== undefined) {
-                                document.getElementById('balanceDisplay').textContent = Number(d.coins).toLocaleString('id-ID');
-                                document.getElementById('coinCount').textContent = Number(d.coins).toLocaleString('id-ID');
-                            }
-                        }).catch(() => {});
+                const profile = await Auth.getProfile(true);
+                if (profile) {
+                    document.getElementById('balanceDisplay').textContent = Number(profile.coins).toLocaleString('id-ID');
+                    document.getElementById('coinCount').textContent = Number(profile.coins).toLocaleString('id-ID');
                 }
             } catch(e) {}
         }
 
         document.getElementById('refreshBalance')?.addEventListener('click', function() {
-            this.querySelector('i').style.animation = 'spin 0.5s linear';
+            this.querySelector('i').style.transition = 'transform 0.5s';
+            this.querySelector('i').style.transform = 'rotate(360deg)';
             loadBalance();
-            setTimeout(() => { this.querySelector('i').style.animation = ''; }, 600);
+            setTimeout(() => {
+                this.querySelector('i').style.transition = '';
+                this.querySelector('i').style.transform = '';
+            }, 600);
         });
 
         // Top up button
@@ -338,12 +340,10 @@
                 return;
             }
 
-            // Ambil user_id dari session
-            let user_id = null;
-            try {
-                const session = JSON.parse(localStorage.getItem('sb-session'));
-                user_id = session?.user?.id || null;
-            } catch(e) {}
+            if (!Auth.isLoggedIn()) {
+                window.location.href = '/login';
+                return;
+            }
 
             // Show loading
             const overlay = document.getElementById('loadingOverlay');
@@ -355,16 +355,16 @@
             try {
                 const res = await fetch('/api/create-transaction', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ amount, user_id })
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + Auth.getToken()
+                    },
+                    body: JSON.stringify({ amount })
                 });
                 const data = await res.json();
 
-                if (!res.ok) {
-                    throw new Error(data.error || 'Gagal membuat transaksi');
-                }
+                if (!res.ok) throw new Error(data.error || 'Gagal membuat transaksi');
 
-                // Redirect ke halaman pembayaran
                 window.location.href = `/isisaldo/${data.order_id}`;
 
             } catch(err) {
