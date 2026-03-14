@@ -7,20 +7,21 @@
 }
 
 .modern-card {
-    background: rgba(18,20,26,0.7);
+    background: rgba(18, 20, 26, 0.7);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(0,229,255,0.2);
+    border: 1px solid rgba(0, 229, 255, 0.2);
     border-radius: 20px;
     padding: 25px;
     transition: 0.3s;
     position: relative;
     overflow: hidden;
+    text-align: center;
 }
 
 .modern-card:hover {
     transform: translateY(-8px);
     border-color: var(--neon-cyan);
-    box-shadow: 0 15px 30px rgba(0,229,255,0.3);
+    box-shadow: 0 15px 30px rgba(0, 229, 255, 0.3);
 }
 
 .modern-card::before {
@@ -30,7 +31,7 @@
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle at 30% 30%, rgba(0,229,255,0.1), transparent 70%);
+    background: radial-gradient(circle at 30% 30%, rgba(0, 229, 255, 0.1), transparent 70%);
     opacity: 0;
     transition: 0.5s;
     pointer-events: none;
@@ -40,68 +41,32 @@
     opacity: 1;
 }
 
+/* Card Icons */
 .card-icon {
-    font-size: 48px;
+    font-size: 40px;
     margin-bottom: 15px;
-    filter: drop-shadow(0 0 8px currentColor);
-}
-
-.card-title {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #fff;
-    text-shadow: 0 0 5px rgba(0,229,255,0.5);
-}
-
-.card-desc {
-    color: #aaa;
-    font-size: 14px;
-    margin-bottom: 20px;
-    line-height: 1.6;
-}
-
-/* ===== TOMBOL DENGAN EFEK SESUAI WARNA (TIDAK ADA BIRU) ===== */
-.btn-detail {
     display: block;
-    width: 100%;
-    text-align: center;
-    background: transparent;
-    border: 2px solid;
-    padding: 12px 0;
-    border-radius: 40px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.2s;
-    cursor: pointer;
-    outline: none; /* hilangkan outline biru */
-    -webkit-tap-highlight-color: transparent; /* hilangkan highlight biru di mobile */
 }
 
-/* Efek hover - warna sesuai tombol (diatur inline di HTML) */
-.btn-detail:hover {
-    filter: brightness(1.2);
-}
+.card-wa { border-color: #25D366; }
+.card-wa .card-icon { color: #25D366; }
+.card-wa:hover { box-shadow: 0 0 20px rgba(37, 211, 102, 0.4); border-color: #25D366; }
 
-/* Efek saat disentuh/diklik */
-.btn-detail:active {
-    transform: scale(0.97);
-    opacity: 0.7;
-    transition: transform 0.1s, opacity 0.1s;
-    /* tidak ada perubahan warna biru */
-}
+.card-tg { border-color: #0088cc; }
+.card-tg .card-icon { color: #0088cc; }
+.card-tg:hover { box-shadow: 0 0 20px rgba(0, 136, 204, 0.4); border-color: #0088cc; }
 
-/* ===== MODAL STYLES ===== */
+/* Modal Styles */
 .modal {
     display: none;
     position: fixed;
-    z-index: 10000;
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.8);
-    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
     align-items: center;
     justify-content: center;
 }
@@ -111,29 +76,28 @@
 }
 
 .modal-content {
-    background: rgba(18,20,26,0.95);
-    backdrop-filter: blur(10px);
+    background: #12141a;
+    border: 2px solid var(--neon-cyan);
     border-radius: 24px;
-    padding: 25px;
-    max-width: 450px;
     width: 90%;
-    border: 2px solid;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.7);
-    animation: modalFadeIn 0.3s;
+    max-width: 450px;
+    padding: 0;
+    position: relative;
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.3);
+    animation: modalSlide 0.3s ease-out;
 }
 
-@keyframes modalFadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes modalSlide {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 .modal-header {
+    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modal-header h2 {
@@ -142,6 +106,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    color: #fff;
 }
 
 .close {
@@ -151,34 +116,31 @@
     cursor: pointer;
     transition: 0.2s;
     outline: none;
-    -webkit-tap-highlight-color: transparent;
 }
 
 .close:hover {
     color: white;
 }
 
-.close:active {
-    transform: scale(0.9);
-    opacity: 0.7;
-}
-
 .modal-body {
-    margin-bottom: 20px;
+    padding: 20px;
 }
 
 .info-item {
-    background: rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 15px;
     padding: 15px;
     margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .info-label {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     margin-bottom: 8px;
-    color: inherit;
+    color: var(--neon-cyan);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .info-content {
@@ -192,36 +154,39 @@
 .info-content span {
     color: #ccc;
     font-size: 14px;
-    word-break: break-word;
+    word-break: break-all;
 }
 
-/* ===== TOMBOL DALAM MODAL ===== */
 .btn-action {
-    display: inline-block;
-    background: black;
-    border: 2px solid;
-    padding: 8px 20px;
-    border-radius: 30px;
+    background: var(--neon-cyan);
+    color: #000;
+    padding: 6px 15px;
+    border-radius: 20px;
     text-decoration: none;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 700;
     transition: 0.2s;
-    font-size: 14px;
-    outline: none;
-    -webkit-tap-highlight-color: transparent;
 }
 
 .btn-action:hover {
-    filter: brightness(1.2);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px var(--neon-cyan);
 }
 
-.btn-action:active {
-    transform: scale(0.95);
-    opacity: 0.7;
+.btn-detail {
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 600px) {
-    .grid-3 {
-        grid-template-columns: 1fr;
-    }
+.btn-detail:hover {
+    background: var(--neon-cyan);
+    color: #000;
 }

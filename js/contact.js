@@ -1,18 +1,25 @@
-// Modal handling untuk halaman contact
+// js/contact.js
 document.addEventListener('DOMContentLoaded', function() {
     const cards = document.querySelectorAll('.modern-card[data-modal]');
-    const modals = document.querySelectorAll('.modal');
-    const closeButtons = document.querySelectorAll('.close');
+    const modals = document.querySelectorAll('.modal-overlay'); // Pastikan class sesuai
+    const closeButtons = document.querySelectorAll('.close-modal');
 
+    // Fungsi buka modal
     function openModal(modalId) {
         const modal = document.getElementById(modalId);
-        if (modal) modal.classList.add('active');
+        if (modal) {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Kunci scroll
+        }
     }
 
+    // Fungsi tutup semua modal
     function closeAllModals() {
         modals.forEach(modal => modal.classList.remove('active'));
+        document.body.style.overflow = 'auto'; // Aktifkan scroll
     }
 
+    // Klik tombol detail di card
     cards.forEach(card => {
         const btn = card.querySelector('.btn-detail');
         if (btn) {
@@ -24,16 +31,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Klik tombol close (X)
     closeButtons.forEach(btn => {
         btn.addEventListener('click', closeAllModals);
     });
 
-    modals.forEach(modal => {
-        modal.addEventListener('click', function(e) {
+    // Klik di luar area modal untuk menutup
+    window.addEventListener('click', function(e) {
+        modals.forEach(modal => {
             if (e.target === modal) closeAllModals();
         });
     });
 
+    // Tombol ESC untuk menutup
     window.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') closeAllModals();
     });
