@@ -4,130 +4,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DzzXNzz - Home</title>
-    <!-- Global CSS -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="loading.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Righteous&display=swap" rel="stylesheet">
     <style>
-        /* Gaya judul pelangi */
-        .rainbow-title {
-            font-size: 42px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #00e5ff, #00ff88, #bf00ff, #ff0055);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 20px rgba(0,229,255,0.5));
-            margin-bottom: 10px;
-            text-align: center;
+        .hero-section { text-align: center; padding: 20px 0 8px; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(0,229,255,0.07);
+            border: 1px solid rgba(0,229,255,0.28);
+            color: #00e5ff; padding: 8px 20px; border-radius: 50px;
+            font-size: 12px; font-weight: 800; letter-spacing: 1.5px;
+            text-transform: uppercase; margin-bottom: 20px;
+            animation: fadeInDown 0.6s ease;
+            box-shadow: 0 0 18px rgba(0,229,255,0.1);
         }
-        .subtitle {
-            color: #aaa;
-            font-size: 16px;
-            text-align: center;
-            margin-bottom: 40px;
+        .hero-badge i { font-size: 9px; color: #00ff88; animation: dotPulse 1.5s infinite; }
+        @keyframes dotPulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+        @keyframes fadeInDown { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes fadeInUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+
+        .stats-row {
+            display: flex; justify-content: center; gap: 18px;
+            margin: 28px 0 40px; flex-wrap: wrap;
+            animation: fadeInUp 0.8s 0.25s ease both;
         }
-        .home-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
+        .stat-item {
+            text-align: center; padding: 15px 22px;
+            background: rgba(13,15,25,0.72);
+            border-radius: 16px; border: 1px solid rgba(255,255,255,0.07);
+            min-width: 90px; transition: 0.3s; cursor: default;
         }
-        .home-card {
-            background: rgba(18,20,26,0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            transition: 0.3s;
-            border: 1px solid transparent;
+        .stat-item:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0,229,255,0.3);
+            box-shadow: 0 8px 25px rgba(0,229,255,0.1);
         }
-        .home-card:hover {
-            transform: translateY(-5px);
+        .stat-number {
+            font-family: 'Righteous', cursive; font-size: 24px;
+            background: linear-gradient(135deg, #00e5ff, #00ff88);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            display: block;
         }
-        .home-card.cyan {
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 15px var(--neon-cyan);
+        .stat-label { font-size: 11px; color: rgba(255,255,255,0.42); font-weight: 700; letter-spacing: 0.5px; margin-top: 2px; }
+
+        .home-grid { animation: fadeInUp 0.8s 0.45s ease both; }
+
+        .promo-banner {
+            background: linear-gradient(135deg, rgba(191,0,255,0.12), rgba(0,229,255,0.08));
+            border: 1px solid rgba(191,0,255,0.28);
+            border-radius: 18px; padding: 16px 22px;
+            display: flex; align-items: center;
+            justify-content: space-between; flex-wrap: wrap; gap: 14px;
+            margin-bottom: 28px; position: relative; overflow: hidden;
+            animation: fadeInUp 0.8s 0.15s ease both;
         }
-        .home-card.purple {
-            border-color: var(--neon-purple);
-            box-shadow: 0 0 15px var(--neon-purple);
+        .promo-banner::before {
+            content: ''; position: absolute;
+            top: 0; left: -120%; width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+            animation: bannerShine 3.5s linear infinite;
         }
-        .home-card.green {
-            border-color: var(--neon-green);
-            box-shadow: 0 0 15px var(--neon-green);
+        @keyframes bannerShine { to { left: 120%; } }
+        .promo-text { display: flex; align-items: center; gap: 14px; }
+        .promo-emoji { font-size: 30px; }
+        .promo-title { font-size: 15px; font-weight: 900; color: #fff; }
+        .promo-sub { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 3px; font-weight: 600; }
+        .promo-btn {
+            background: linear-gradient(135deg, #bf00ff, #00e5ff);
+            color: white; border: none; padding: 10px 22px;
+            border-radius: 30px; font-weight: 900; font-size: 13px;
+            cursor: pointer; text-decoration: none; display: inline-block;
+            transition: 0.25s; letter-spacing: 0.5px;
+            box-shadow: 0 4px 18px rgba(191,0,255,0.35);
         }
-        .home-card.red {
-            border-color: var(--neon-red);
-            box-shadow: 0 0 15px var(--neon-red);
-        }
-        .card-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-        .home-card.cyan .card-icon { color: var(--neon-cyan); }
-        .home-card.purple .card-icon { color: var(--neon-purple); }
-        .home-card.green .card-icon { color: var(--neon-green); }
-        .home-card.red .card-icon { color: var(--neon-red); }
-        .card-title {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-        .card-desc {
-            color: #aaa;
-            font-size: 14px;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-        .card-tag {
-            display: inline-block;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 4px 12px;
-            border-radius: 20px;
-            text-transform: uppercase;
-        }
-        .home-card.cyan .card-tag {
-            background: var(--neon-cyan);
-            color: black;
-        }
-        .home-card.purple .card-tag {
-            background: var(--neon-purple);
-            color: white;
-        }
-        .home-card.green .card-tag {
-            background: var(--neon-green);
-            color: black;
-        }
-        .home-card.red .card-tag {
-            background: var(--neon-red);
-            color: white;
+        .promo-btn:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 6px 28px rgba(191,0,255,0.5); }
+
+        @media (max-width: 600px) {
+            .stats-row { gap: 10px; }
+            .stat-item { padding: 12px 14px; min-width: 76px; }
+            .stat-number { font-size: 20px; }
+            .promo-banner { justify-content: center; text-align: center; }
         }
     </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
 
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-brand">DzzXNzz</div>
+        <div class="loader-rings">
+            <div class="ring ring-outer"></div>
+            <div class="ring ring-inner"></div>
+            <div class="ring-dot"></div>
+        </div>
+        <div class="loading-text">Memuat...</div>
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+            <span id="progress-text">0%</span>
+        </div>
+        <div class="loading-dots">
+            <span></span><span></span><span></span><span></span>
+        </div>
+    </div>
+
     <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-left">
             <button id="menu-toggle">☰</button>
+            <span class="nav-brand">DzzXNzz</span>
         </div>
         <div class="nav-right">
-            <div class="coins-wrapper">
-<span class="coins-text">COINS : 0</span>
-<button class="buy-coins">+</button>
-</div>
+            <div class="coins-wrapper">🪙 COINS: <span id="coinCount">0</span></div>
             <div class="user-menu">
                 <div class="user-avatar">
-                    <img src="./image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
+                    <img src="./image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=06070f&color=00e5ff&bold=true'">
                 </div>
                 <div class="menu-trigger" id="menuTrigger">
                     <i class="fas fa-ellipsis-v"></i>
                 </div>
-                <div class="dropdown-menu" id="dropdownMenu">
-                    <!-- Diisi oleh JavaScript -->
-                </div>
+                <div class="dropdown-menu" id="dropdownMenu"></div>
             </div>
         </div>
     </nav>
@@ -137,7 +135,7 @@
         <div class="sidebar-header">
             <span class="user-name-text">DzzXNzz</span>
             <div class="sidebar-pfp">
-                <img src="./image/image.jpg" alt="PFP" onerror="this.src='https://ui-avatars.com/api/?name=User&background=020202&color=00e5ff&bold=true'">
+                <img src="./image/image.jpg" alt="PFP" onerror="this.src='https://ui-avatars.com/api/?name=DzzXNzz&background=06070f&color=00e5ff&bold=true'">
             </div>
         </div>
         <ul class="sidebar-menu">
@@ -146,11 +144,7 @@
             <li><a href="donasi"><i class="fas fa-heart"></i> Donasi</a></li>
             <li><a href="contact"><i class="fas fa-phone-alt"></i> Contact</a></li>
         </ul>
-
-        <!-- Divider -->
         <div class="sidebar-divider"></div>
-
-        <!-- Menu Sistem (diisi JavaScript) -->
         <ul class="sidebar-menu sidebar-system" id="system-menu">
             <li class="system-item"><a href="#"><i class="fas fa-spinner fa-pulse"></i> Loading...</a></li>
         </ul>
@@ -159,36 +153,69 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <h1 class="rainbow-title">DzzXNzz</h1>
-        <p class="subtitle">Solusi hosting dan bot terbaik untuk Anda</p>
+        <div class="hero-section">
+            <div class="hero-badge">
+                <i class="fas fa-circle"></i> SEMUA SISTEM ONLINE
+            </div>
+            <h1 class="rainbow-title">DzzXNzz</h1>
+            <p class="subtitle">Solusi hosting & bot terbaik — cepat, aman, dan terjangkau ✨</p>
 
+            <div class="stats-row">
+                <div class="stat-item">
+                    <span class="stat-number">99.9%</span>
+                    <span class="stat-label">Uptime</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Support</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100+</span>
+                    <span class="stat-label">Pengguna</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">4★</span>
+                    <span class="stat-label">Rating</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Promo Banner -->
+        <div class="promo-banner">
+            <div class="promo-text">
+                <span class="promo-emoji">🎉</span>
+                <div>
+                    <div class="promo-title">Promo Spesial — Diskon 20%!</div>
+                    <div class="promo-sub">Berlaku untuk pembelian Panel Pterodactyl pertama kamu.</div>
+                </div>
+            </div>
+            <a href="product" class="promo-btn">Lihat Produk →</a>
+        </div>
+
+        <!-- Cards -->
         <div class="home-grid">
-            <!-- Card Panel Pterodactyl (Cyan) -->
             <div class="home-card cyan">
                 <div class="card-icon"><i class="fas fa-server"></i></div>
                 <h3 class="card-title">Panel Pterodactyl</h3>
-                <p class="card-desc">Hosting panel dengan performa tinggi dan anti lag.</p>
+                <p class="card-desc">Hosting panel performa tinggi, anti lag, siap pakai kapan saja.</p>
                 <span class="card-tag">SYSTEM READY</span>
             </div>
-            <!-- Card Sewa Bot Jaga (Purple) -->
             <div class="home-card purple">
                 <div class="card-icon"><i class="fas fa-robot"></i></div>
                 <h3 class="card-title">Sewa Bot Jaga</h3>
-                <p class="card-desc">Keamanan grup 24 jam dengan fitur lengkap.</p>
+                <p class="card-desc">Keamanan grup 24 jam non-stop dengan fitur lengkap dan update rutin.</p>
                 <span class="card-tag">SYSTEM READY</span>
             </div>
-            <!-- Card Script & Tools (Green) -->
             <div class="home-card green">
                 <div class="card-icon"><i class="fas fa-cube"></i></div>
                 <h3 class="card-title">Script & Tools</h3>
-                <p class="card-desc">Koleksi script terbaru untuk kebutuhan Anda.</p>
+                <p class="card-desc">Koleksi script dan tools terbaru, selalu diperbarui untuk kebutuhan kamu.</p>
                 <span class="card-tag">CHECK NEW</span>
             </div>
-            <!-- Card Donasi (Red) -->
             <div class="home-card red">
                 <div class="card-icon"><i class="fas fa-heart"></i></div>
                 <h3 class="card-title">Donasi</h3>
-                <p class="card-desc">Dukung perkembangan website ini.</p>
+                <p class="card-desc">Dukung perkembangan website ini agar terus berkembang lebih baik.</p>
                 <span class="card-tag">SUPPORT US</span>
             </div>
         </div>
@@ -203,7 +230,7 @@
                 <div class="social-icons">
                     <a href="https://wa.me/6287713472756" target="_blank" class="social-icon wa"><i class="fab fa-whatsapp"></i></a>
                     <a href="https://t.me/DzzXNzz" target="_blank" class="social-icon tg"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="mailto:alwaysnnyzz@gmail.com" class="social-icon email"><i class="fas fa-envelope"></i></a>
+                    <a href="mailto:support@dzzxnzz.my.id" class="social-icon email"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
             <div>
