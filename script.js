@@ -84,7 +84,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   // ===== LOAD COINS + USERNAME =====
   const coinCountEl  = document.getElementById('coinCount');
-  const userNameText = document.querySelector('.user-name-text');
   if (Auth.isLoggedIn()) {
     const profile = await Auth.getProfile();
     if (profile) {
