@@ -1,10 +1,11 @@
 // js/pay.js — Auto-check status tiap 5 detik
 
 document.addEventListener('DOMContentLoaded', function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const orderId = urlParams.get('order_id') || window.location.pathname.split('/').pop();
+    // Ambil order_id dari pathname: /isisaldo/SALDO-xxx -> SALDO-xxx
+    const pathParts = window.location.pathname.split('/');
+    const orderId = pathParts[pathParts.length - 1];
 
-    if (!orderId || orderId === 'isisaldo') {
+    if (!orderId || orderId === 'isisaldo' || orderId === '') {
         window.location.href = '/isisaldo';
         return;
     }
@@ -65,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (payOrderEl) payOrderEl.textContent = 'Order ID: ' + data.order_id;
 
             // Cek jika sudah completed (refresh halaman)
+            // Langsung redirect — coins sudah ditambah sebelumnya via check-status
             if (data.status === 'completed') {
                 window.location.href = `/struk?order_id=${orderId}`;
                 return;
