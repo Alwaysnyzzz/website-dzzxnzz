@@ -85,9 +85,17 @@ document.addEventListener('DOMContentLoaded', async function () {
   // ===== LOAD COINS =====
   const coinCountEl = document.getElementById('coinCount');
 
-  // Nama sidebar selalu DzzXNzz, paksa hardcode
+  // PAKSA nama sidebar = DzzXNzz, tidak bisa diubah
+  function lockSidebarName() {
+    document.querySelectorAll('.user-name-text').forEach(el => {
+      if (el.textContent !== 'DzzXNzz') el.textContent = 'DzzXNzz';
+    });
+  }
+  lockSidebarName();
+  // Observer: kalau ada yang coba ubah, langsung kembalikan
+  const nameObserver = new MutationObserver(lockSidebarName);
   document.querySelectorAll('.user-name-text').forEach(el => {
-    el.textContent = 'DzzXNzz';
+    nameObserver.observe(el, { childList: true, characterData: true, subtree: true });
   });
 
   if (Auth.isLoggedIn()) {
