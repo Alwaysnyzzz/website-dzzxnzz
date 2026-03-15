@@ -24,7 +24,7 @@ export default async function handler(req, res) {
     if (dbError || !trx)
       return res.status(404).json({ error: 'Transaksi tidak ditemukan' });
 
-    // Jika sudah completed di DB, langsung return
+    // Jika sudah completed di DB → coins sudah ditambah sebelumnya, langsung return
     if (trx.status === 'completed')
       return res.status(200).json({ status: 'completed', amount: trx.amount });
 
@@ -38,24 +38,41 @@ export default async function handler(req, res) {
 
     const pakasirStatus = pakasirData.transaction.status;
 
-    // Update status di DB jika berubah
-    if (pakasirStatus !== trx.status) {
+    // Jika completed → update DB dulu, baru tambah coins
+    if (pakasirStatus === 'completed') {
+      // 1. Update status transaksi
       await supabase
         .from('transactions')
         .update({
-          status: pakasirStatus,
+          status: 'completed',
           payment_method: pakasirData.transaction.payment_method || null,
-          completed_at: pakasirData.transaction.completed_at || null
+          completed_at: pakasirData.transaction.completed_at || new Date().toISOString()
         })
         .eq('order_id', order_id);
 
-      // Jika completed → tambah coins
-      if (pakasirStatus === 'completed' && trx.user_id) {
-        await supabase.rpc('add_coins', {
+      // 2. Tambah coins ke user (atomic via RPC)
+      if (trx.user_id) {
+        const { data: newCoins, error: coinsErr } = await supabase.rpc('add_coins', {
           p_user_id: trx.user_id,
           p_amount: trx.amount
         });
+
+        if (coinsErr) {
+          console.error('[CheckStatus] Gagal tambah coins:', coinsErr);
+        } else {
+          console.log(`[CheckStatus] +${trx.amount} coins → user ${trx.user_id}, total: ${newCoins}`);
+        }
       }
+
+      return res.status(200).json({ status: 'completed', amount: trx.amount });
+    }
+
+    // Status lain (pending, cancelled) — update saja tanpa tambah coins
+    if (pakasirStatus !== trx.status) {
+      await supabase
+        .from('transactions')
+        .update({ status: pakasirStatus })
+        .eq('order_id', order_id);
     }
 
     return res.status(200).json({ status: pakasirStatus, amount: trx.amount });
