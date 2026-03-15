@@ -179,7 +179,7 @@ body {
 
 .sidebar-header { margin-bottom: 28px; text-align: center; }
 
-.user-name-text {
+.user-name {
     font-family: var(--font-display);
     color: var(--neon-cyan);
     font-size: 22px;
