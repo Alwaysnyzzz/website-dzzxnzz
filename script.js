@@ -84,11 +84,11 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   // ===== LOAD COINS + USERNAME =====
   const coinCountEl  = document.getElementById('coinCount');
+  const userNameText = document.querySelector('.user-name-text');
   if (Auth.isLoggedIn()) {
     const profile = await Auth.getProfile();
     if (profile) {
       if (coinCountEl) coinCountEl.textContent = Number(profile.coins).toLocaleString('id-ID');
-      if (userNameText) userNameText.textContent = profile.username;
       // Update semua avatar dengan nama user
       document.querySelectorAll('.user-avatar img, .sidebar-pfp img').forEach(img => {
         if (!img.src.includes('/image/')) {
