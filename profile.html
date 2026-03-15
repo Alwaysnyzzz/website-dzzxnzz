@@ -253,6 +253,102 @@
         .ring-inner { width:36px; height:36px; top:11px; left:11px; border-left-color:#00ff88; border-right-color:#00ff88; animation:spinR 1.5s linear infinite; }
         .loading-text { color:#00e5ff; font-size:12px; font-weight:800; letter-spacing:2px; text-shadow:0 0 8px #00e5ff; }
 
+        .riwayat-item.clickable:hover {
+            background:rgba(255,255,255,0.03);
+            border-radius:12px;
+            margin:0 -8px;
+            padding-left:8px;
+            padding-right:8px;
+        }
+        .riwayat-hint {
+            font-size:11px; font-weight:800;
+            margin-top:3px; display:flex; align-items:center; gap:5px;
+        }
+        .riwayat-item .riwayat-dot.pending   ~ .riwayat-info .riwayat-hint { color:#ffe000; }
+        .riwayat-item .riwayat-dot.completed ~ .riwayat-info .riwayat-hint { color:#00e5ff; }
+
+        /* Modal cancelled */
+        @keyframes shakeX {
+            0%,100%{transform:translateX(0)}
+            20%{transform:translateX(-8px)}
+            40%{transform:translateX(8px)}
+            60%{transform:translateX(-5px)}
+            80%{transform:translateX(5px)}
+        }
+        @keyframes popIn {
+            0%{transform:scale(0.7);opacity:0}
+            70%{transform:scale(1.08)}
+            100%{transform:scale(1);opacity:1}
+        }
+        @keyframes ringPulse {
+            0%,100%{box-shadow:0 0 0 0 rgba(255,0,85,0.4)}
+            50%{box-shadow:0 0 0 14px rgba(255,0,85,0)}
+        }
+
+        .modal-cancelled {
+            position:fixed; inset:0;
+            background:rgba(0,0,0,0.8); backdrop-filter:blur(10px);
+            display:flex; align-items:center; justify-content:center;
+            z-index:9000; opacity:0; visibility:hidden; transition:.3s;
+        }
+        .modal-cancelled.show { opacity:1; visibility:visible; }
+        .modal-cancelled-box {
+            background:rgba(10,12,22,.98);
+            border-radius:24px;
+            padding:36px 28px;
+            max-width:300px; width:88%;
+            text-align:center;
+            border:1px solid rgba(255,0,85,0.3);
+            box-shadow:0 0 40px rgba(255,0,85,0.15), 0 25px 60px rgba(0,0,0,0.8);
+            position:relative; overflow:hidden;
+        }
+        .modal-cancelled.show .modal-cancelled-box {
+            animation: popIn 0.4s cubic-bezier(.34,1.56,.64,1) forwards,
+                       shakeX 0.5s 0.4s ease forwards;
+        }
+        .modal-cancelled-box::before {
+            content:'';
+            position:absolute; top:0; left:0; right:0; height:3px;
+            background:linear-gradient(90deg,#ff0055,#ff7b00,#ff0055);
+            background-size:200% 100%;
+            animation:shineBar 2s linear infinite;
+        }
+        .modal-cancelled-icon-wrap {
+            width:72px; height:72px; border-radius:50%;
+            background:rgba(255,0,85,0.1);
+            border:2.5px solid rgba(255,0,85,0.5);
+            display:flex; align-items:center; justify-content:center;
+            margin:0 auto 18px;
+            animation:ringPulse 2s ease infinite;
+        }
+        .modal-cancelled-icon-wrap i {
+            font-size:30px; color:#ff0055;
+            filter:drop-shadow(0 0 10px #ff0055);
+        }
+        .modal-cancelled-title {
+            font-size:20px; font-weight:900;
+            color:#fff; margin-bottom:8px;
+        }
+        .modal-cancelled-sub {
+            font-size:13px; color:rgba(255,255,255,.45);
+            font-weight:700; line-height:1.65; margin-bottom:24px;
+        }
+        .modal-cancelled-sub span { color:#ff6688; font-weight:900; }
+        .modal-cancelled-btn {
+            width:100%; padding:13px;
+            background:rgba(255,0,85,0.08);
+            border:1.5px solid rgba(255,0,85,0.35);
+            border-radius:40px; color:#ff6688;
+            font-family:'Nunito',sans-serif;
+            font-weight:900; font-size:14px;
+            cursor:pointer; transition:.25s;
+        }
+        .modal-cancelled-btn:hover {
+            background:rgba(255,0,85,0.15);
+            border-color:#ff0055; color:#fff;
+            box-shadow:0 0 18px rgba(255,0,85,0.25);
+        }
+
         @media(max-width:480px) {
             .pstat-num { font-size:16px; }
             .riwayat-id { max-width:120px; }
@@ -438,6 +534,22 @@
 
     </main>
 
+    <!-- Modal Transaksi Dibatalkan -->
+    <div class="modal-cancelled" id="cancelledModal" onclick="if(event.target===this)this.classList.remove('show')">
+        <div class="modal-cancelled-box">
+            <div class="modal-cancelled-icon-wrap">
+                <i class="fas fa-exclamation"></i>
+            </div>
+            <div class="modal-cancelled-title">Transaksi Usai</div>
+            <div class="modal-cancelled-sub">
+                Transaksi ini telah <span>dibatalkan</span> dan sudah tidak bisa dilanjutkan.
+            </div>
+            <button class="modal-cancelled-btn" onclick="document.getElementById('cancelledModal').classList.remove('show')">
+                Mengerti
+            </button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
     <script>
         // ===== Toggle accordion =====
@@ -477,6 +589,23 @@
                    d.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
         }
 
+        // ===== Cache transaksi (tidak fetch ulang) =====
+        let _allTrx = null;
+
+        // ===== Handle klik item riwayat =====
+        function handleItemClick(status, orderId) {
+            if (status === 'pending')   { window.location.href = '/isisaldo/' + orderId; return; }
+            if (status === 'completed') { window.location.href = '/struk?order_id=' + orderId; return; }
+            if (status === 'cancelled') { showCancelledModal(orderId); return; }
+        }
+
+        // ===== Modal transaksi dibatalkan =====
+        function showCancelledModal(orderId) {
+            const modal = document.getElementById('cancelledModal');
+            document.getElementById('cancelledOrderId').textContent = orderId;
+            modal.classList.add('show');
+        }
+
         // ===== Render riwayat =====
         function renderRiwayat(type, data) {
             const el = document.getElementById(type === 'saldo' ? 'riwayatSaldoList' : 'riwayatOrderList');
@@ -484,42 +613,43 @@
                 el.innerHTML = `<div class="riwayat-empty"><i class="fas fa-inbox"></i>Belum ada riwayat</div>`;
                 return;
             }
+
+            const statusLabel = { completed: 'Selesai', pending: 'Menunggu', cancelled: 'Dibatalkan' };
+            const statusIcon  = { completed: 'fa-arrow-right', pending: 'fa-qrcode', cancelled: 'fa-times-circle' };
+            const clickHint   = { completed: 'Lihat struk', pending: 'Lanjut bayar', cancelled: '' };
+            const hintColor   = { completed: '#00e5ff', pending: '#ffe000', cancelled: '' };
+
             el.innerHTML = data.map(t => `
-                <div class="riwayat-item">
+                <div class="riwayat-item ${t.status !== 'cancelled' ? 'clickable' : ''}"
+                     onclick="handleItemClick('${t.status}','${t.order_id}')"
+                     style="${t.status !== 'cancelled' ? 'cursor:pointer' : ''}">
                     <div class="riwayat-left">
                         <div class="riwayat-dot ${t.status}"></div>
                         <div class="riwayat-info">
                             <div class="riwayat-id">${t.order_id}</div>
                             <div class="riwayat-date">${fmtDate(t.created_at)}</div>
+                            ${clickHint[t.status] ? `<div class="riwayat-hint" style="color:${hintColor[t.status]}"><i class="fas ${statusIcon[t.status]}"></i> ${clickHint[t.status]}</div>` : ''}
                         </div>
                     </div>
                     <div class="riwayat-right">
                         <div class="riwayat-amount">Rp ${Number(t.amount).toLocaleString('id-ID')}</div>
-                        <span class="riwayat-status ${t.status}">${t.status}</span>
+                        <span class="riwayat-status ${t.status}">${statusLabel[t.status] || t.status}</span>
                     </div>
                 </div>
             `).join('');
         }
 
-        // ===== Load riwayat dari API =====
-        async function loadRiwayat(type) {
+        // ===== Load riwayat — pakai cache, tidak fetch ulang =====
+        function loadRiwayat(type) {
             const elId = type === 'saldo' ? 'riwayatSaldoList' : 'riwayatOrderList';
-            try {
-                const res  = await fetch('/api/transactions', {
-                    headers: { 'Authorization': 'Bearer ' + Auth.getToken() }
-                });
-                const data = await res.json();
-                if (!Array.isArray(data)) { renderRiwayat(type, []); return; }
-
-                // Filter: saldo = type isisaldo, order = type lainnya
-                const filtered = type === 'saldo'
-                    ? data.filter(t => t.type === 'isisaldo')
-                    : data.filter(t => t.type !== 'isisaldo');
-
-                renderRiwayat(type, filtered);
-            } catch(e) {
-                document.getElementById(elId).innerHTML = `<div class="riwayat-empty"><i class="fas fa-exclamation-circle"></i>Gagal memuat data</div>`;
+            if (!_allTrx) {
+                document.getElementById(elId).innerHTML = `<div class="riwayat-empty"><i class="fas fa-inbox"></i>Belum ada data</div>`;
+                return;
             }
+            const filtered = type === 'saldo'
+                ? _allTrx.filter(t => t.type === 'isisaldo')
+                : _allTrx.filter(t => t.type !== 'isisaldo');
+            renderRiwayat(type, filtered);
         }
 
         // ===== Page load =====
@@ -544,11 +674,12 @@
                     document.getElementById('infoJoined').textContent    = tgl;
                 }
 
-                // Ambil jumlah transaksi
+                // Ambil transaksi SEKALI — simpan ke cache _allTrx, dipakai ulang untuk riwayat
                 try {
                     const res  = await fetch('/api/transactions', { headers:{'Authorization':'Bearer '+Auth.getToken()} });
                     const data = await res.json();
                     if (Array.isArray(data)) {
+                        _allTrx = data; // simpan ke cache global
                         document.getElementById('statTrx').textContent  = data.length;
                         document.getElementById('statDone').textContent = data.filter(t=>t.status==='completed').length;
                     }
