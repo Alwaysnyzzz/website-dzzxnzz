@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - DzzXNzz</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        @keyframes fadeInUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes shineBar { 0%{background-position:0%} 100%{background-position:200%} }
+        @keyframes coinFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+        @keyframes spin { to{transform:rotate(360deg)} }
+        @keyframes spinR { to{transform:rotate(-360deg)} }
+
+        .main-content { padding: 88px 20px 50px; max-width: 600px; margin: 0 auto; }
+
+        /* ===== PROFILE HEADER CARD ===== */
+        .profile-header {
+            background: rgba(13,15,25,0.88);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            border: 1px solid rgba(0,229,255,0.2);
+            box-shadow: 0 0 30px rgba(0,229,255,0.07), 0 20px 50px rgba(0,0,0,0.55);
+            overflow: hidden;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.6s ease;
+            position: relative;
+        }
+        .profile-header::before {
+            content: '';
+            position: absolute; top:0; left:0; right:0; height:3px;
+            background: linear-gradient(90deg, #00e5ff, #00ff88, #bf00ff, #00e5ff);
+            background-size: 200% 100%;
+            animation: shineBar 3s linear infinite;
+        }
+
+        /* Cover / banner area */
+        .profile-cover {
+            height: 90px;
+            background: linear-gradient(135deg, rgba(0,229,255,0.15), rgba(191,0,255,0.12), rgba(0,255,136,0.1));
+            position: relative;
+        }
+
+        .profile-avatar-wrap {
+            position: absolute;
+            bottom: -38px; left: 24px;
+        }
+        .profile-avatar {
+            width: 76px; height: 76px;
+            border-radius: 50%;
+            border: 3px solid #00e5ff;
+            background: #0a0b14;
+            box-shadow: 0 0 20px rgba(0,229,255,0.4);
+            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px; color: #00e5ff;
+        }
+        .profile-avatar img { width:100%; height:100%; object-fit:cover; }
+
+        .profile-info {
+            padding: 50px 24px 24px;
+        }
+        .profile-username {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px; font-weight: 900;
+            color: #fff; margin-bottom: 4px;
+            letter-spacing: 1px;
+        }
+        .profile-joined {
+            font-size: 13px; color: rgba(255,255,255,0.4);
+            font-weight: 700; display: flex; align-items: center; gap: 6px;
+        }
+        .profile-joined i { color: rgba(255,255,255,0.3); font-size: 12px; }
+
+        /* ===== STATS ROW ===== */
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px; margin-bottom: 20px;
+            animation: fadeInUp 0.6s 0.1s ease both;
+        }
+        .pstat-card {
+            background: rgba(13,15,25,0.82);
+            backdrop-filter: blur(12px);
+            border-radius: 16px; padding: 16px 12px;
+            border: 1px solid rgba(255,255,255,0.07);
+            text-align: center; transition: 0.3s;
+        }
+        .pstat-card:hover { transform: translateY(-3px); border-color: rgba(0,229,255,0.25); }
+        .pstat-icon { font-size: 20px; margin-bottom: 8px; }
+        .pstat-num {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px; font-weight: 900;
+            margin-bottom: 4px; display: block;
+        }
+        .pstat-label { font-size: 11px; color: rgba(255,255,255,0.4); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+        .pstat-card.cyan  { border-color: rgba(0,229,255,0.2); }
+        .pstat-card.cyan .pstat-icon { color: #00e5ff; filter: drop-shadow(0 0 8px #00e5ff); }
+        .pstat-card.cyan .pstat-num  { color: #00e5ff; filter: drop-shadow(0 0 8px rgba(0,229,255,0.5)); }
+        .pstat-card.green { border-color: rgba(0,255,136,0.2); }
+        .pstat-card.green .pstat-icon { color: #00ff88; filter: drop-shadow(0 0 8px #00ff88); }
+        .pstat-card.green .pstat-num  { color: #00ff88; }
+        .pstat-card.purple { border-color: rgba(191,0,255,0.2); }
+        .pstat-card.purple .pstat-icon { color: #bf00ff; filter: drop-shadow(0 0 8px #bf00ff); }
+        .pstat-card.purple .pstat-num  { color: #bf00ff; }
+
+        /* ===== INFO SECTION ===== */
+        .section-card {
+            background: rgba(13,15,25,0.82);
+            backdrop-filter: blur(12px);
+            border-radius: 20px; padding: 22px 20px;
+            border: 1px solid rgba(255,255,255,0.07);
+            margin-bottom: 16px;
+            animation: fadeInUp 0.6s ease both;
+        }
+        .section-card:nth-child(3) { animation-delay: 0.15s; }
+        .section-card:nth-child(4) { animation-delay: 0.25s; }
+
+        .section-title {
+            font-size: 13px; font-weight: 900;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase; letter-spacing: 1px;
+            margin-bottom: 16px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .section-title i { color: #00e5ff; font-size: 13px; }
+
+        .info-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .info-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .info-left { display: flex; align-items: center; gap: 12px; }
+        .info-left i { width: 18px; font-size: 14px; color: rgba(255,255,255,0.3); text-align: center; }
+        .info-key { font-size: 13px; color: rgba(255,255,255,0.45); font-weight: 700; }
+        .info-val { font-size: 14px; color: #fff; font-weight: 900; }
+        .info-val.cyan { color: #00e5ff; }
+        .info-val.green { color: #00ff88; }
+
+        /* ===== CHANGE PASSWORD ===== */
+        .input-group { margin-bottom: 14px; }
+        .input-label {
+            display: block; font-size: 11px; font-weight: 800;
+            color: #00e5ff; letter-spacing: 1px;
+            text-transform: uppercase; margin-bottom: 7px;
+        }
+        .input-wrap { position: relative; }
+        .input-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.25); font-size: 13px; pointer-events: none; }
+        input[type=password], input[type=text] {
+            width: 100%; padding: 13px 16px 13px 40px;
+            background: rgba(0,0,0,0.35);
+            border: 1.5px solid rgba(255,255,255,0.1);
+            border-radius: 12px; color: #fff;
+            font-family: 'Nunito', sans-serif;
+            font-size: 14px; font-weight: 700;
+            outline: none; transition: 0.25s;
+        }
+        input:focus { border-color: #00e5ff; box-shadow: 0 0 15px rgba(0,229,255,0.12); background: rgba(0,0,0,0.5); }
+        input::placeholder { color: rgba(255,255,255,0.2); }
+        .toggle-pass {
+            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; color: rgba(255,255,255,0.28);
+            cursor: pointer; font-size: 13px; padding: 4px;
+        }
+        .toggle-pass:hover { color: #00e5ff; }
+
+        .alert-box {
+            border-radius: 10px; padding: 10px 14px; margin-bottom: 12px;
+            font-size: 13px; font-weight: 700;
+            display: none; align-items: center; gap: 8px;
+        }
+        .alert-box.show { display: flex; animation: fadeInUp 0.3s ease; }
+        .alert-error   { background: rgba(255,0,0,0.08); border: 1px solid rgba(255,0,0,0.25); color: #ff6666; }
+        .alert-success { background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.3); color: #00ff88; }
+
+        .btn-save {
+            width: 100%; padding: 14px;
+            background: linear-gradient(135deg, #00e5ff, #00ff88);
+            border: none; border-radius: 12px; color: #06070f;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900; font-size: 14px; cursor: pointer;
+            transition: 0.25s; letter-spacing: 0.5px;
+            box-shadow: 0 5px 20px rgba(0,229,255,0.25);
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-save:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,229,255,0.4); }
+        .btn-save:active { transform: scale(0.97); }
+        .btn-save:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        /* ===== LOGOUT BUTTON ===== */
+        .btn-logout {
+            width: 100%; padding: 14px;
+            background: transparent;
+            border: 1.5px solid rgba(255,0,85,0.4);
+            border-radius: 12px; color: #ff0055;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900; font-size: 14px; cursor: pointer;
+            transition: 0.25s; letter-spacing: 0.5px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            animation: fadeInUp 0.6s 0.35s ease both;
+        }
+        .btn-logout:hover { background: rgba(255,0,85,0.1); box-shadow: 0 0 20px rgba(255,0,85,0.25); transform: translateY(-2px); }
+
+        /* ===== LOADING ===== */
+        .page-loader {
+            position: fixed; inset: 0;
+            background: rgba(6,7,15,0.95); backdrop-filter: blur(8px);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 9999; transition: 0.4s;
+        }
+        .page-loader.hidden { opacity: 0; visibility: hidden; }
+        .loader-rings { position: relative; width: 60px; height: 60px; margin-bottom: 16px; }
+        .ring { position: absolute; border-radius: 50%; border: 3px solid transparent; }
+        .ring-outer { width: 100%; height: 100%; border-top-color: #00e5ff; border-bottom-color: #00e5ff; animation: spin 1.5s linear infinite; }
+        .ring-inner { width: 38px; height: 38px; top: 11px; left: 11px; border-left-color: #00ff88; border-right-color: #00ff88; animation: spinR 1.5s linear infinite; }
+        .loading-text { color: #00e5ff; font-size: 13px; font-weight: 800; letter-spacing: 2px; text-shadow: 0 0 8px #00e5ff; }
+
+        /* Loader kecil di tombol */
+        .btn-loader { width: 16px; height: 16px; border: 2.5px solid rgba(0,0,0,0.3); border-top-color: #06070f; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
+
+        @media (max-width: 480px) {
+            .profile-stats { grid-template-columns: repeat(3,1fr); }
+            .pstat-num { font-size: 17px; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-rings"><div class="ring ring-outer"></div><div class="ring ring-inner"></div></div>
+        <div class="loading-text">Memuat profil...</div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <button id="menu-toggle">☰</button>
+        </div>
+        <div class="nav-right">
+            <a href="/isisaldo" class="coins-wrapper">🪙 <span id="coinCount">0</span> +</a>
+            <div class="user-menu">
+                <div class="user-avatar"><img src="./image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=DzzXNzz&background=06070f&color=00e5ff&bold=true'"></div>
+                <div class="menu-trigger" id="menuTrigger"><i class="fas fa-ellipsis-v"></i></div>
+                <div class="dropdown-menu" id="dropdownMenu"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="user-name-text">DzzXNzz</span>
+            <div class="sidebar-pfp"><img src="./image/image.jpg" alt="PFP" onerror="this.src='https://ui-avatars.com/api/?name=DzzXNzz&background=06070f&color=00e5ff&bold=true'"></div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/product"><i class="fas fa-shopping-cart"></i> Product</a></li>
+            <li><a href="/isisaldo"><i class="fas fa-wallet"></i> Isi Saldo</a></li>
+            <li><a href="/contact"><i class="fas fa-phone-alt"></i> Contact</a></li>
+        </ul>
+        <div class="sidebar-divider"></div>
+        <ul class="sidebar-menu sidebar-system" id="system-menu"></ul>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <main class="main-content" id="mainContent" style="display:none">
+
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-cover"></div>
+            <div class="profile-avatar-wrap">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+            <div class="profile-info">
+                <div class="profile-username" id="profileUsername">—</div>
+                <div class="profile-joined"><i class="fas fa-calendar-alt"></i> <span id="profileJoined">—</span></div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="profile-stats">
+            <div class="pstat-card cyan">
+                <div class="pstat-icon">🪙</div>
+                <span class="pstat-num" id="statCoins">0</span>
+                <span class="pstat-label">Coins</span>
+            </div>
+            <div class="pstat-card green">
+                <div class="pstat-icon"><i class="fas fa-receipt"></i></div>
+                <span class="pstat-num" id="statTrx">0</span>
+                <span class="pstat-label">Transaksi</span>
+            </div>
+            <div class="pstat-card purple">
+                <div class="pstat-icon"><i class="fas fa-check-circle"></i></div>
+                <span class="pstat-num" id="statDone">0</span>
+                <span class="pstat-label">Selesai</span>
+            </div>
+        </div>
+
+        <!-- Info Akun -->
+        <div class="section-card">
+            <div class="section-title"><i class="fas fa-id-card"></i> Info Akun</div>
+            <div class="info-row">
+                <div class="info-left"><i class="fas fa-user"></i><span class="info-key">Username</span></div>
+                <span class="info-val cyan" id="infoUsername">—</span>
+            </div>
+            <div class="info-row">
+                <div class="info-left"><i class="fas fa-coins"></i><span class="info-key">Saldo Coins</span></div>
+                <span class="info-val green" id="infoCoins">0</span>
+            </div>
+            <div class="info-row">
+                <div class="info-left"><i class="fas fa-calendar"></i><span class="info-key">Bergabung</span></div>
+                <span class="info-val" id="infoJoined">—</span>
+            </div>
+        </div>
+
+        <!-- Ganti Password -->
+        <div class="section-card">
+            <div class="section-title"><i class="fas fa-lock"></i> Ganti Password</div>
+
+            <div class="alert-box alert-error" id="passErrorBox">
+                <i class="fas fa-exclamation-triangle"></i><span id="passErrorText"></span>
+            </div>
+            <div class="alert-box alert-success" id="passSuccessBox">
+                <i class="fas fa-check-circle"></i><span id="passSuccessText"></span>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Password Lama</label>
+                <div class="input-wrap">
+                    <input type="password" id="oldPass" placeholder="••••••••">
+                    <i class="fas fa-lock input-icon"></i>
+                    <button type="button" class="toggle-pass" onclick="togglePass('oldPass', this)"><i class="fas fa-eye"></i></button>
+                </div>
+            </div>
+            <div class="input-group">
+                <label class="input-label">Password Baru</label>
+                <div class="input-wrap">
+                    <input type="password" id="newPass" placeholder="min. 6 karakter">
+                    <i class="fas fa-lock input-icon"></i>
+                    <button type="button" class="toggle-pass" onclick="togglePass('newPass', this)"><i class="fas fa-eye"></i></button>
+                </div>
+            </div>
+            <div class="input-group">
+                <label class="input-label">Konfirmasi Password Baru</label>
+                <div class="input-wrap">
+                    <input type="password" id="confirmPass" placeholder="ulangi password baru">
+                    <i class="fas fa-lock input-icon"></i>
+                    <button type="button" class="toggle-pass" onclick="togglePass('confirmPass', this)"><i class="fas fa-eye"></i></button>
+                </div>
+            </div>
+
+            <button class="btn-save" id="savePassBtn">
+                <i class="fas fa-save"></i>
+                <span id="savePassText">Simpan Password</span>
+                <div class="btn-loader" id="savePassLoader"></div>
+            </button>
+        </div>
+
+        <!-- Logout -->
+        <button class="btn-logout" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i> Keluar dari Akun
+        </button>
+
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        function togglePass(inputId, btn) {
+            const inp = document.getElementById(inputId);
+            const ico = btn.querySelector('i');
+            inp.type = inp.type === 'password' ? 'text' : 'password';
+            ico.className = inp.type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+        }
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            // Redirect kalau belum login
+            if (!Auth.isLoggedIn()) {
+                window.location.href = '/login';
+                return;
+            }
+
+            const loader = document.getElementById('pageLoader');
+            const main   = document.getElementById('mainContent');
+
+            try {
+                // Ambil profil
+                const profile = await Auth.getProfile(true);
+                if (!profile) { window.location.href = '/login'; return; }
+
+                // Isi data
+                document.getElementById('profileUsername').textContent = profile.username;
+                document.getElementById('infoUsername').textContent    = profile.username;
+                document.getElementById('statCoins').textContent       = Number(profile.coins).toLocaleString('id-ID');
+                document.getElementById('infoCoins').textContent       = '🪙 ' + Number(profile.coins).toLocaleString('id-ID');
+
+                // Format tanggal bergabung
+                if (profile.created_at) {
+                    const d = new Date(profile.created_at);
+                    const tgl = d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+                    document.getElementById('profileJoined').textContent = 'Bergabung ' + tgl;
+                    document.getElementById('infoJoined').textContent    = tgl;
+                }
+
+                // Ambil statistik transaksi
+                try {
+                    const resTrx = await fetch('/api/transactions?user_id=' + profile.id, {
+                        headers: { 'Authorization': 'Bearer ' + Auth.getToken() }
+                    });
+                    const trxData = await resTrx.json();
+                    if (Array.isArray(trxData)) {
+                        document.getElementById('statTrx').textContent  = trxData.length;
+                        document.getElementById('statDone').textContent = trxData.filter(t => t.status === 'completed').length;
+                    }
+                } catch(e) {}
+
+            } catch(e) {
+                console.error(e);
+            } finally {
+                loader.classList.add('hidden');
+                main.style.display = 'block';
+            }
+        });
+
+        // ===== Ganti Password =====
+        document.getElementById('savePassBtn').addEventListener('click', async function () {
+            const errBox  = document.getElementById('passErrorBox');
+            const sucBox  = document.getElementById('passSuccessBox');
+            errBox.classList.remove('show');
+            sucBox.classList.remove('show');
+
+            const oldPass     = document.getElementById('oldPass').value;
+            const newPass     = document.getElementById('newPass').value;
+            const confirmPass = document.getElementById('confirmPass').value;
+
+            if (!oldPass || !newPass || !confirmPass) {
+                document.getElementById('passErrorText').textContent = 'Semua field wajib diisi';
+                errBox.classList.add('show'); return;
+            }
+            if (newPass.length < 6) {
+                document.getElementById('passErrorText').textContent = 'Password baru minimal 6 karakter';
+                errBox.classList.add('show'); return;
+            }
+            if (newPass !== confirmPass) {
+                document.getElementById('passErrorText').textContent = 'Konfirmasi password tidak cocok';
+                errBox.classList.add('show'); return;
+            }
+
+            this.disabled = true;
+            document.getElementById('savePassText').style.display = 'none';
+            document.getElementById('savePassLoader').style.display = 'block';
+
+            try {
+                const res  = await fetch('/api/auth/change-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + Auth.getToken()
+                    },
+                    body: JSON.stringify({ old_password: oldPass, new_password: newPass })
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    document.getElementById('passErrorText').textContent = data.error || 'Gagal ganti password';
+                    errBox.classList.add('show');
+                } else {
+                    document.getElementById('passSuccessText').textContent = 'Password berhasil diganti!';
+                    sucBox.classList.add('show');
+                    document.getElementById('oldPass').value     = '';
+                    document.getElementById('newPass').value     = '';
+                    document.getElementById('confirmPass').value = '';
+                }
+            } catch(err) {
+                document.getElementById('passErrorText').textContent = 'Gagal terhubung ke server';
+                errBox.classList.add('show');
+            } finally {
+                this.disabled = false;
+                document.getElementById('savePassText').style.display = 'block';
+                document.getElementById('savePassLoader').style.display = 'none';
+            }
+        });
+
+        // ===== Logout =====
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            Auth.logout();
+            window.location.href = '/login';
+        });
+    </script>
+</body>
+</html>
