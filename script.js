@@ -90,9 +90,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (profile) {
       if (coinCountEl) coinCountEl.textContent = Number(profile.coins).toLocaleString('id-ID');
       // Update semua avatar dengan nama user
+      // Avatar tetap pakai DzzXNzz, bukan username
       document.querySelectorAll('.user-avatar img, .sidebar-pfp img').forEach(img => {
         if (!img.src.includes('/image/')) {
-          img.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(profile.username)}&background=06070f&color=00e5ff&bold=true`;
+          img.src = 'https://ui-avatars.com/api/?name=DzzXNzz&background=06070f&color=00e5ff&bold=true';
         }
       });
     }
