@@ -94,17 +94,19 @@ body {
 
 .coins-wrapper {
     border: 1.5px solid var(--neon-yellow);
-    padding: 7px 20px;
+    padding: 7px 14px;
     border-radius: 25px;
-    font-size: 14px; font-weight: 900;
+    font-size: 13px; font-weight: 900;
     color: var(--neon-yellow);
     background: rgba(255,224,0,0.07);
     box-shadow: 0 0 14px rgba(255,224,0,0.25);
     text-shadow: 0 0 8px var(--neon-yellow);
-    letter-spacing: 0.5px;
-    display: flex; align-items: center; gap: 6px;
-    min-width: 90px; justify-content: center;
+    letter-spacing: 0.3px;
+    display: flex; align-items: center; gap: 5px;
+    min-width: 110px; max-width: 160px;
+    justify-content: center;
     cursor: pointer; text-decoration: none; transition: 0.2s;
+    white-space: nowrap; overflow: hidden;
 }
 .coins-wrapper:hover {
     background: rgba(255,224,0,0.15);
