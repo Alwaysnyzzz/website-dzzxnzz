@@ -82,20 +82,18 @@ document.addEventListener('DOMContentLoaded', async function () {
     document.addEventListener('click', e => { if (!menuTrigger.contains(e.target)) dropdownMenu.classList.remove('show'); });
   }
 
-  // ===== LOAD COINS + USERNAME =====
-  const coinCountEl  = document.getElementById('coinCount');
-  const userNameText = document.querySelector('.user-name-text');
+  // ===== LOAD COINS =====
+  const coinCountEl = document.getElementById('coinCount');
+
+  // Nama sidebar selalu DzzXNzz, paksa hardcode
+  document.querySelectorAll('.user-name-text').forEach(el => {
+    el.textContent = 'DzzXNzz';
+  });
+
   if (Auth.isLoggedIn()) {
     const profile = await Auth.getProfile();
     if (profile) {
       if (coinCountEl) coinCountEl.textContent = Number(profile.coins).toLocaleString('id-ID');
-      // Update semua avatar dengan nama user
-      // Avatar tetap pakai DzzXNzz, bukan username
-      document.querySelectorAll('.user-avatar img, .sidebar-pfp img').forEach(img => {
-        if (!img.src.includes('/image/')) {
-          img.src = 'https://ui-avatars.com/api/?name=DzzXNzz&background=06070f&color=00e5ff&bold=true';
-        }
-      });
     }
   } else {
     if (coinCountEl) coinCountEl.textContent = '0';
