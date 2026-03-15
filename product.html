@@ -86,7 +86,7 @@
             <span class="nav-brand">DzzXNzz</span>
         </div>
         <div class="nav-right">
-            <div class="coins-wrapper">🪙 +<span id="coinCount">0</span></div>
+            <a href="/isisaldo" class="coins-wrapper">🪙 <span id="coinCount">0</span> +</a>
             <div class="user-menu">
                 <div class="user-avatar"><img src="./image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=06070f&color=00e5ff&bold=true'"></div>
                 <div class="menu-trigger" id="menuTrigger"><i class="fas fa-ellipsis-v"></i></div>
@@ -96,20 +96,20 @@
     </nav>
 
     <div class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-        <span class="user-name-text">DzzXNzz</span>
-        <div class="sidebar-pfp"><img src="./image/image.jpg" alt="PFP" onerror="this.src='https://ui-avatars.com/api/?name=DzzXNzz&background=06070f&color=00e5ff&bold=true'"></div>
+        <div class="sidebar-header">
+            <span class="user-name-text">DzzXNzz</span>
+            <div class="sidebar-pfp"><img src="./image/image.jpg" alt="PFP" onerror="this.src='https://ui-avatars.com/api/?name=DzzXNzz&background=06070f&color=00e5ff&bold=true'"></div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="home"><i class="fas fa-home"></i> Home</a></li>
+            <li class="active"><a href="product"><i class="fas fa-box"></i> Product</a></li>
+            <li><a href="/isisaldo"><i class="fas fa-wallet"></i> Isi Saldo</a></li>
+            <li><a href="contact"><i class="fas fa-phone-alt"></i> Contact</a></li>
+        </ul>
+        <div class="sidebar-divider"></div>
+        <ul class="sidebar-menu sidebar-system" id="system-menu"></ul>
     </div>
-    <ul class="sidebar-menu">
-        <li><a href="home"><i class="fas fa-home"></i> Home</a></li>
-        <li class="active"><a href="product"><i class="fas fa-box"></i> Product</a></li>
-        <li><a href="isisaldo"><i class="fas fa-wallet"></i> Isi Saldo</a></li>
-        <li><a href="contact"><i class="fas fa-phone-alt"></i> Contact</a></li>
-    </ul>
-    <div class="sidebar-divider"></div>
-    <ul class="sidebar-menu sidebar-system" id="system-menu"></ul>
-</div>
-<div class="overlay" id="overlay"></div>
+    <div class="overlay" id="overlay"></div>
 
     <main class="main-content">
         <div class="product-intro">

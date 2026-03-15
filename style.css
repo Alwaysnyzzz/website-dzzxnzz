@@ -104,6 +104,12 @@ body {
     letter-spacing: 0.5px;
     display: flex; align-items: center; gap: 6px;
     min-width: 90px; justify-content: center;
+    cursor: pointer; text-decoration: none; transition: 0.2s;
+}
+.coins-wrapper:hover {
+    background: rgba(255,224,0,0.15);
+    box-shadow: 0 0 22px rgba(255,224,0,0.4);
+    transform: scale(1.04);
 }
 
 .user-avatar {

@@ -174,6 +174,20 @@
         @keyframes spin { to{transform:rotate(360deg)} }
         @keyframes spinR { to{transform:rotate(-360deg)} }
         .loading-text { color: #00e5ff; font-size: 15px; font-weight: 800; letter-spacing: 2px; text-shadow: 0 0 10px #00e5ff; }
+
+        /* Warning belum login */
+        .not-login-warn {
+            display: flex; align-items: flex-start; gap: 12px;
+            background: rgba(255,224,0,0.07);
+            border: 1.5px solid rgba(255,224,0,0.35);
+            border-radius: 14px; padding: 14px 16px;
+            margin-bottom: 16px; animation: fadeInUp 0.4s ease;
+        }
+        .not-login-warn i { color: #ffe000; font-size: 18px; margin-top: 2px; flex-shrink: 0; }
+        .warn-title { font-size: 14px; font-weight: 900; color: #ffe000; margin-bottom: 3px; }
+        .warn-sub { font-size: 13px; color: rgba(255,255,255,0.55); font-weight: 600; line-height: 1.5; }
+        .warn-sub a { color: #00e5ff; font-weight: 800; text-decoration: none; }
+        .warn-sub a:hover { color: #00ff88; }
     </style>
 </head>
 <body>
@@ -185,7 +199,7 @@
             <span class="nav-brand">DzzXNzz</span>
         </div>
         <div class="nav-right">
-            <div class="coins-wrapper">🪙 <span id="coinCount">0</span> +</div>
+            <a href="/isisaldo" class="coins-wrapper">🪙 <span id="coinCount">0</span> +</a>
             <div class="user-menu">
                 <div class="user-avatar"><img src="./image/profile.jpg" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=User&background=06070f&color=00e5ff&bold=true'"></div>
                 <div class="menu-trigger" id="menuTrigger"><i class="fas fa-ellipsis-v"></i></div>
@@ -254,6 +268,15 @@
                 </div>
                 <div class="error-msg" id="errorMsg"></div>
 
+                <!-- Warning belum login -->
+                <div class="not-login-warn" id="notLoginWarn" style="display:none">
+                    <i class="fas fa-lock"></i>
+                    <div>
+                        <div class="warn-title">Kamu belum login nih!</div>
+                        <div class="warn-sub">Login dulu biar coins masuk ke akun kamu ya 😊 <a href="/login">Login sekarang →</a></div>
+                    </div>
+                </div>
+
                 <div class="info-row">
                     <i class="fas fa-info-circle"></i>
                     <span>Minimal top up <strong>Rp 500</strong> · Pembayaran via <strong>QRIS</strong></span>
@@ -303,10 +326,23 @@
             event.target.classList.add('active');
         }
 
+        // Cek login & tampilkan warning
+        function checkLoginStatus() {
+            const warn = document.getElementById('notLoginWarn');
+            const balanceCard = document.querySelector('.balance-card');
+            if (!Auth.isLoggedIn()) {
+                if (warn) warn.style.display = 'flex';
+                if (balanceCard) balanceCard.style.opacity = '0.4';
+            } else {
+                if (warn) warn.style.display = 'none';
+                if (balanceCard) balanceCard.style.opacity = '1';
+            }
+        }
+
         // Load balance pakai Auth helper dari script.js
         async function loadBalance() {
             if (!Auth.isLoggedIn()) {
-                window.location.href = '/login';
+                checkLoginStatus();
                 return;
             }
             try {
@@ -341,7 +377,9 @@
             }
 
             if (!Auth.isLoggedIn()) {
-                window.location.href = '/login';
+                // Tampilkan warning, scroll ke sana
+                const warn = document.getElementById('notLoginWarn');
+                if (warn) { warn.style.display = 'flex'; warn.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
                 return;
             }
 
@@ -376,6 +414,7 @@
             }
         });
 
+        checkLoginStatus();
         loadBalance();
     </script>
 </body>
