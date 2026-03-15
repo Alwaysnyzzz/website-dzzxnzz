@@ -267,8 +267,16 @@
                 document.getElementById('detailWaktu').textContent = date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
                 document.getElementById('strukturTimestamp').textContent = 'Diproses pada ' + date.toLocaleString('id-ID');
 
-                // Hapus cache profil lama supaya script.js fetch ulang dari DB
+                // Force refresh coins dari DB — hapus cache lama lalu fetch ulang
                 localStorage.removeItem('nyzz-profile');
+                if (typeof Auth !== 'undefined' && Auth.isLoggedIn()) {
+                    Auth.getProfile(true).then(profile => {
+                        if (profile) {
+                            const coinEl = document.getElementById('coinCount');
+                            if (coinEl) coinEl.textContent = Number(profile.coins).toLocaleString('id-ID');
+                        }
+                    });
+                }
 
                 // Sembunyikan loading, tampilkan struk
                 loadingOverlay.classList.add('hidden');
