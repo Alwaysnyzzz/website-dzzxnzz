@@ -74,11 +74,27 @@
         }
         .promo-btn:hover { transform:translateY(-2px) scale(1.05); box-shadow:0 6px 28px rgba(191,0,255,.5); }
 
+        .welcome-text { color: rgba(255,255,255,0.6); font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+        .welcome-text span { color: #00e5ff; font-weight: 900; }
+
+        .product-count-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(0,229,255,0.07);
+            border: 1px solid rgba(0,229,255,0.2);
+            border-radius: 30px; padding: 7px 18px;
+            font-size: 13px; font-weight: 700;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 22px;
+        }
+        .product-count-badge i { color: #00e5ff; font-size: 13px; }
+        .product-count-badge strong { color: #00e5ff; font-weight: 900; }
+
         @media(max-width:600px){
             .stats-row{gap:10px;}
             .stat-item{padding:12px 14px;min-width:76px;}
             .stat-number{font-size:20px;}
             .promo-banner{justify-content:center;text-align:center;}
+            .product-count-badge{font-size:12px;}
         }
     </style>
 </head>
@@ -105,7 +121,6 @@
     <nav class="navbar">
         <div class="nav-left">
             <button id="menu-toggle">☰</button>
-            <span class="nav-brand">DzzXNzz</span>
         </div>
         <div class="nav-right">
             <a href="/isisaldo" class="coins-wrapper">🪙 <span id="coinCount">0</span> +</a>
@@ -138,9 +153,13 @@
         <div class="hero-section">
             <div class="hero-badge"><i class="fas fa-circle"></i> SEMUA SISTEM ONLINE</div>
             <h1 class="rainbow-title">DzzXNzz</h1>
-            <p class="subtitle">Solusi hosting & bot terbaik — cepat, aman, dan terjangkau ✨</p>
+            <p class="subtitle" id="welcomeText">Solusi hosting & bot terbaik — cepat, aman, dan terjangkau ✨</p>
+            <div class="product-count-badge" id="productBadge">
+                <i class="fas fa-box"></i>
+                <span><strong id="produkCount">2</strong> Produk Tersedia — Panel Pterodactyl &amp; Layanan PPOB</span>
+            </div>
             <div class="stats-row">
-                <div class="stat-item"><span class="stat-number">99.9%</span><span class="stat-label">Uptime</span></div>
+                <div class="stat-item"><span class="stat-number" id="totalProduk">2</span><span class="stat-label">Total Produk</span></div>
                 <div class="stat-item"><span class="stat-number">24/7</span><span class="stat-label">Support</span></div>
                 <div class="stat-item"><span class="stat-number">100+</span><span class="stat-label">Pengguna</span></div>
                 <div class="stat-item"><span class="stat-number">4★</span><span class="stat-label">Rating</span></div>
@@ -207,5 +226,21 @@
         </div>
     </footer>
     <script src="script.js"></script>
+    <script>
+        // Welcome text berdasarkan status login
+        document.addEventListener('DOMContentLoaded', async function() {
+            const welcomeEl = document.getElementById('welcomeText');
+            if (!welcomeEl) return;
+
+            if (Auth.isLoggedIn()) {
+                const profile = await Auth.getProfile();
+                if (profile) {
+                    welcomeEl.innerHTML = `Selamat datang kembali, <span style="color:#00e5ff;font-weight:900">${profile.username}</span>! 👋`;
+                }
+            } else {
+                welcomeEl.textContent = 'Solusi hosting & bot terbaik — cepat, aman, dan terjangkau ✨';
+            }
+        });
+    </script>
 </body>
 </html>

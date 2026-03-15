@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Struk Pembayaran - DzzXNzz</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Righteous&display=swap" rel="stylesheet">
     <style>
@@ -146,7 +146,7 @@
 
     <nav class="navbar">
         <div class="nav-left">
-            <span class="nav-brand">DzzXNzz</span>
+
         </div>
         <div class="nav-right">
             <div class="coins-wrapper">🪙 <span id="coinCount">0</span> +</div>
@@ -221,7 +221,7 @@
         <div class="loading-text">Memuat struk...</div>
     </div>
 
-    <script src="../script.js"></script>
+    <script src="script.js"></script>
     <script>
         (function () {
             const urlParams = new URLSearchParams(window.location.search);
@@ -267,9 +267,8 @@
                 document.getElementById('detailWaktu').textContent = date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
                 document.getElementById('strukturTimestamp').textContent = 'Diproses pada ' + date.toLocaleString('id-ID');
 
-                // Update coinCount di navbar
-                const coinCountEl = document.getElementById('coinCount');
-                if (coinCountEl) coinCountEl.textContent = Number(data.amount).toLocaleString('id-ID');
+                // Hapus cache profil lama supaya script.js fetch ulang dari DB
+                localStorage.removeItem('nyzz-profile');
 
                 // Sembunyikan loading, tampilkan struk
                 loadingOverlay.classList.add('hidden');
