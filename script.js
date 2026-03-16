@@ -125,12 +125,17 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (profile) {
       // Update coins di navbar
       if (coinCountEl) coinCountEl.textContent = Number(profile.coins).toLocaleString('id-ID');
-      // Load avatar navbar dari DB (via cache yang sudah valid)
-      if (profile.avatar_url) {
-        document.querySelectorAll('.user-avatar img').forEach(img => {
-          img.src = profile.avatar_url;
-        });
-      }
+
+      // Ganti img navbar jadi inisial huruf pertama username
+      const initial = profile.username ? profile.username.charAt(0).toUpperCase() : '?';
+      document.querySelectorAll('.user-avatar').forEach(wrap => {
+        wrap.innerHTML = `<span style="
+          font-family:'Orbitron',sans-serif;font-size:15px;font-weight:900;
+          color:#00e5ff;text-shadow:0 0 10px rgba(0,229,255,0.8);
+          width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+          user-select:none;
+        ">${initial}</span>`;
+      });
     }
   } else {
     if (coinCountEl) coinCountEl.textContent = '0';
