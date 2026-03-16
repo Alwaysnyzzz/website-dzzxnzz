@@ -99,9 +99,17 @@ document.addEventListener('DOMContentLoaded', async function () {
   });
 
   if (Auth.isLoggedIn()) {
-    const profile = await Auth.getProfile();
+    const profile = await Auth.getProfile(); // pakai cache localStorage, request hanya sekali
     if (profile) {
+      // Update coins
       if (coinCountEl) coinCountEl.textContent = Number(profile.coins).toLocaleString('id-ID');
+
+      // Load avatar di navbar dari cache (tidak request ulang)
+      if (profile.avatar_url) {
+        document.querySelectorAll('.user-avatar img').forEach(img => {
+          img.src = profile.avatar_url;
+        });
+      }
     }
   } else {
     if (coinCountEl) coinCountEl.textContent = '0';

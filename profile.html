@@ -139,13 +139,14 @@
 
         .accordion-body {
             max-height:0; overflow:hidden;
-            transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.3s ease;
+            transition:max-height 0.5s cubic-bezier(0.4,0,0.2,1), padding 0.3s ease;
             padding:0 18px;
         }
         .accordion-body.open {
-            max-height:800px;
+            max-height:2000px;
             padding:16px 18px 18px;
             animation:slideDown 0.3s ease;
+            overflow-y:auto;
         }
 
         /* ===== PASSWORD FORM ===== */
@@ -349,6 +350,52 @@
             box-shadow:0 0 18px rgba(255,0,85,0.25);
         }
 
+        /* ===== EDIT BUTTONS ===== */
+        .cover-edit-btn {
+            position:absolute; top:10px; right:12px;
+            width:34px; height:34px; border-radius:50%;
+            background:rgba(0,0,0,0.55); backdrop-filter:blur(6px);
+            border:1.5px solid rgba(255,255,255,0.25);
+            color:rgba(255,255,255,0.8); font-size:13px;
+            cursor:pointer; display:flex; align-items:center; justify-content:center;
+            transition:0.2s; z-index:2;
+        }
+        .cover-edit-btn:hover { background:rgba(0,229,255,0.25); border-color:#00e5ff; color:#00e5ff; }
+
+        .avatar-edit-btn {
+            position:absolute; bottom:0; right:0;
+            width:26px; height:26px; border-radius:50%;
+            background:#00e5ff; border:2px solid #06070f;
+            color:#06070f; font-size:11px;
+            cursor:pointer; display:flex; align-items:center; justify-content:center;
+            transition:0.2s; z-index:2;
+        }
+        .avatar-edit-btn:hover { background:#00ff88; transform:scale(1.1); }
+
+        /* Upload toast notifikasi */
+        .upload-toast {
+            position:fixed; bottom:24px; left:50%;
+            transform:translateX(-50%) translateY(100px);
+            background:rgba(13,15,25,0.96); backdrop-filter:blur(12px);
+            border:1px solid rgba(0,229,255,0.3); border-radius:40px;
+            padding:11px 22px; font-size:13px; font-weight:800;
+            color:#fff; z-index:9999;
+            transition:0.4s cubic-bezier(.34,1.56,.64,1);
+            display:flex; align-items:center; gap:8px;
+            white-space:nowrap; box-shadow:0 8px 30px rgba(0,0,0,0.5);
+        }
+        .upload-toast.show  { transform:translateX(-50%) translateY(0); }
+        .upload-toast.success { border-color:rgba(0,255,136,0.4); }
+        .upload-toast.success i { color:#00ff88; }
+        .upload-toast.error   { border-color:rgba(255,0,85,0.4); }
+        .upload-toast.error i { color:#ff6688; }
+        .upload-toast.loading { border-color:rgba(0,229,255,0.3); }
+        .upload-toast.loading i { color:#00e5ff; }
+
+        /* Disabled state tombol edit saat upload */
+        .cover-edit-btn:disabled,
+        .avatar-edit-btn:disabled { opacity:0.45; cursor:not-allowed; }
+
         @media(max-width:480px) {
             .pstat-num { font-size:16px; }
             .riwayat-id { max-width:120px; }
@@ -394,10 +441,58 @@
     <main class="main-content" id="mainContent" style="display:none">
 
         <!-- Profile Header -->
+        <!-- Modal Input Link Avatar -->
+        <div class="modal-link" id="modalLinkAvatar">
+            <div class="modal-link-box">
+                <div class="modal-link-title"><i class="fas fa-user-circle"></i> Foto Profil</div>
+                <div class="modal-link-sub">Paste link gambar dari <span>imgur.com</span>, <span>discord</span>, atau URL gambar lainnya</div>
+                <input type="url" class="modal-link-input" id="inputLinkAvatar" placeholder="https://i.imgur.com/xxx.jpg">
+                <div class="modal-link-error" id="errorLinkAvatar">Link tidak valid atau gambar tidak bisa dimuat</div>
+                <img class="modal-link-preview" id="previewLinkAvatar" alt="preview">
+                <div class="modal-link-actions">
+                    <button class="modal-link-save" onclick="saveLinkAvatar()">Simpan</button>
+                    <button class="modal-link-cancel" onclick="closeModalLink('avatar')">Batal</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Input Link Cover -->
+        <div class="modal-link" id="modalLinkCover">
+            <div class="modal-link-box">
+                <div class="modal-link-title"><i class="fas fa-image"></i> Foto Cover</div>
+                <div class="modal-link-sub">Paste link gambar dari <span>imgur.com</span>, <span>discord</span>, atau URL gambar lainnya</div>
+                <input type="url" class="modal-link-input" id="inputLinkCover" placeholder="https://i.imgur.com/xxx.jpg">
+                <div class="modal-link-error" id="errorLinkCover">Link tidak valid atau gambar tidak bisa dimuat</div>
+                <img class="modal-link-preview" id="previewLinkCover" alt="preview">
+                <div class="modal-link-actions">
+                    <button class="modal-link-save" onclick="saveLinkCover()">Simpan</button>
+                    <button class="modal-link-cancel" onclick="closeModalLink('cover')">Batal</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input file tersembunyi -->
+        <input type="file" id="inputAvatar" accept="image/jpeg,image/png,image/webp" style="display:none">
+        <input type="file" id="inputCover"  accept="image/jpeg,image/png,image/webp" style="display:none">
+
+        <!-- Toast notifikasi -->
+        <div class="upload-toast" id="uploadToast">
+            <i id="uploadToastIcon" class="fas fa-spinner fa-spin"></i>
+            <span id="uploadToastText">Mengupload...</span>
+        </div>
+
         <div class="profile-header">
-            <div class="profile-cover">
-                <div class="profile-avatar-wrap">
-                    <div class="profile-avatar"><i class="fas fa-user"></i></div>
+            <div class="profile-cover" id="profileCover">
+                <!-- Pensil cover -->
+                <button class="cover-edit-btn" id="coverEditBtn" onclick="document.getElementById('inputCover').click()" title="Ganti foto cover">
+                    <i class="fas fa-pencil-alt"></i>
+                </button>
+                <div class="profile-avatar-wrap" style="position:relative;display:inline-block">
+                    <div class="profile-avatar" id="profileAvatarEl"><i class="fas fa-user"></i></div>
+                    <!-- Pensil avatar -->
+                    <button class="avatar-edit-btn" id="avatarEditBtn" onclick="document.getElementById('inputAvatar').click()" title="Ganti foto profil">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
                 </div>
             </div>
             <div class="profile-info">
@@ -689,6 +784,7 @@
             finally {
                 loader.classList.add('hidden');
                 main.style.display = 'block';
+                loadSavedPhotos(); // Load foto avatar & cover dari localStorage
             }
         });
 
@@ -739,6 +835,129 @@
         // ===== Logout =====
         document.getElementById('logoutBtn').addEventListener('click',function(){
             Auth.logout(); window.location.href='/login';
+        });
+
+        // ===== TOAST HELPER =====
+        let toastTimer;
+        function showToast(msg, type='loading') {
+            const toast    = document.getElementById('uploadToast');
+            const toastTxt = document.getElementById('uploadToastText');
+            const toastIco = document.getElementById('uploadToastIcon');
+            toast.className = 'upload-toast show ' + type;
+            toastTxt.textContent = msg;
+            toastIco.className = type === 'loading'
+                ? 'fas fa-spinner fa-spin'
+                : type === 'success' ? 'fas fa-check-circle' : 'fas fa-times-circle';
+            clearTimeout(toastTimer);
+            if (type !== 'loading') toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+        function hideToast() {
+            document.getElementById('uploadToast').classList.remove('show');
+        }
+
+        // ===== UPLOAD KE CATBOX VIA API =====
+        async function uploadToCatbox(file, type) {
+            const coverBtn  = document.getElementById('coverEditBtn');
+            const avatarBtn = document.getElementById('avatarEditBtn');
+            // Disable tombol saat upload
+            if (coverBtn)  coverBtn.disabled  = true;
+            if (avatarBtn) avatarBtn.disabled = true;
+            showToast('Mengupload ke Catbox...', 'loading');
+
+            try {
+                // Cek ukuran
+                const maxSize = type === 'cover' ? 3 : 2;
+                if (file.size > maxSize * 1024 * 1024) {
+                    showToast(`Ukuran maksimal ${maxSize} MB`, 'error'); return;
+                }
+
+                // Baca sebagai base64
+                const base64 = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload  = e => resolve(e.target.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+
+                // Tampilkan preview dulu (sementara)
+                applyPhoto(type, base64);
+
+                // Kirim ke API
+                const res  = await fetch('/api/upload-image', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + Auth.getToken()
+                    },
+                    body: JSON.stringify({ image: base64, type, filename: file.name })
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    showToast(data.error || 'Upload gagal', 'error');
+                    return;
+                }
+
+                // Terapkan URL Catbox langsung ke tampilan
+                applyPhoto(type, data.url);
+
+                // Hapus cache lama → fetch ulang SEKALI → cache baru tersimpan
+                localStorage.removeItem('nyzz-profile');
+                const updatedProfile = await Auth.getProfile(true);
+                if (updatedProfile) {
+                    // Update coins juga sekalian
+                    const coinEl = document.getElementById('coinCount');
+                    if (coinEl) coinEl.textContent = Number(updatedProfile.coins).toLocaleString('id-ID');
+                    // Update avatar di navbar juga
+                    if (updatedProfile.avatar_url) {
+                        document.querySelectorAll('.user-avatar img').forEach(img => {
+                            img.src = updatedProfile.avatar_url;
+                        });
+                    }
+                }
+
+                showToast(
+                    type === 'avatar' ? 'Foto profil diperbarui! ✨' : 'Foto cover diperbarui! ✨',
+                    'success'
+                );
+
+            } catch(err) {
+                showToast('Gagal upload: ' + err.message, 'error');
+            } finally {
+                if (coverBtn)  coverBtn.disabled  = false;
+                if (avatarBtn) avatarBtn.disabled = false;
+            }
+        }
+
+        // ===== Terapkan foto ke tampilan =====
+        function applyPhoto(type, url) {
+            if (type === 'avatar') {
+                const el = document.getElementById('profileAvatarEl');
+                if (el) el.innerHTML = `<img src="${url}" alt="avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+            } else {
+                const el = document.getElementById('profileCover');
+                if (el) {
+                    el.style.backgroundImage    = `url(${url})`;
+                    el.style.backgroundSize     = 'cover';
+                    el.style.backgroundPosition = 'center';
+                }
+            }
+        }
+
+        // ===== Load foto dari profil Supabase =====
+        function loadSavedPhotos(profile) {
+            if (profile?.avatar_url) applyPhoto('avatar', profile.avatar_url);
+            if (profile?.cover_url)  applyPhoto('cover',  profile.cover_url);
+        }
+
+        // ===== Event listener input file =====
+        document.getElementById('inputAvatar').addEventListener('change', function(e) {
+            if (e.target.files[0]) uploadToCatbox(e.target.files[0], 'avatar');
+            this.value = ''; // reset supaya bisa pilih file sama lagi
+        });
+        document.getElementById('inputCover').addEventListener('change', function(e) {
+            if (e.target.files[0]) uploadToCatbox(e.target.files[0], 'cover');
+            this.value = '';
         });
     </script>
 </body>

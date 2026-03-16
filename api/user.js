@@ -24,7 +24,7 @@ export default async function handler(req, res) {
     // Ambil data terbaru dari DB (termasuk coins)
     const { data: profile, error } = await supabase
       .from('profiles')
-      .select('id, username, coins, created_at')
+      .select('id, username, coins, created_at, avatar_url, cover_url')
       .eq('id', decoded.id)
       .single();
 
