@@ -104,11 +104,18 @@ document.addEventListener('DOMContentLoaded', async function () {
       // Update coins
       if (coinCountEl) coinCountEl.textContent = Number(profile.coins).toLocaleString('id-ID');
 
-      // Load avatar di navbar dari cache (tidak request ulang)
-      if (profile.avatar_url) {
+      // Load avatar navbar dari localStorage foto (instant, tidak hilang saat refresh)
+      const uid = profile.id;
+      const localAvatar = localStorage.getItem('photo_avatar_' + uid);
+      const avatarUrl   = localAvatar || profile.avatar_url;
+      if (avatarUrl) {
         document.querySelectorAll('.user-avatar img').forEach(img => {
-          img.src = profile.avatar_url;
+          img.src = avatarUrl;
         });
+        // Simpan ke localStorage kalau belum ada
+        if (!localAvatar && profile.avatar_url) {
+          localStorage.setItem('photo_avatar_' + uid, profile.avatar_url);
+        }
       }
     }
   } else {

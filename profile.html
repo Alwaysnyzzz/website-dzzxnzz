@@ -915,7 +915,7 @@
             finally {
                 loader.classList.add('hidden');
                 main.style.display = 'block';
-                loadSavedPhotos(); // Load foto avatar & cover dari localStorage
+                loadSavedPhotos(profile); // Load foto dari localStorage / profile
             }
         });
 
@@ -1075,10 +1075,23 @@
             }
         }
 
-        // ===== Load foto dari profil Supabase =====
+        // ===== Simpan foto ke localStorage (key sendiri, tidak ikut profile cache) =====
+        function savePhotoLocal(type, url) {
+            const uid = Auth.getUser()?.id || 'guest';
+            if (url) localStorage.setItem('photo_' + type + '_' + uid, url);
+            else     localStorage.removeItem('photo_' + type + '_' + uid);
+        }
+
+        // ===== Load foto — dari localStorage dulu (instant), fallback dari profile =====
         function loadSavedPhotos(profile) {
-            if (profile?.avatar_url) applyPhoto('avatar', profile.avatar_url);
-            if (profile?.cover_url)  applyPhoto('cover',  profile.cover_url);
+            const uid = Auth.getUser()?.id || 'guest';
+            // Coba dari localStorage foto sendiri dulu (lebih cepat, tidak hilang)
+            const localAvatar = localStorage.getItem('photo_avatar_' + uid);
+            const localCover  = localStorage.getItem('photo_cover_'  + uid);
+            if (localAvatar) applyPhoto('avatar', localAvatar);
+            else if (profile?.avatar_url) { applyPhoto('avatar', profile.avatar_url); savePhotoLocal('avatar', profile.avatar_url); }
+            if (localCover)  applyPhoto('cover', localCover);
+            else if (profile?.cover_url)  { applyPhoto('cover',  profile.cover_url);  savePhotoLocal('cover',  profile.cover_url); }
         }
 
         // ===== Popup upload helpers =====
@@ -1104,19 +1117,22 @@
         }
 
         async function deletePhoto(type) {
-            if (!confirm('Hapus foto ' + (type === 'avatar' ? 'profil' : 'cover') + '?')) return;
             const deleteBtn = document.getElementById(type === 'avatar' ? 'btnDeleteAvatar' : 'btnDeleteCover');
             if (deleteBtn) { deleteBtn.disabled = true; deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menghapus...'; }
             showToast('Menghapus foto...', 'loading');
             try {
-                const res  = await fetch('/api/upload-image', {
+                const res  = await fetch('/api/delete-photo', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + Auth.getToken() },
-                    body: JSON.stringify({ image: null, type, delete: true })
+                    body: JSON.stringify({ type })
                 });
                 const data = await res.json();
                 if (!res.ok) { showToast(data.error || 'Gagal hapus', 'error'); return; }
-                // Reset tampilan ke default
+
+                // Hapus dari localStorage foto
+                savePhotoLocal(type, null);
+
+                // Reset tampilan
                 if (type === 'avatar') {
                     const el = document.getElementById('profileAvatarEl');
                     if (el) el.innerHTML = '<i class="fas fa-user"></i>';
@@ -1124,17 +1140,25 @@
                         img.src = 'https://ui-avatars.com/api/?name=DzzXNzz&background=06070f&color=00e5ff&bold=true';
                     });
                 } else {
-                    const el = document.getElementById('profileCover');
-                    if (el) { el.style.backgroundImage = ''; el.style.background = ''; }
+                    const coverEl = document.getElementById('profileCover');
+                    if (coverEl) {
+                        coverEl.style.backgroundImage = '';
+                        coverEl.style.background = 'linear-gradient(135deg,rgba(0,229,255,0.15),rgba(191,0,255,0.12),rgba(0,255,136,0.1))';
+                    }
                 }
+
+                // Hapus cache profile
                 localStorage.removeItem('nyzz-profile');
-                await Auth.getProfile(true);
                 closeUploadModal(type);
-                showToast(type === 'avatar' ? 'Foto profil dihapus' : 'Foto cover dihapus', 'success');
+                showToast(type === 'avatar' ? 'Foto profil dihapus ✓' : 'Foto cover dihapus ✓', 'success');
+
             } catch(err) {
                 showToast('Gagal: ' + err.message, 'error');
             } finally {
-                if (deleteBtn) { deleteBtn.disabled = false; deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Hapus Foto ' + (type === 'avatar' ? 'Profil' : 'Cover'); }
+                if (deleteBtn) {
+                    deleteBtn.disabled = false;
+                    deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Hapus';
+                }
             }
         }
 
@@ -1230,19 +1254,17 @@
                     return;
                 }
 
-                // Terapkan URL permanen
+                // Terapkan URL permanen + simpan ke localStorage (tidak hilang saat refresh)
                 applyPhoto(type, data.url);
+                savePhotoLocal(type, data.url);
 
-                // Hapus cache → fetch ulang sekali
-                localStorage.removeItem('nyzz-profile');
-                const updated = await Auth.getProfile(true);
-                if (updated) {
-                    const coinEl = document.getElementById('coinCount');
-                    if (coinEl) coinEl.textContent = Number(updated.coins).toLocaleString('id-ID');
-                    if (updated.avatar_url) {
-                        document.querySelectorAll('.user-avatar img').forEach(img => img.src = updated.avatar_url);
-                    }
+                // Update avatar navbar juga
+                if (type === 'avatar') {
+                    document.querySelectorAll('.user-avatar img').forEach(img => img.src = data.url);
                 }
+
+                // Hapus cache profile lama (biar coins fresh), tapi foto sudah aman di localStorage
+                localStorage.removeItem('nyzz-profile');
 
                 closeUploadModal(type);
                 showToast(type === 'avatar' ? 'Foto profil diperbarui! ✨' : 'Foto cover diperbarui! ✨', 'success');
