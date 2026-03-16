@@ -99,23 +99,30 @@ document.addEventListener('DOMContentLoaded', async function () {
   });
 
   if (Auth.isLoggedIn()) {
-    const profile = await Auth.getProfile(); // pakai cache localStorage, request hanya sekali
+    const uid = Auth.getUser()?.id;
+
+    // Load foto avatar dari localStorage foto dulu (instant, 0 request)
+    if (uid) {
+      const localAvatar = localStorage.getItem('photo_avatar_' + uid);
+      if (localAvatar) {
+        document.querySelectorAll('.user-avatar img').forEach(img => {
+          img.src = localAvatar;
+        });
+      }
+    }
+
+    // Fetch profile (pakai cache kalau ada)
+    const profile = await Auth.getProfile();
     if (profile) {
       // Update coins
       if (coinCountEl) coinCountEl.textContent = Number(profile.coins).toLocaleString('id-ID');
 
-      // Load avatar navbar dari localStorage foto (instant, tidak hilang saat refresh)
-      const uid = profile.id;
-      const localAvatar = localStorage.getItem('photo_avatar_' + uid);
-      const avatarUrl   = localAvatar || profile.avatar_url;
-      if (avatarUrl) {
+      // Kalau tidak ada di localStorage tapi ada di DB → simpan ke localStorage
+      if (uid && !localStorage.getItem('photo_avatar_' + uid) && profile.avatar_url) {
+        localStorage.setItem('photo_avatar_' + uid, profile.avatar_url);
         document.querySelectorAll('.user-avatar img').forEach(img => {
-          img.src = avatarUrl;
+          img.src = profile.avatar_url;
         });
-        // Simpan ke localStorage kalau belum ada
-        if (!localAvatar && profile.avatar_url) {
-          localStorage.setItem('photo_avatar_' + uid, profile.avatar_url);
-        }
       }
     }
   } else {
