@@ -23,7 +23,7 @@
             border-radius: 24px;
             border: 1px solid rgba(0,229,255,0.2);
             box-shadow: 0 0 30px rgba(0,229,255,0.07), 0 20px 50px rgba(0,0,0,0.55);
-            overflow: hidden; margin-bottom: 16px;
+            overflow: visible; margin-bottom: 16px;
             animation: fadeInUp 0.5s ease;
             position: relative;
         }
@@ -36,8 +36,9 @@
             height: 85px;
             background: linear-gradient(135deg,rgba(0,229,255,0.15),rgba(191,0,255,0.12),rgba(0,255,136,0.1));
             position: relative;
+            overflow: visible;
         }
-        .profile-avatar-wrap { position: absolute; bottom:-36px; left:22px; }
+        .profile-avatar-wrap { position: absolute; bottom:-36px; left:22px; z-index:3; }
         .profile-avatar {
             width:74px; height:74px; border-radius:50%;
             border:3px solid #00e5ff; background:#0a0b14;
@@ -468,25 +469,43 @@
             padding:5px 12px; cursor:pointer;
         }
 
-        .upload-modal-actions { display:flex; gap:10px; }
+        .upload-modal-actions { display:flex; gap:8px; }
         .upload-btn-save {
-            flex:1; padding:13px; background:linear-gradient(135deg,#00e5ff,#00ff88);
+            flex:1; padding:13px 10px;
+            background:linear-gradient(135deg,#00e5ff,#00ff88);
             border:none; border-radius:40px; color:#06070f;
-            font-family:'Nunito',sans-serif; font-weight:900; font-size:14px;
+            font-family:'Nunito',sans-serif; font-weight:900; font-size:13px;
             cursor:pointer; transition:.25s;
-            display:flex; align-items:center; justify-content:center; gap:8px;
+            display:flex; align-items:center; justify-content:center; gap:6px;
+            white-space:nowrap;
         }
         .upload-btn-save:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,229,255,0.35); }
         .upload-btn-save:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
         .upload-btn-cancel {
-            flex:1; padding:13px; background:transparent;
+            flex:1; padding:13px 10px; background:transparent;
             border:1.5px solid rgba(255,255,255,0.15); border-radius:40px;
             color:rgba(255,255,255,0.5); font-family:'Nunito',sans-serif;
-            font-weight:900; font-size:14px; cursor:pointer; transition:.2s;
+            font-weight:900; font-size:13px; cursor:pointer; transition:.2s;
+            white-space:nowrap;
         }
         .upload-btn-cancel:hover { border-color:rgba(255,255,255,0.3); color:#fff; }
+        /* Tombol hapus di dalam actions (inline) */
+        .upload-modal-actions .upload-btn-delete {
+            flex:1; padding:13px 10px; margin-top:0;
+            font-size:13px; white-space:nowrap;
+        }
 
         .upload-btn-loader { width:15px; height:15px; border:2.5px solid rgba(0,0,0,0.3); border-top-color:#06070f; border-radius:50%; animation:spin 0.7s linear infinite; display:none; }
+
+        .upload-btn-delete {
+            width:100%; padding:11px; margin-top:10px;
+            background:transparent;
+            border:1.5px solid rgba(255,0,85,0.3); border-radius:40px;
+            color:rgba(255,0,85,0.7); font-family:'Nunito',sans-serif;
+            font-weight:800; font-size:13px; cursor:pointer; transition:.2s;
+            display:flex; align-items:center; justify-content:center; gap:8px;
+        }
+        .upload-btn-delete:hover { background:rgba(255,0,85,0.08); border-color:#ff0055; color:#ff6688; }
 
         @media(max-width:480px) {
             .pstat-num { font-size:16px; }
@@ -550,7 +569,7 @@
                 <div class="profile-avatar-wrap" style="position:relative;display:inline-block">
                     <div class="profile-avatar" id="profileAvatarEl"><i class="fas fa-user"></i></div>
                     <!-- Pensil avatar -->
-                    <button class="avatar-edit-btn" id="avatarEditBtn" onclick="document.getElementById('inputAvatar').click()" title="Ganti foto profil">
+                    <button class="avatar-edit-btn" id="avatarEditBtn" onclick="openUploadModal('avatar')" title="Ganti foto profil">
                         <i class="fas fa-pencil-alt"></i>
                     </button>
                 </div>
@@ -707,6 +726,9 @@
                     <span id="btnSaveAvatarText"><i class="fas fa-check"></i> Simpan</span>
                     <div class="upload-btn-loader" id="loaderAvatar"></div>
                 </button>
+                <button class="upload-btn-delete" id="btnDeleteAvatar" onclick="deletePhoto('avatar')" style="display:none">
+                    <i class="fas fa-trash-alt"></i> Hapus
+                </button>
                 <button class="upload-btn-cancel" onclick="closeUploadModal('avatar')">Batal</button>
             </div>
         </div>
@@ -729,6 +751,9 @@
                 <button class="upload-btn-save" id="btnSaveCover">
                     <span id="btnSaveCoverText"><i class="fas fa-check"></i> Simpan</span>
                     <div class="upload-btn-loader" id="loaderCover"></div>
+                </button>
+                <button class="upload-btn-delete" id="btnDeleteCover" onclick="deletePhoto('cover')" style="display:none">
+                    <i class="fas fa-trash-alt"></i> Hapus
                 </button>
                 <button class="upload-btn-cancel" onclick="closeUploadModal('cover')">Batal</button>
             </div>
@@ -1063,12 +1088,54 @@
             const modal = document.getElementById(type === 'avatar' ? 'modalUploadAvatar' : 'modalUploadCover');
             // Reset state
             selectedFile[type] = null;
-            const previewWrap = document.getElementById(type === 'avatar' ? 'previewWrapAvatar' : 'previewWrapCover');
-            const dropArea    = document.getElementById(type === 'avatar' ? 'dropAvatar' : 'dropCover');
+            const previewWrap  = document.getElementById(type === 'avatar' ? 'previewWrapAvatar' : 'previewWrapCover');
+            const dropArea     = document.getElementById(type === 'avatar' ? 'dropAvatar' : 'dropCover');
+            const deleteBtn    = document.getElementById(type === 'avatar' ? 'btnDeleteAvatar' : 'btnDeleteCover');
             previewWrap.classList.remove('show');
             dropArea.style.display = 'block';
+            // Tampilkan tombol hapus hanya jika sudah ada foto tersimpan
+            try {
+                const profile = JSON.parse(localStorage.getItem('nyzz-profile'));
+                const hasPhoto = type === 'avatar' ? !!profile?.avatar_url : !!profile?.cover_url;
+                if (deleteBtn) deleteBtn.style.display = hasPhoto ? 'flex' : 'none';
+            } catch(e) { if (deleteBtn) deleteBtn.style.display = 'none'; }
             modal.classList.add('show');
             document.body.style.overflow = 'hidden';
+        }
+
+        async function deletePhoto(type) {
+            if (!confirm('Hapus foto ' + (type === 'avatar' ? 'profil' : 'cover') + '?')) return;
+            const deleteBtn = document.getElementById(type === 'avatar' ? 'btnDeleteAvatar' : 'btnDeleteCover');
+            if (deleteBtn) { deleteBtn.disabled = true; deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menghapus...'; }
+            showToast('Menghapus foto...', 'loading');
+            try {
+                const res  = await fetch('/api/upload-image', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + Auth.getToken() },
+                    body: JSON.stringify({ image: null, type, delete: true })
+                });
+                const data = await res.json();
+                if (!res.ok) { showToast(data.error || 'Gagal hapus', 'error'); return; }
+                // Reset tampilan ke default
+                if (type === 'avatar') {
+                    const el = document.getElementById('profileAvatarEl');
+                    if (el) el.innerHTML = '<i class="fas fa-user"></i>';
+                    document.querySelectorAll('.user-avatar img').forEach(img => {
+                        img.src = 'https://ui-avatars.com/api/?name=DzzXNzz&background=06070f&color=00e5ff&bold=true';
+                    });
+                } else {
+                    const el = document.getElementById('profileCover');
+                    if (el) { el.style.backgroundImage = ''; el.style.background = ''; }
+                }
+                localStorage.removeItem('nyzz-profile');
+                await Auth.getProfile(true);
+                closeUploadModal(type);
+                showToast(type === 'avatar' ? 'Foto profil dihapus' : 'Foto cover dihapus', 'success');
+            } catch(err) {
+                showToast('Gagal: ' + err.message, 'error');
+            } finally {
+                if (deleteBtn) { deleteBtn.disabled = false; deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Hapus Foto ' + (type === 'avatar' ? 'Profil' : 'Cover'); }
+            }
         }
 
         function closeUploadModal(type) {
