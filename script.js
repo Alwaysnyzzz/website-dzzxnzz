@@ -15,8 +15,11 @@ const Auth = {
   },
   setSession(session) { localStorage.setItem('nyzz-session', JSON.stringify(session)); },
   logout() {
+    // Hapus session & profile cache
     localStorage.removeItem('nyzz-session');
     localStorage.removeItem('nyzz-profile');
+    // Foto TIDAK dihapus dari localStorage — biar tetap ada kalau login lagi
+    // (foto per userId, tidak bocor ke akun lain)
   },
   async getProfile(forceRefresh = false) {
     if (!this.isLoggedIn()) return null;
@@ -53,7 +56,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         <li class="system-item"><a href="/profile"><i class="fas fa-user-circle"></i> Akun</a></li>
         <li class="system-item"><a href="#" id="sidebarLogout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>`;
       document.getElementById('sidebarLogout')?.addEventListener('click', e => {
-        e.preventDefault(); Auth.logout(); window.location.href = '/login';
+        e.preventDefault();
+        Auth.logout();
+        document.querySelectorAll('.user-avatar img').forEach(img => img.src = '/image/profile.jpg');
+        window.location.href = '/login';
       });
     } else {
       systemMenu.innerHTML = `
@@ -71,7 +77,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         <a href="/profile" class="dropdown-item"><i class="fas fa-user"></i> Akun</a>
         <a href="#" id="dropdownLogout" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a>`;
       document.getElementById('dropdownLogout')?.addEventListener('click', e => {
-        e.preventDefault(); Auth.logout(); window.location.href = '/login';
+        e.preventDefault();
+        Auth.logout();
+        document.querySelectorAll('.user-avatar img').forEach(img => img.src = '/image/profile.jpg');
+        window.location.href = '/login';
       });
     } else {
       dropdownMenu.innerHTML = `
@@ -101,7 +110,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   if (Auth.isLoggedIn()) {
     const uid = Auth.getUser()?.id;
 
-    // Load foto avatar dari localStorage foto dulu (instant, 0 request)
+    // Load foto avatar dari localStorage (instant, 0 request)
     if (uid) {
       const localAvatar = localStorage.getItem('photo_avatar_' + uid);
       if (localAvatar) {
@@ -109,6 +118,7 @@ document.addEventListener('DOMContentLoaded', async function () {
           img.src = localAvatar;
         });
       }
+      // Kalau tidak ada localStorage → biarkan default HTML (image/profile.jpg)
     }
 
     // Fetch profile (pakai cache kalau ada)
