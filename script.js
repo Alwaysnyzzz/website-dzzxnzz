@@ -23,9 +23,20 @@ const Auth = {
   },
   async getProfile(forceRefresh = false) {
     if (!this.isLoggedIn()) return null;
+
+    // Cek cache — tapi validasi dulu, cache lama mungkin tidak punya avatar_url/cover_url
     if (!forceRefresh) {
-      try { const c = JSON.parse(localStorage.getItem('nyzz-profile')); if (c) return c; } catch {}
+      try {
+        const c = JSON.parse(localStorage.getItem('nyzz-profile'));
+        // Kalau cache ada DAN sudah punya field avatar_url (walau null) → pakai cache
+        // 'avatar_url' in c memastikan field memang ada, bukan cuma undefined
+        if (c && 'avatar_url' in c) return c;
+        // Cache lama tidak punya avatar_url → hapus, fetch ulang
+        localStorage.removeItem('nyzz-profile');
+      } catch {}
     }
+
+    // Fetch fresh dari DB
     try {
       const res = await fetch('/api/user', { headers: { Authorization: 'Bearer ' + this.getToken() } });
       if (res.status === 401) { this.logout(); window.location.href = '/login'; return null; }
@@ -108,28 +119,14 @@ document.addEventListener('DOMContentLoaded', async function () {
   });
 
   if (Auth.isLoggedIn()) {
-    const uid = Auth.getUser()?.id;
-
-    // Load foto avatar dari localStorage (instant, 0 request)
-    if (uid) {
-      const localAvatar = localStorage.getItem('photo_avatar_' + uid);
-      if (localAvatar) {
-        document.querySelectorAll('.user-avatar img').forEach(img => {
-          img.src = localAvatar;
-        });
-      }
-      // Kalau tidak ada localStorage → biarkan default HTML (image/profile.jpg)
-    }
-
-    // Fetch profile (pakai cache kalau ada)
+    // getProfile() pakai cache nyzz-profile yang sudah divalidasi punya avatar_url
+    // Kalau cache lama tidak punya avatar_url → otomatis fetch fresh dari DB
     const profile = await Auth.getProfile();
     if (profile) {
-      // Update coins
+      // Update coins di navbar
       if (coinCountEl) coinCountEl.textContent = Number(profile.coins).toLocaleString('id-ID');
-
-      // Kalau tidak ada di localStorage tapi ada di DB → simpan ke localStorage
-      if (uid && !localStorage.getItem('photo_avatar_' + uid) && profile.avatar_url) {
-        localStorage.setItem('photo_avatar_' + uid, profile.avatar_url);
+      // Load avatar navbar dari DB (via cache yang sudah valid)
+      if (profile.avatar_url) {
         document.querySelectorAll('.user-avatar img').forEach(img => {
           img.src = profile.avatar_url;
         });

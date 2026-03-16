@@ -888,6 +888,8 @@
             const main   = document.getElementById('mainContent');
 
             try {
+                // forceRefresh=true → selalu fetch dari DB, tidak pakai cache lama
+                // Ini penting biar avatar_url selalu terbaca walaupun cache lama tidak ada field ini
                 const profile = await Auth.getProfile(true);
                 if (!profile) { window.location.href = '/login'; return; }
 
@@ -1012,39 +1014,15 @@
             }
         }
 
-        // ===== Simpan foto ke localStorage (key sendiri, tidak ikut profile cache) =====
-        function savePhotoLocal(type, url) {
-            const uid = Auth.getUser()?.id || 'guest';
-            if (url) localStorage.setItem('photo_' + type + '_' + uid, url);
-            else     localStorage.removeItem('photo_' + type + '_' + uid);
-        }
+        // savePhotoLocal tidak dipakai — foto disimpan di Supabase DB lewat /api/upload-image
+        function savePhotoLocal(type, url) { /* tidak dipakai, foto di Supabase */ }
 
-        // ===== Load foto — localStorage dulu, fallback DB, fallback default =====
+        // ===== Load foto dari profile — URL dari Supabase DB =====
         function loadSavedPhotos(profile) {
-            const uid = Auth.getUser()?.id;
-            if (!uid) return;
-
-            // ===== AVATAR =====
-            const localAvatar = localStorage.getItem('photo_avatar_' + uid);
-            if (localAvatar) {
-                // Ada di localStorage → langsung tampil
-                applyPhoto('avatar', localAvatar);
-            } else if (profile?.avatar_url) {
-                // Ada di DB → simpan ke localStorage & tampil
-                savePhotoLocal('avatar', profile.avatar_url);
-                applyPhoto('avatar', profile.avatar_url);
-            }
-            // Kalau tidak ada keduanya → tetap tampil image/profile.jpg (default HTML)
-
-            // ===== COVER =====
-            const localCover = localStorage.getItem('photo_cover_' + uid);
-            if (localCover) {
-                applyPhoto('cover', localCover);
-            } else if (profile?.cover_url) {
-                savePhotoLocal('cover', profile.cover_url);
-                applyPhoto('cover', profile.cover_url);
-            }
-            // Cover default = gradient CSS (biarkan kosong)
+            if (!profile) return;
+            // avatar_url & cover_url sudah ada di profile dari /api/user
+            if (profile.avatar_url) applyPhoto('avatar', profile.avatar_url);
+            if (profile.cover_url)  applyPhoto('cover',  profile.cover_url);
         }
 
         // ===== Popup upload helpers =====
@@ -1207,17 +1185,17 @@
                     return;
                 }
 
-                // Terapkan URL permanen + simpan ke localStorage (tidak hilang saat refresh)
+                // Terapkan URL ke tampilan langsung
                 applyPhoto(type, data.url);
-                savePhotoLocal(type, data.url);
 
                 // Update avatar navbar juga
                 if (type === 'avatar') {
                     document.querySelectorAll('.user-avatar img').forEach(img => img.src = data.url);
                 }
 
-                // Hapus cache profile lama (biar coins fresh), tapi foto sudah aman di localStorage
+                // Hapus cache lama → getProfile(true) akan fetch fresh dari DB termasuk avatar_url baru
                 localStorage.removeItem('nyzz-profile');
+                await Auth.getProfile(true); // refresh cache dengan data terbaru
 
                 closeUploadModal(type);
                 showToast(type === 'avatar' ? 'Foto profil diperbarui! ✨' : 'Foto cover diperbarui! ✨', 'success');
