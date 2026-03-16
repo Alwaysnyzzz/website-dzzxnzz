@@ -396,6 +396,98 @@
         .cover-edit-btn:disabled,
         .avatar-edit-btn:disabled { opacity:0.45; cursor:not-allowed; }
 
+        /* ===== POPUP UPLOAD FOTO ===== */
+        .upload-modal {
+            position:fixed; inset:0;
+            background:rgba(0,0,0,0.82); backdrop-filter:blur(12px);
+            display:flex; align-items:center; justify-content:center;
+            z-index:9000; opacity:0; visibility:hidden; transition:.3s;
+        }
+        .upload-modal.show { opacity:1; visibility:visible; }
+        .upload-modal-box {
+            background:rgba(10,12,22,.97); border-radius:24px;
+            padding:28px 24px; max-width:340px; width:90%;
+            border:1px solid rgba(0,229,255,0.2);
+            box-shadow:0 0 40px rgba(0,229,255,0.08), 0 25px 60px rgba(0,0,0,0.8);
+            position:relative; overflow:hidden;
+            transform:scale(0.9); transition:.3s cubic-bezier(.34,1.56,.64,1);
+        }
+        .upload-modal.show .upload-modal-box { transform:scale(1); }
+        .upload-modal-box::before {
+            content:''; position:absolute; top:0; left:0; right:0; height:3px;
+            background:linear-gradient(90deg,#00e5ff,#00ff88,#bf00ff,#00e5ff);
+            background-size:200% 100%; animation:shineBar 3s linear infinite;
+        }
+
+        .upload-modal-title {
+            font-size:16px; font-weight:900; color:#fff;
+            margin-bottom:18px; display:flex; align-items:center; gap:10px;
+        }
+        .upload-modal-title i { color:#00e5ff; }
+
+        /* Area klik pilih foto */
+        .upload-drop-area {
+            border:2px dashed rgba(0,229,255,0.3);
+            border-radius:16px; padding:24px 16px;
+            text-align:center; cursor:pointer;
+            transition:0.25s; margin-bottom:16px;
+            background:rgba(0,229,255,0.03);
+            position:relative; overflow:hidden;
+        }
+        .upload-drop-area:hover {
+            border-color:#00e5ff;
+            background:rgba(0,229,255,0.07);
+        }
+        .upload-drop-area input[type=file] {
+            position:absolute; inset:0;
+            opacity:0; cursor:pointer; width:100%; height:100%;
+        }
+        .upload-drop-icon { font-size:32px; color:rgba(0,229,255,0.5); margin-bottom:8px; }
+        .upload-drop-text { font-size:13px; font-weight:700; color:rgba(255,255,255,0.5); }
+        .upload-drop-text span { color:#00e5ff; font-weight:900; }
+
+        /* Preview setelah pilih foto */
+        .upload-preview-wrap {
+            display:none; margin-bottom:16px;
+            border-radius:14px; overflow:hidden;
+            border:1px solid rgba(0,229,255,0.2);
+            position:relative;
+        }
+        .upload-preview-wrap.show { display:block; }
+        .upload-preview-wrap img {
+            width:100%; height:160px; object-fit:cover; display:block;
+        }
+        .upload-preview-wrap.avatar img {
+            height:120px; object-fit:cover;
+        }
+        .upload-preview-change {
+            position:absolute; bottom:8px; right:8px;
+            background:rgba(0,0,0,0.65); backdrop-filter:blur(4px);
+            border:1px solid rgba(255,255,255,0.2); border-radius:20px;
+            color:rgba(255,255,255,0.8); font-size:11px; font-weight:800;
+            padding:5px 12px; cursor:pointer;
+        }
+
+        .upload-modal-actions { display:flex; gap:10px; }
+        .upload-btn-save {
+            flex:1; padding:13px; background:linear-gradient(135deg,#00e5ff,#00ff88);
+            border:none; border-radius:40px; color:#06070f;
+            font-family:'Nunito',sans-serif; font-weight:900; font-size:14px;
+            cursor:pointer; transition:.25s;
+            display:flex; align-items:center; justify-content:center; gap:8px;
+        }
+        .upload-btn-save:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,229,255,0.35); }
+        .upload-btn-save:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+        .upload-btn-cancel {
+            flex:1; padding:13px; background:transparent;
+            border:1.5px solid rgba(255,255,255,0.15); border-radius:40px;
+            color:rgba(255,255,255,0.5); font-family:'Nunito',sans-serif;
+            font-weight:900; font-size:14px; cursor:pointer; transition:.2s;
+        }
+        .upload-btn-cancel:hover { border-color:rgba(255,255,255,0.3); color:#fff; }
+
+        .upload-btn-loader { width:15px; height:15px; border:2.5px solid rgba(0,0,0,0.3); border-top-color:#06070f; border-radius:50%; animation:spin 0.7s linear infinite; display:none; }
+
         @media(max-width:480px) {
             .pstat-num { font-size:16px; }
             .riwayat-id { max-width:120px; }
@@ -441,39 +533,7 @@
     <main class="main-content" id="mainContent" style="display:none">
 
         <!-- Profile Header -->
-        <!-- Modal Input Link Avatar -->
-        <div class="modal-link" id="modalLinkAvatar">
-            <div class="modal-link-box">
-                <div class="modal-link-title"><i class="fas fa-user-circle"></i> Foto Profil</div>
-                <div class="modal-link-sub">Paste link gambar dari <span>imgur.com</span>, <span>discord</span>, atau URL gambar lainnya</div>
-                <input type="url" class="modal-link-input" id="inputLinkAvatar" placeholder="https://i.imgur.com/xxx.jpg">
-                <div class="modal-link-error" id="errorLinkAvatar">Link tidak valid atau gambar tidak bisa dimuat</div>
-                <img class="modal-link-preview" id="previewLinkAvatar" alt="preview">
-                <div class="modal-link-actions">
-                    <button class="modal-link-save" onclick="saveLinkAvatar()">Simpan</button>
-                    <button class="modal-link-cancel" onclick="closeModalLink('avatar')">Batal</button>
-                </div>
-            </div>
-        </div>
 
-        <!-- Modal Input Link Cover -->
-        <div class="modal-link" id="modalLinkCover">
-            <div class="modal-link-box">
-                <div class="modal-link-title"><i class="fas fa-image"></i> Foto Cover</div>
-                <div class="modal-link-sub">Paste link gambar dari <span>imgur.com</span>, <span>discord</span>, atau URL gambar lainnya</div>
-                <input type="url" class="modal-link-input" id="inputLinkCover" placeholder="https://i.imgur.com/xxx.jpg">
-                <div class="modal-link-error" id="errorLinkCover">Link tidak valid atau gambar tidak bisa dimuat</div>
-                <img class="modal-link-preview" id="previewLinkCover" alt="preview">
-                <div class="modal-link-actions">
-                    <button class="modal-link-save" onclick="saveLinkCover()">Simpan</button>
-                    <button class="modal-link-cancel" onclick="closeModalLink('cover')">Batal</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Input file tersembunyi -->
-        <input type="file" id="inputAvatar" accept="image/jpeg,image/png,image/webp" style="display:none">
-        <input type="file" id="inputCover"  accept="image/jpeg,image/png,image/webp" style="display:none">
 
         <!-- Toast notifikasi -->
         <div class="upload-toast" id="uploadToast">
@@ -484,7 +544,7 @@
         <div class="profile-header">
             <div class="profile-cover" id="profileCover">
                 <!-- Pensil cover -->
-                <button class="cover-edit-btn" id="coverEditBtn" onclick="document.getElementById('inputCover').click()" title="Ganti foto cover">
+                <button class="cover-edit-btn" id="coverEditBtn" onclick="openUploadModal('cover')" title="Ganti foto cover">
                     <i class="fas fa-pencil-alt"></i>
                 </button>
                 <div class="profile-avatar-wrap" style="position:relative;display:inline-block">
@@ -628,6 +688,52 @@
         </button>
 
     </main>
+
+    <!-- ===== POPUP UPLOAD AVATAR ===== -->
+    <div class="upload-modal" id="modalUploadAvatar">
+        <div class="upload-modal-box">
+            <div class="upload-modal-title"><i class="fas fa-user-circle"></i> Ganti Foto Profil</div>
+            <div class="upload-drop-area" id="dropAvatar">
+                <input type="file" id="fileInputAvatar" accept="image/jpeg,image/png,image/webp">
+                <div class="upload-drop-icon"><i class="fas fa-image"></i></div>
+                <div class="upload-drop-text">Ketuk untuk pilih foto<br><span>JPG, PNG, WebP</span> · maks 2 MB</div>
+            </div>
+            <div class="upload-preview-wrap avatar" id="previewWrapAvatar">
+                <img id="previewImgAvatar" src="" alt="preview">
+                <div class="upload-preview-change" onclick="document.getElementById('fileInputAvatar').click()">Ganti</div>
+            </div>
+            <div class="upload-modal-actions">
+                <button class="upload-btn-save" id="btnSaveAvatar">
+                    <span id="btnSaveAvatarText"><i class="fas fa-check"></i> Simpan</span>
+                    <div class="upload-btn-loader" id="loaderAvatar"></div>
+                </button>
+                <button class="upload-btn-cancel" onclick="closeUploadModal('avatar')">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== POPUP UPLOAD COVER ===== -->
+    <div class="upload-modal" id="modalUploadCover">
+        <div class="upload-modal-box">
+            <div class="upload-modal-title"><i class="fas fa-image"></i> Ganti Foto Cover</div>
+            <div class="upload-drop-area" id="dropCover">
+                <input type="file" id="fileInputCover" accept="image/jpeg,image/png,image/webp">
+                <div class="upload-drop-icon"><i class="fas fa-panorama"></i></div>
+                <div class="upload-drop-text">Ketuk untuk pilih foto<br><span>JPG, PNG, WebP</span> · maks 3 MB</div>
+            </div>
+            <div class="upload-preview-wrap" id="previewWrapCover">
+                <img id="previewImgCover" src="" alt="preview">
+                <div class="upload-preview-change" onclick="document.getElementById('fileInputCover').click()">Ganti</div>
+            </div>
+            <div class="upload-modal-actions">
+                <button class="upload-btn-save" id="btnSaveCover">
+                    <span id="btnSaveCoverText"><i class="fas fa-check"></i> Simpan</span>
+                    <div class="upload-btn-loader" id="loaderCover"></div>
+                </button>
+                <button class="upload-btn-cancel" onclick="closeUploadModal('cover')">Batal</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal Transaksi Dibatalkan -->
     <div class="modal-cancelled" id="cancelledModal" onclick="if(event.target===this)this.classList.remove('show')">
@@ -950,15 +1056,138 @@
             if (profile?.cover_url)  applyPhoto('cover',  profile.cover_url);
         }
 
-        // ===== Event listener input file =====
-        document.getElementById('inputAvatar').addEventListener('change', function(e) {
-            if (e.target.files[0]) uploadToCatbox(e.target.files[0], 'avatar');
-            this.value = ''; // reset supaya bisa pilih file sama lagi
+        // ===== Popup upload helpers =====
+        let selectedFile = { avatar: null, cover: null };
+
+        function openUploadModal(type) {
+            const modal = document.getElementById(type === 'avatar' ? 'modalUploadAvatar' : 'modalUploadCover');
+            // Reset state
+            selectedFile[type] = null;
+            const previewWrap = document.getElementById(type === 'avatar' ? 'previewWrapAvatar' : 'previewWrapCover');
+            const dropArea    = document.getElementById(type === 'avatar' ? 'dropAvatar' : 'dropCover');
+            previewWrap.classList.remove('show');
+            dropArea.style.display = 'block';
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeUploadModal(type) {
+            const modal = document.getElementById(type === 'avatar' ? 'modalUploadAvatar' : 'modalUploadCover');
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+            // Reset file input
+            const fileInput = document.getElementById(type === 'avatar' ? 'fileInputAvatar' : 'fileInputCover');
+            if (fileInput) fileInput.value = '';
+        }
+
+        // Klik backdrop tutup modal
+        document.querySelectorAll('.upload-modal').forEach(m => {
+            m.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('show');
+                    document.body.style.overflow = '';
+                }
+            });
         });
-        document.getElementById('inputCover').addEventListener('change', function(e) {
-            if (e.target.files[0]) uploadToCatbox(e.target.files[0], 'cover');
-            this.value = '';
+
+        // Preview setelah pilih file
+        function handleFileSelect(file, type) {
+            if (!file) return;
+            const maxSize = type === 'cover' ? 3 : 2;
+            if (file.size > maxSize * 1024 * 1024) {
+                showToast(`Ukuran maksimal ${maxSize} MB`, 'error');
+                return;
+            }
+            selectedFile[type] = file;
+            const reader = new FileReader();
+            reader.onload = e => {
+                const previewImg  = document.getElementById(type === 'avatar' ? 'previewImgAvatar' : 'previewImgCover');
+                const previewWrap = document.getElementById(type === 'avatar' ? 'previewWrapAvatar' : 'previewWrapCover');
+                const dropArea    = document.getElementById(type === 'avatar' ? 'dropAvatar' : 'dropCover');
+                previewImg.src = e.target.result;
+                previewWrap.classList.add('show');
+                dropArea.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        document.getElementById('fileInputAvatar').addEventListener('change', function() {
+            if (this.files[0]) handleFileSelect(this.files[0], 'avatar');
         });
+        document.getElementById('fileInputCover').addEventListener('change', function() {
+            if (this.files[0]) handleFileSelect(this.files[0], 'cover');
+        });
+
+        // Tombol Simpan
+        document.getElementById('btnSaveAvatar').addEventListener('click', () => savePhoto('avatar'));
+        document.getElementById('btnSaveCover').addEventListener('click',  () => savePhoto('cover'));
+
+        async function savePhoto(type) {
+            const file = selectedFile[type];
+            if (!file) { showToast('Pilih foto dulu ya!', 'error'); return; }
+
+            const btnText   = document.getElementById(type === 'avatar' ? 'btnSaveAvatarText' : 'btnSaveCoverText');
+            const btnLoader = document.getElementById(type === 'avatar' ? 'loaderAvatar' : 'loaderCover');
+            const saveBtn   = document.getElementById(type === 'avatar' ? 'btnSaveAvatar' : 'btnSaveCover');
+
+            saveBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnLoader.style.display = 'block';
+            showToast('Mengupload...', 'loading');
+
+            try {
+                // Baca sebagai base64
+                const base64 = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload  = e => resolve(e.target.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+
+                // Preview sementara
+                applyPhoto(type, base64);
+
+                // Upload ke Catbox via API
+                const res  = await fetch('/api/upload-image', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + Auth.getToken()
+                    },
+                    body: JSON.stringify({ image: base64, type, filename: file.name })
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    showToast(data.error || 'Upload gagal', 'error');
+                    return;
+                }
+
+                // Terapkan URL permanen
+                applyPhoto(type, data.url);
+
+                // Hapus cache → fetch ulang sekali
+                localStorage.removeItem('nyzz-profile');
+                const updated = await Auth.getProfile(true);
+                if (updated) {
+                    const coinEl = document.getElementById('coinCount');
+                    if (coinEl) coinEl.textContent = Number(updated.coins).toLocaleString('id-ID');
+                    if (updated.avatar_url) {
+                        document.querySelectorAll('.user-avatar img').forEach(img => img.src = updated.avatar_url);
+                    }
+                }
+
+                closeUploadModal(type);
+                showToast(type === 'avatar' ? 'Foto profil diperbarui! ✨' : 'Foto cover diperbarui! ✨', 'success');
+
+            } catch(err) {
+                showToast('Gagal: ' + err.message, 'error');
+            } finally {
+                saveBtn.disabled = false;
+                btnText.style.display = 'flex';
+                btnLoader.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
