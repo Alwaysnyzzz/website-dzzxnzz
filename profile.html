@@ -33,10 +33,42 @@
             background-size: 200% 100%; animation: shineBar 3s linear infinite;
         }
         .profile-cover {
-            height: 85px;
-            background: linear-gradient(135deg,rgba(0,229,255,0.15),rgba(191,0,255,0.12),rgba(0,255,136,0.1));
+            height: 100px;
             position: relative;
             overflow: visible;
+            background: linear-gradient(135deg, #0d0f1a, #0a0c18);
+        }
+        .profile-cover-bg {
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg,
+                rgba(0,229,255,0.18) 0%,
+                rgba(191,0,255,0.14) 50%,
+                rgba(0,255,136,0.12) 100%);
+            overflow: hidden;
+        }
+        .profile-cover-bg::before {
+            content:'';
+            position:absolute; top:-40px; right:-20px;
+            width:160px; height:160px; border-radius:50%;
+            background: radial-gradient(circle, rgba(0,229,255,0.15), transparent 70%);
+            animation: floatBubble 6s ease-in-out infinite;
+        }
+        .profile-cover-bg::after {
+            content:'';
+            position:absolute; bottom:-30px; left:30%;
+            width:120px; height:120px; border-radius:50%;
+            background: radial-gradient(circle, rgba(191,0,255,0.12), transparent 70%);
+            animation: floatBubble 8s ease-in-out infinite reverse;
+        }
+        @keyframes floatBubble {
+            0%,100%{transform:translateY(0) scale(1)}
+            50%{transform:translateY(-12px) scale(1.1)}
+        }
+        .profile-cover-dots {
+            position:absolute; inset:0;
+            background-image: radial-gradient(rgba(0,229,255,0.15) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.5;
         }
         .profile-avatar-wrap { position: absolute; bottom:-36px; left:22px; z-index:3; }
         .profile-avatar {
@@ -352,16 +384,6 @@
         }
 
         /* ===== EDIT BUTTONS ===== */
-        .cover-edit-btn {
-            position:absolute; top:10px; right:12px;
-            width:34px; height:34px; border-radius:50%;
-            background:rgba(0,0,0,0.55); backdrop-filter:blur(6px);
-            border:1.5px solid rgba(255,255,255,0.25);
-            color:rgba(255,255,255,0.8); font-size:13px;
-            cursor:pointer; display:flex; align-items:center; justify-content:center;
-            transition:0.2s; z-index:2;
-        }
-        .cover-edit-btn:hover { background:rgba(0,229,255,0.25); border-color:#00e5ff; color:#00e5ff; }
 
         .avatar-edit-btn {
             position:absolute; bottom:0; right:0;
@@ -394,7 +416,6 @@
         .upload-toast.loading i { color:#00e5ff; }
 
         /* Disabled state tombol edit saat upload */
-        .cover-edit-btn:disabled,
         .avatar-edit-btn:disabled { opacity:0.45; cursor:not-allowed; }
 
         /* ===== POPUP UPLOAD FOTO ===== */
@@ -562,10 +583,8 @@
 
         <div class="profile-header">
             <div class="profile-cover" id="profileCover">
-                <!-- Pensil cover -->
-                <button class="cover-edit-btn" id="coverEditBtn" onclick="openUploadModal('cover')" title="Ganti foto cover">
-                    <i class="fas fa-pencil-alt"></i>
-                </button>
+                <div class="profile-cover-bg"></div>
+                <div class="profile-cover-dots"></div>
                 <div class="profile-avatar-wrap" style="position:relative;display:inline-block">
                     <div class="profile-avatar" id="profileAvatarEl">
                         <img src="/image/profile.jpg" alt="avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%" onerror="this.style.display='none';this.parentElement.innerHTML+='<i class=&quot;fas fa-user&quot;></i>'">
@@ -736,31 +755,7 @@
         </div>
     </div>
 
-    <!-- ===== POPUP UPLOAD COVER ===== -->
-    <div class="upload-modal" id="modalUploadCover">
-        <div class="upload-modal-box">
-            <div class="upload-modal-title"><i class="fas fa-image"></i> Ganti Foto Cover</div>
-            <div class="upload-drop-area" id="dropCover">
-                <input type="file" id="fileInputCover" accept="image/jpeg,image/png,image/webp">
-                <div class="upload-drop-icon"><i class="fas fa-panorama"></i></div>
-                <div class="upload-drop-text">Ketuk untuk pilih foto<br><span>JPG, PNG, WebP</span> · maks 3 MB</div>
-            </div>
-            <div class="upload-preview-wrap" id="previewWrapCover">
-                <img id="previewImgCover" src="" alt="preview">
-                <div class="upload-preview-change" onclick="document.getElementById('fileInputCover').click()">Ganti</div>
-            </div>
-            <div class="upload-modal-actions">
-                <button class="upload-btn-save" id="btnSaveCover">
-                    <span id="btnSaveCoverText"><i class="fas fa-check"></i> Simpan</span>
-                    <div class="upload-btn-loader" id="loaderCover"></div>
-                </button>
-                <button class="upload-btn-delete" id="btnDeleteCover" onclick="deletePhoto('cover')" style="display:none">
-                    <i class="fas fa-trash-alt"></i> Hapus
-                </button>
-                <button class="upload-btn-cancel" onclick="closeUploadModal('cover')">Batal</button>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Modal Transaksi Dibatalkan -->
     <div class="modal-cancelled" id="cancelledModal" onclick="if(event.target===this)this.classList.remove('show')">
